@@ -11,7 +11,7 @@
  * @package Inane\Datetime
  *
  * @license UNLICENSE
- * @license https://github.com/inanepain/stdlib/raw/develop/UNLICENSE UNLICENSE
+ * @license https://github.com/inanepain/datetime/raw/develop/UNLICENSE UNLICENSE
  *
  * @version $Id$
  * $Date$

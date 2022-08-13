@@ -1,6 +1,6 @@
 # Changelog: Datetime
 
-> version: $$ ($Date$)
+> version: $Id$ ($Date$)
 
 ## History
 
