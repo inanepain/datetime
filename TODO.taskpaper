@@ -1,3 +1,6 @@
 Inane\Datetime:
-	- Allow for custom units to be specified when formatting as duration
-	- Add code docs
+	- Allow for custom units to be specified when formatting as duration @version
+	- Parse `DateInterval` @version(0.2.0)
+	- Get `DateInterval` @version(0.1.0) @done(2022-08-13)
+	- Get as `DateTime` or `DateTimeImmutable` @version(0.1.0) @done(2022-08-13)
+	- Add code docs @version(0.1.0) @done(2022-08-13)
