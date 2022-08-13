@@ -1,0 +1,3 @@
+Inane\Datetime:
+	- Allow for custom units to be specified when formatting as duration
+	- Add code docs
