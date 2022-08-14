@@ -41,7 +41,7 @@ use const true;
  *
  * @package Inane\Datetime
  *
- * @version 0.1.0
+ * @version 0.2.0
  */
 class Timespan implements Stringable {
     /**
@@ -66,10 +66,11 @@ class Timespan implements Stringable {
      */
     private static array $units = [
         'y' => ['symbols' => ['years', 'year', 'y', 'yrs', 'yr'], 'value'=> 31556952],
+        'm' => ['symbols' => ['months', 'month', 'm', 'months', 'month'], 'value'=> 2629746],
         'w' => ['symbols' => ['weeks', 'week', 'w','weeks', 'week'], 'value'=> 604800],
         'd' => ['symbols' => ['days', 'day', 'd','days', 'day'], 'value'=> 86400],
         'h' => ['symbols' => ['hours', 'hour', 'h', 'hrs', 'hr'], 'value'=> 3600],
-        'm' => ['symbols' => ['minutes', 'minute', 'm', 'mins', 'min'], 'value'=> 60],
+        'i' => ['symbols' => ['minutes', 'minute', 'i', 'mins', 'min'], 'value'=> 60],
         's' => ['symbols' => ['seconds', 'second', 's', 'secs', 'sec'], 'value'=> 1],
     ];
 
@@ -176,10 +177,11 @@ class Timespan implements Stringable {
      *
      * @param int $timespan seconds
      * @param bool $symbolType unit symbol single, medium, long
+     * @param array $units array of units to include in duration, single char to be used
      *
      * @return string duration
      */
-    public static function ts2dur(int $timespan, int $symbolType = Timespan::SYMBOL_MEDIUM): string {
+    public static function ts2dur(int $timespan, int $symbolType = Timespan::SYMBOL_MEDIUM, array $units = []): string {
         if ($timespan == 0) return match($symbolType) {
             static::SYMBOL_SINGLE => '0s',
             static::SYMBOL_LONG => '0seconds',
@@ -187,7 +189,9 @@ class Timespan implements Stringable {
         };
 
         $r = [];
-        foreach (static::$units as $u) {
+        foreach (static::$units as $k => $u) {
+            if (!empty($units) && !in_array($k, $units)) continue;
+
             $a = intval($timespan / $u['value']);
             if ($a > 0) {
                 $r[] = "$a" . static::getUnitSymbol($a == 1, $symbolType, $u['symbols']);
@@ -211,11 +215,12 @@ class Timespan implements Stringable {
      * Get Duration
      *
      * @param null|int $symbolType  unit symbol current, single, medium, long
+     * @param array $units array of units to include in duration, single char to be used
      *
      * @return string duration
      */
-    public function getDuration(?int $symbolType = null): string {
-        return static::ts2dur($this->timespan, $symbolType ?? $this->symbolType);
+    public function getDuration(?int $symbolType = null, array $units = []): string {
+        return static::ts2dur($this->timespan, $symbolType ?? $this->symbolType, $units);
     }
 
     /**
