@@ -6,7 +6,6 @@
 :experimental:
 :icons: font
 :source-highlighter: highlight.js
-:sectnums: |,all|
 :toc: auto
 
 Things to help you bend space and time to your will. Or at least do some calculations with it.
@@ -23,74 +22,8 @@ $ composer require inanepain/datetime
 ----
 
 == Datetime Classes
+:sectnums:
 
 This is meant as more of an introduction to the various classes in Datetime and not an in-depth guide.
 
-include::doc/timespan.adoc[]
-
-=== Timespan
-
-A `Timespan` is essentially a number of seconds that can be expressed in a few different ways. They can also be added or subtracted from *NOW* to get a _future_ or _past_ date and time. `Timespan` currently supports (to various degrees) three types/formats of time periods as well as three types/formats of expressing a datetime.
-
-NOTE: Terminology various from one reference source to the next. Inane\Datetime uses the vague definitions bellow.
-
-==== Time Periods
-
-A length of time, like *5 minutes* which is the same as a *timespan 300*.
-
-.Supported Time Periods
-[opts="header"cols="1,1,2"]
-|===
-|Name |Type |Example
-|timespan |seconds |`5400`
-|duration |string |`2years 3d 7secs`
-|DateInterval |class |`new DateInterval('PT300S')``
-|===
-
-==== Date and Time
-
-A specific point in time, like *01 January 1970 02:00:00 AM SAST* which is the same as unix timestamp *0*.
-
-.Supported Date Times
-[opts="header"cols="1,1,2"]
-|===
-|Name |Type |Example
-|timestamp |seconds |`236988000`
-|formatted date |string |`06 July 1977 12:00:00 AM SAST`
-|DateTime(Immutable) |class |`new DateTime('NOW')`
-|===
-
-=== Usage
-
-.example
-[source,php]
-----
-// Naturally values based on now will differ with every execution of the code.
-
-$epoch = new \Inane\Datetime\Timespan(time());
-echo("Time since epoch: $epoch\n"); // and it will be greater then when this was written: 52y 32w 1d 6h 13m 1s
-
-$dur1 = '3 yrs 2w 2days 4 min';
-$ts1 = \Inane\Datetime\Timespan::fromDuration($dur1);
-
-echo($ts1->getTimespan());       // 96053496
-echo("$ts1");                    // 3y 2w 2d 4m
-
-echo($ts1->getTimestamp());      // 1756477381 (added timespan to now)
-echo($ts1->getTimestamp(false)); // 1564370389 (subtracted timespan to now)
-echo($ts1->format());            // 2025-08-29 16:23:01
-echo($ts1->format('', false) . "\n");   // 2019-07-29 05:19:49
-
-$ts2 = new \Inane\Datetime\Timespan(8600);
-echo("\tSymbol Format:");
-echo("Default:\t" . $ts2->getDuration()); // 2hrs 23mins 20secs
-echo("Single:\t\t" . $ts2->getDuration(\Inane\Datetime\Timespan::SYMBOL_SINGLE)); // 2h 23m 20s
-echo("Abbreviated:\t" . $ts2->getDuration(\Inane\Datetime\Timespan::SYMBOL_MEDIUM)); // 2hrs 23mins 20secs
-echo("Word:\t\t" . $ts2->getDuration(\Inane\Datetime\Timespan::SYMBOL_LONG) . "\n"); // 2hours 23minutes 20seconds
-
-$s1 = \Inane\Datetime\Timespan::dur2ts('1hr 30min');
-echo("1hr 30min => $s1");
-
-$d1 = \Inane\Datetime\Timespan::ts2dur(10800);
-echo("10800 => $d1");
-----
+include::doc/timespan.adoc[leveloffset=+2]
