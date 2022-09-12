@@ -6,7 +6,8 @@ Things to help you bend space and time to your will. Or at least do some calcula
 
 **Contents:**
 
- - Timespan
+* Timespan
+* Timestamp
 
 ## Install
 

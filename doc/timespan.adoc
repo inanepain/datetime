@@ -7,15 +7,20 @@
 :icons: font
 :source-highlighter: highlight.js
 :sectnums: |,all|
+:fn-period: pass:c,q[footnote:[*period:* length or portion of time, *NOT* a punctuation mark!]]
+:fn-moment: pass:c,q[footnote:[*moment:* exact point in time.]]
+:fn-timestamp: pass:c,q[footnote:[*timestamp:* a.k.a. unix time, epoch time, posix time and various combinations there of.]]
 :toc: auto
 
-A `Timespan` is essentially a number of seconds that can be expressed in a few different ways. They can also be added or subtracted from *NOW* to get a _future_ or _past_ date and time. `Timespan` currently supports (to various degrees) three types/formats of time periods as well as three types/formats of expressing a datetime.
+The `Timespan` *class* represents a _timespan_ or _period_{fn-period} which is essentially a number of seconds. As with most things, seconds can be expressed in various formats to suite the situation, for instance `5400` and `2years 3d 7secs`, `Timespan` makes this easy for you.
 
-== Supported types / formats
+Quickly get a _moment_{fn-moment} in the _future_ or _past_ by adding or subtracting a `Timespan` from a link:timestamp.adoc[`Timestamp`]. Working together these two classes have you covered in the _past_, _present_, _future_ or anytime in _between_.
 
-This covers a basic overview of what a `Timespan` can convert between.
+NOTE: The Timespan as is a period of time or duration and a Timestamp{fn-timestamp} is a moment in time.
 
-NOTE: Terminology various from one reference source to the next. Inane\Datetime uses the vague definitions bellow.
+== Moments and Periods
+
+This covers a basic overview of different `Timespan` formats and types.
 
 === Time Periods
 
@@ -25,14 +30,16 @@ A length of time, like *5 minutes* which is the same as a *timespan 300*.
 [opts="header"cols="1,1,2"]
 |===
 |Name |Type |Example
-|timespan |seconds |`5400`
+|timespan |int (seconds) |`5400`
 |duration |string |`2years 3d 7secs`
 |DateInterval |class |`new DateInterval('PT300S')``
 |===
 
-=== Date and Time
+=== Moments in Time
 
-A specific point in time, like *01 January 1970 02:00:00 AM SAST* which is the same as unix timestamp *0*.
+A specific point in time, like *01 January 1970 02:00:00 AM SAST* which is the same as the unix timestamp *0*.
+
+NOTE: A unix timestamp while being a moment in time as also a period, the number of seconds since the epoch (0).
 
 .Supported Date Times
 [opts="header"cols="1,1,2"]
@@ -42,6 +49,8 @@ A specific point in time, like *01 January 1970 02:00:00 AM SAST* which is the s
 |formatted date |string |`06 July 1977 12:00:00 AM SAST`
 |DateTime(Immutable) |class |`new DateTime('NOW')`
 |===
+
+<<<
 
 == Examples
 
@@ -58,7 +67,7 @@ $ts1 = \Inane\Datetime\Timespan::fromDuration('3 yrs 2w 2days 4 min');
 // Automatic string conversion
 echo("$ts1");                    // 3y 2w 2d 4i
 
-echo($ts1->getTimespan());       // 96053496 (seconds)
+echo($ts1->getSeconds());       // 96053496 (seconds)
 // Timestamp uses now as it's point of reference
 echo($ts1->getTimestamp());      // 1756477381 (added timespan to now)
 echo($ts1->getTimestamp(false)); // 1564370389 (subtracted timespan from now)

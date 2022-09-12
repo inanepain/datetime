@@ -26,26 +26,24 @@ use DateTimeImmutable;
 use Stringable;
 
 use function date;
+use function is_int;
 use function is_null;
 use function time;
 
 /**
  * Timestamp
  *
+ * @property int $timestamp - unix timestamp
+ *
  * @package Inane\Datetime
  *
  * @version 0.1.0
  */
-class Timestamp implements Stringable {
+class Timestamp implements TimeWrapper, Stringable {
     /**
-     * Timespan constructor
-     *
-     * symbol type 2: long
-     * symbol type 1: medium
-     * symbol type 0: single
+     * Timestamp constructor
      *
      * @param int $timestamp seconds
-     * @param int $symbolType unit symbol single, medium, long
      *
      * @return void
      */
@@ -61,12 +59,33 @@ class Timestamp implements Stringable {
     }
 
     /**
-     * String representation of timestamp
+     * Get property $name
+     *
+     * @return string date
+     */
+    public function __get(string $name): mixed {
+        return match($name) {
+            'timestamp' => $this->timestamp,
+            default => throw new \Inane\Stdlib\Exception\InvalidPropertyException("Timestamp:=not found: `$name`!"),
+        };
+    }
+
+    /**
+     * Timestamp as a formatted string
      *
      * @return string date
      */
     public function __toString(): string {
         return $this->format();
+    }
+
+    /**
+     * Get as seconds
+     *
+     * @return int seconds
+     */
+    public function getSeconds(): int {
+        return $this->timestamp;
     }
 
     /**
@@ -97,25 +116,26 @@ class Timestamp implements Stringable {
     }
 
     /**
-     * Adjust timestamp by $seconds
+     * Adjust timestamp by $timespan
      *
-     * @param int $seconds positive or negative seconds
+     * @param int|\Inane\Datetime\Timespan $timespan positive or negative seconds or Timespan
      *
      * @return \Inane\Datetime\Timestamp
      */
-    public function adjust(int $seconds): self {
-        $this->timestamp += $seconds;
+    public function adjust(int|Timespan $timespan): self {
+        $this->timestamp += is_int($timespan) ? $timespan : $timespan->getSeconds();
         return $this;
     }
 
     /**
      * Difference between two Timestamps
      *
-     * @param Timestamp $timestamp from which to measure difference
+     * @param int|\Inane\Datetime\Timestamp $timestamp from which to measure difference
      *
      * @return \Inane\Datetime\Timespan
      */
-    public function diff(Timestamp $timestamp): Timespan {
-        return new Timespan($this->timestamp > $timestamp->timestamp ? $this->timestamp - $timestamp->timestamp : $timestamp->timestamp - $this->timestamp);
+    public function diff(int|Timestamp $timestamp): Timespan {
+        $ts = is_int($timestamp) ? $timestamp : $timestamp->timestamp;
+        return new Timespan($ts - $this->timestamp);
     }
 }

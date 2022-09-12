@@ -1,5 +1,8 @@
 Inane\Datetime:
 	website: http://vaieen.local:3000/inane/datetime
+	- Create an Interface for Time classes
+	DatetimeInterface:
+		- Use interface for types
 	- Allow for custom units to be specified when formatting as duration @version
 	- Parse `DateInterval` @version(0.2.0)
 	- Set / Get custom point of reference to use when getting date time. @version(0.2.0)
