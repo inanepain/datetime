@@ -4,6 +4,10 @@
 
 ## History
 
+### current: 0.3.0 (2022 Xxx xx)
+
+ - next
+
 ### 0.2.0 (2022 Sep 22)
 
  - new: `TimeWrapper` interface for time unit classes
