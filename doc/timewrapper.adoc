@@ -1,0 +1,43 @@
+= TimeWrapper
+:author: Philip Michael Raab
+:email: <peep@inane.co.za>
+:revnumber: 0.1.0
+:revdate: 2022-08-19
+:experimental:
+:icons: font
+:source-highlighter: highlight.js
+:sectnums: |,all|
+:toc: auto
+
+The `TimeWrapper` *interface* implemented by link:timespan.adoc[`Timespan`] and link:timestamp.adoc[`Timestamp`], possibly more to come, started more as a convenience class in the code. As bonus the interoperability this enabled opened the classes up to a greater variety of use cases. Enough rambling and there's nothing left to say about that anyway so let's get a move on.
+
+<<<
+
+== Defined Methods
+
+Thus far the *interface* defines to methods:
+
+. getSeconds
+. format
+
+=== getSeconds: int
+
+At the core it's all numbers and for these numbers it's the seconds returned by this method.
+
+.method: format
+[source,php]
+----
+public function format(string $format = ''): string;
+----
+
+***
+
+=== format: string
+
+The method uses the same formatting pattern as `date` and `DateTime` as well as numerous other functions and classes in php to return a string representation of the object.
+
+.method: format
+[source,php]
+----
+public function getSeconds(): int;
+----

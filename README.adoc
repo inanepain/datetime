@@ -1,0 +1,44 @@
+= Datetime
+:author: Philip Michael Raab
+:email: <peep@inane.co.za>
+:revnumber: 0.1.0
+:revdate: 2022-08-17
+:experimental:
+:icons: font
+:source-highlighter: highlight.js
+:toc: auto
+
+Things to help you bend space and time to your will. Or at least do some calculations with it.
+
+.Interfaces
+* <<TimeWrapper>>
+
+.Classes
+ - <<Timespan>>
+ - <<Timestamp>>
+
+== Install
+
+[source,shell]
+----
+$ composer require inanepain/datetime
+----
+
+<<<
+
+== Datetime
+:sectnums:
+
+This is meant as more of an introduction to the various classes, interfaces, enums and anything else found in the `Inane\Datetime` namespace and not an in-depth guide.
+
+<<<
+
+include::doc/timewrapper.adoc[leveloffset=+2]
+
+<<<
+
+include::doc/timespan.adoc[leveloffset=+2]
+
+<<<
+
+include::doc/timestamp.adoc[leveloffset=+2]

@@ -22,42 +22,53 @@ declare(strict_types=1);
 namespace Inane\Datetime;
 
 use DateInterval;
-use DateTime;
-use DateTimeImmutable;
 use Stringable;
 
 use function array_combine;
-use function date;
+use function array_fill;
+use function array_filter;
+use function array_key_exists;
+use function array_keys;
+use function array_merge;
+use function array_pop;
+use function array_shift;
+use function count;
 use function implode;
+use function in_array;
 use function intval;
+use function is_int;
+use function is_null;
 use function is_numeric;
+use function is_string;
 use function preg_match_all;
 use function preg_replace;
-use function time;
-use const true;
+use function str_split;
+use function str_starts_with;
+use const null;
 
-/**
+/** Timespan
  * Timespan
  *
  * @package Inane\Datetime
  *
- * @version 0.1.0
+ * @version 0.3.0
  */
-class Timespan implements Stringable {
+class Timespan implements TimeWrapper, Stringable {
     /**
-     * Single symbol character
+     * Single character symbol
      */
-    public const SYMBOL_SINGLE = 0;
+    public const SYMBOL_CHAR = 0;
 
     /**
      * Abbreviated symbol
+     *  In some cases this is the full symbol
      */
-    public const SYMBOL_MEDIUM = 1;
+    public const SYMBOL_ABBREVIATED = 1;
 
     /**
      * Symbol word
      */
-    public const SYMBOL_LONG = 2;
+    public const SYMBOL_WORD = 2;
 
     /**
      * Time period units (symbols and values)
@@ -66,22 +77,23 @@ class Timespan implements Stringable {
      */
     private static array $units = [
         'y' => ['symbols' => ['years', 'year', 'y', 'yrs', 'yr'], 'value'=> 31556952],
+        'm' => ['symbols' => ['months', 'month', 'm', 'months', 'month'], 'value'=> 2629746],
         'w' => ['symbols' => ['weeks', 'week', 'w','weeks', 'week'], 'value'=> 604800],
         'd' => ['symbols' => ['days', 'day', 'd','days', 'day'], 'value'=> 86400],
         'h' => ['symbols' => ['hours', 'hour', 'h', 'hrs', 'hr'], 'value'=> 3600],
-        'm' => ['symbols' => ['minutes', 'minute', 'm', 'mins', 'min'], 'value'=> 60],
+        'i' => ['symbols' => ['minutes', 'minute', 'i', 'mins', 'min'], 'value'=> 60],
         's' => ['symbols' => ['seconds', 'second', 's', 'secs', 'sec'], 'value'=> 1],
     ];
 
-    /**
+    /** __construct
      * Timespan constructor
      *
-     * symbol type 2: long
-     * symbol type 1: medium
-     * symbol type 0: single
+     * symbol format 2: word
+     * symbol format 1: abbreviated
+     * symbol format 0: char
      *
      * @param int $timespan seconds
-     * @param int $symbolType unit symbol single, medium, long
+     * @param int $symbolFormat unit symbol character, abbreviation, word
      *
      * @return void
      */
@@ -93,12 +105,21 @@ class Timespan implements Stringable {
          */
         private int $timespan = 0,
         /**
-         * unit symbol single, medium, long
+         * unit symbol character, abbreviation, word
          *
          * @var int
          */
-        private int $symbolType = Timespan::SYMBOL_MEDIUM,
+        private int $symbolFormat = Timespan::SYMBOL_ABBREVIATED,
     ) {
+    }
+
+    /**
+     * String representation of timespan
+     *
+     * @return string duration
+     */
+    public function __toString(): string {
+        return $this->getDuration();
     }
 
     /**
@@ -113,12 +134,44 @@ class Timespan implements Stringable {
     }
 
     /**
-     * String representation of timespan
+     * Gets the unit symbol by size and style
      *
-     * @return string duration
+     * @param bool $single should the unit be single or plural
+     * @param int $symbolFormat character, abbreviation, word
+     * @param array $symbols available options
+     *
+     * @return string unit symbol
      */
-    public function __toString(): string {
-        return $this->getDuration();
+    private static function getUnitSymbol(bool $single, int $symbolFormat, array $symbols): string {
+        return $symbols[$symbolFormat == Timespan::SYMBOL_WORD ? ($single ? 1 : 0) : ($symbolFormat == Timespan::SYMBOL_CHAR ? 2 : ($single ? 4 : 3))];
+    }
+
+    /**
+     * Parses a duration string into array by unit
+     *
+     * @param string $duration
+     *
+     * @return array unit values
+     */
+    private static function parseDuration(string $duration): array {
+        $pattern = '/(([0-9]+)([a-z]+))/';
+        $d = preg_replace('/\s/', '', $duration);
+        preg_match_all($pattern, $d, $m);
+
+        $invert = ['r' => str_starts_with($d, '-') ? -1 : 1];
+        $k = array_combine(array_keys(static::$units), array_fill(0, count(static::$units), 0));
+        $r = array_combine($m[3], $m[2]);
+
+        foreach ($r as $u => $a) {
+            $matches = array_filter(static::$units, function($unit) use ($u) {
+                return in_array($u, $unit['symbols']);
+            });
+
+            $match = array_pop($matches) ?? ['value' => 0];
+            if (array_key_exists('symbols', $match)) $k[$match['symbols'][2]] = intval($a);
+        }
+
+        return array_merge($invert, $k);;
     }
 
     /**
@@ -131,66 +184,48 @@ class Timespan implements Stringable {
     public static function dur2ts(string $duration): int {
         if (is_numeric($duration)) return intval($duration);
 
-        $pattern = '/(([0-9]+)([a-z]+))/';
-        $d = preg_replace('/\s/', '', $duration);
-        preg_match_all($pattern, $d, $m);
-        $r = array_combine($m[3], $m[2]);
+        $r = static::parseDuration($duration);
+        $invert = array_shift($r);
         $s = 0;
 
-        foreach ($r as $u => $a) {
-            $v = match(true) {
-                in_array($u, static::$units['y']['symbols']) => static::$units['y']['value'],
-                in_array($u, static::$units['w']['symbols']) => static::$units['w']['value'],
-                in_array($u, static::$units['d']['symbols']) => static::$units['d']['value'],
-                in_array($u, static::$units['h']['symbols']) => static::$units['h']['value'],
-                in_array($u, static::$units['m']['symbols']) => static::$units['m']['value'],
-                in_array($u, static::$units['s']['symbols']) => static::$units['s']['value'],
-                default => 0,
-            };
+        foreach ($r as $u => $a)
+            $s += static::$units[$u]['value'] * $a;
 
-            $s += ($a * $v);
-        }
-
-        return $s;
+        return $s * $invert;
     }
 
-    /**
-     * Gets the unit symbol by size and style
-     *
-     * @param bool $single singular
-     * @param int $type single, medium, long
-     * @param array $symbols available options
-     *
-     * @return string unit symbol
-     */
-    private static function getUnitSymbol(bool $single, int $type, array $symbols): string {
-        return $symbols[$type == Timespan::SYMBOL_LONG ? ($single ? 1 : 0) : ($type == Timespan::SYMBOL_SINGLE ? 2 : ($single ? 4 : 3))];
-    }
-
-    /**
+    /** ts2dur
      * Convert timespan to duration
      *
-     * symbol type 2: long
-     * symbol type 1: medium
-     * symbol type 0: single
+     * symbol format 2: word
+     * symbol format 1: abbreviated
+     * symbol format 0: char
      *
      * @param int $timespan seconds
-     * @param bool $symbolType unit symbol single, medium, long
+     * @param bool $symbolFormat unit symbol character, abbreviation, word
+     * @param array $units array of units to include in duration, single char to be used
      *
      * @return string duration
      */
-    public static function ts2dur(int $timespan, int $symbolType = Timespan::SYMBOL_MEDIUM): string {
-        if ($timespan == 0) return match($symbolType) {
-            static::SYMBOL_SINGLE => '0s',
-            static::SYMBOL_LONG => '0seconds',
+    public static function ts2dur(int $timespan, int $symbolFormat = Timespan::SYMBOL_ABBREVIATED, array $units = []): string {
+        if ($timespan == 0) return match($symbolFormat) {
+            static::SYMBOL_CHAR => '0s',
+            static::SYMBOL_WORD => '0seconds',
             default => '0secs',
         };
 
         $r = [];
-        foreach (static::$units as $u) {
+        if ($timespan < 0) {
+            $timespan = $timespan * -1;
+            $r[] = '-';
+        }
+
+        foreach (static::$units as $k => $u) {
+            if (!empty($units) && !in_array($k, $units)) continue;
+
             $a = intval($timespan / $u['value']);
             if ($a > 0) {
-                $r[] = "$a" . static::getUnitSymbol($a == 1, $symbolType, $u['symbols']);
+                $r[] = "$a" . static::getUnitSymbol($a == 1, $symbolFormat, $u['symbols']);
                 $timespan = $timespan % $u['value'];
             }
         }
@@ -199,43 +234,24 @@ class Timespan implements Stringable {
     }
 
     /**
-     * Get Timespan
+     * Get Timespan in seconds
      *
      * @return int seconds
      */
-    public function getTimespan(): int {
+    public function getSeconds(): int {
         return $this->timespan;
     }
 
     /**
      * Get Duration
      *
-     * @param null|int $symbolType  unit symbol current, single, medium, long
+     * @param null|int $symbolFormat  unit symbol current, character, abbreviation, word
+     * @param array $units array of units to include in duration, single char to be used
      *
      * @return string duration
      */
-    public function getDuration(?int $symbolType = null): string {
-        return static::ts2dur($this->timespan, $symbolType ?? $this->symbolType);
-    }
-
-    /**
-     * Get a unix timestamp adjusted by the timestamp's value
-     *
-     * @param bool $upcoming true adds ts to now for a future date, false subtracts ts for past date
-     *
-     * @return int adjusted timestamp
-     */
-    public function getTimestamp(bool $upcoming = true): int {
-        return $upcoming ? ($this->timespan + time()) : (time() - $this->timespan);
-    }
-
-    /**
-     * Get DateTime
-     *
-     * @return \DateTime|\DateTimeImmutable DateTime
-     */
-    public function getDateTime(bool $immutable = false, bool $upcoming = true): DateTime|DateTimeImmutable {
-        return $immutable ? new DateTimeImmutable('@' . $this->getTimestamp($upcoming)) : new DateTime('@' . $this->getTimestamp($upcoming));
+    public function getDuration(?int $symbolFormat = null, array $units = []): string {
+        return static::ts2dur($this->timespan, $symbolFormat ?? $this->symbolFormat, $units);
     }
 
     /**
@@ -244,24 +260,59 @@ class Timespan implements Stringable {
      * @return \DateInterval DateInterval
      */
     public function getDateInterval(): DateInterval {
-        return DateInterval::createFromDateString($this->getDuration(Timespan::SYMBOL_MEDIUM));
+        return DateInterval::createFromDateString($this->getDuration(Timespan::SYMBOL_ABBREVIATED));
     }
 
     /**
-     * Get a formatted date string
+     * Get duration string
      *
-     * Format:
-     * @link \DateTimeInterface::format()
+     * Only use units specified in $units
      *
-     * @param string $format @see \DateTimeInterface::format()
-     * @param bool $upcoming true adds ts to now for a future date, false subtracts ts for past date
+     * Units:
+     * - y: years
+     * - m: months
+     * - w: weeks
+     * - d: days
+     * - h: hours
+     * - i: minutes
+     * - s: seconds
      *
-     * @return string formatted date string
+     * @param string $units specify desired units
+     *
+     * @return string duration
      */
-    public function format(string $format = 'Y-m-d H:i:s', bool $upcoming = true): string {
-        if (empty($format)) $format = 'Y-m-d H:i:s';
+    public function duration(string $units = 'ymdhis'): string {
+        if (empty($units)) $units = ['y','m','d','h','i','s'];
+        else $units = str_split($units);
 
-        return date($format, $this->getTimestamp($upcoming));
+        return static::ts2dur($this->timespan, $this->symbolFormat, $units);
+    }
+
+    /**
+     * Get a formatted duration string
+     *
+     * Units:
+     * - %r: sign (only shown if negative)
+     * - %y: years
+     * - %m: months
+     * - %w: weeks
+     * - %d: days
+     * - %h: hours
+     * - %i: minutes
+     * - %s: seconds
+     *
+     * @param string $format specify desired units
+     *
+     * @return string formatted timespan string
+     */
+    public function format(string $format = '%r%yyrs %mmonth %ddays %hhrs %imin %ssecs'): string {
+        $r = static::parseDuration($this->getDuration());
+        $r['r'] = $r['r'] < 0 ? '-' : '';
+
+        foreach($r as $u => $v)
+            $format = \str_replace("%$u", "$v", $format);
+
+        return $format;
     }
 
     /**
@@ -269,12 +320,45 @@ class Timespan implements Stringable {
      *
      * timespan can be negative seconds
      *
-     * @param int|string $tsORdur timespan or duration
+     * @param int|string|\Inane\Datetime\Timespan $tsORdur timespan, Timespan or duration
      *
      * @return \Inane\Datetime\Timespan
      */
-    public function adjust(int|string $tsORdur): self {
-        $this->timespan += static::dur2ts("$tsORdur");
+    public function adjust(int|string|Timespan $tsORdur): self {
+        if ($tsORdur instanceof Timespan) $tsORdur = $tsORdur->getSeconds();
+        else if (is_string($tsORdur) && !is_numeric($tsORdur)) $tsORdur = static::dur2ts("$tsORdur");
+        else if (is_string($tsORdur) && is_numeric($tsORdur)) $tsORdur = intval($tsORdur);
+
+        $this->timespan += $tsORdur;
         return $this;
+    }
+
+    /**
+     * Apply to Timestamp
+     *
+     * If none supplied Timestamp is uses NOW.
+     *
+     * @param null|int|\Inane\Datetime\Timestamp $timestamp to modify
+     *
+     * @return \Inane\Datetime\Timestamp
+     */
+    public function apply2Timestamp(null|int|Timestamp $timestamp = null): Timestamp {
+        if (is_null($timestamp)) $timestamp = new Timestamp();
+        else if (is_int($timestamp)) $timestamp = new Timestamp($timestamp);
+
+        $timestamp->adjust($this->timespan);
+
+        return $timestamp;
+    }
+
+    /**
+     * Absolute value
+     *
+     * @since 0.3.0
+     *
+     * @return \Inane\Datetime\Timespan An absolute copy
+     */
+    public function abs(): Timespan {
+        return new static(abs($this->timespan));
     }
 }

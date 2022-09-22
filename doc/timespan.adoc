@@ -1,0 +1,93 @@
+= Timespan
+:author: Philip Michael Raab
+:email: <peep@inane.co.za>
+:revnumber: 0.2.0
+:revdate: 2022-08-17
+:experimental:
+:icons: font
+:source-highlighter: highlight.js
+:sectnums: |,all|
+:fn-period: pass:c,q[footnote:[*period:* length or portion of time, *NOT* a punctuation mark!]]
+:fn-moment: pass:c,q[footnote:[*moment:* exact point in time.]]
+:fn-timestamp: pass:c,q[footnote:[*timestamp:* a.k.a. unix time, epoch time, posix time and various combinations there of.]]
+:toc: auto
+
+The `Timespan` *class* represents a _timespan_ or _period_{fn-period} which is essentially a number of seconds. As with most things, seconds can be expressed in various formats to suite the situation, for instance `5400` and `2years 3d 7secs`, `Timespan` makes this easy for you.
+
+Quickly get a _moment_{fn-moment} in the _future_ or _past_ by adding or subtracting a `Timespan` from a link:timestamp.adoc[`Timestamp`]. Working together these two classes have you covered in the _past_, _present_, _future_ or anytime in _between_.
+
+NOTE: The Timespan as is a period of time or duration and a Timestamp{fn-timestamp} is a moment in time.
+
+== Moments and Periods
+
+This covers a basic overview of different `Timespan` formats and types.
+
+=== Time Periods
+
+A length of time, like *5 minutes* which is the same as a *timespan 300*.
+
+.Supported Time Periods
+[opts="header"cols="1,1,2"]
+|===
+|Name |Type |Example
+|timespan |int (seconds) |`5400`
+|duration |string |`2years 3d 7secs`
+|DateInterval |class |`new DateInterval('PT300S')``
+|===
+
+=== Moments in Time
+
+A specific point in time, like *01 January 1970 02:00:00 AM SAST* which is the same as the unix timestamp *0*.
+
+NOTE: A unix timestamp while being a moment in time as also a period, the number of seconds since the epoch (0).
+
+.Supported Date Times
+[opts="header"cols="1,1,2"]
+|===
+|Name |Type |Example
+|timestamp |seconds |`236988000`
+|formatted date |string |`06 July 1977 12:00:00 AM SAST`
+|DateTime(Immutable) |class |`new DateTime('NOW')`
+|===
+
+<<<
+
+== Examples
+
+.example
+[source,php]
+----
+// Create with current seconds since epoch
+$epoch = new \Inane\Datetime\Timespan(time());
+echo("Time since epoch: $epoch\n"); // 52y 32w 1d 6h 13i 1s (not what you got! lol.)
+
+// Create from duration
+$ts1 = \Inane\Datetime\Timespan::fromDuration('3 yrs 2w 2days 4 min');
+
+// Automatic string conversion
+echo("$ts1");                    // 3y 2w 2d 4i
+
+echo($ts1->getSeconds());       // 96053496 (seconds)
+// Timestamp uses now as it's point of reference
+echo($ts1->getTimestamp());      // 1756477381 (added timespan to now)
+echo($ts1->getTimestamp(false)); // 1564370389 (subtracted timespan from now)
+
+// default format: Y-m-d H:i:s
+echo($ts1->format());            // 2025-08-29 16:23:01
+echo($ts1->format('', false) . "\n");   // 2019-07-29 05:19:49
+
+// Another Timespan
+$ts2 = new \Inane\Datetime\Timespan(8600);
+echo("\tSymbol Format:");
+echo("Default:\t" . $ts2->getDuration()); // 2hrs 23mins 20secs
+echo("Char:\t\t" . $ts2->getDuration(\Inane\Datetime\Timespan::SYMBOL_CHAR)); // 2h 23i 20s (not the `i` for min char.)
+echo("Abbreviated:\t" . $ts2->getDuration(\Inane\Datetime\Timespan::SYMBOL_ABBREVIATED)); // 2hrs 23mins 20secs
+echo("Word:\t\t" . $ts2->getDuration(\Inane\Datetime\Timespan::SYMBOL_WORD) . "\n"); // 2hours 23minutes 20seconds
+
+// Static conversion functions
+$s1 = \Inane\Datetime\Timespan::dur2ts('1hr 30min');
+echo("1hr 30min => $s1");
+
+$d1 = \Inane\Datetime\Timespan::ts2dur(10800);
+echo("10800 => $d1");
+----
