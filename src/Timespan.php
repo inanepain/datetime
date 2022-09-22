@@ -51,7 +51,7 @@ use const null;
  *
  * @package Inane\Datetime
  *
- * @version 0.2.0
+ * @version 0.3.0
  */
 class Timespan implements TimeWrapper, Stringable {
     /**
@@ -349,5 +349,16 @@ class Timespan implements TimeWrapper, Stringable {
         $timestamp->adjust($this->timespan);
 
         return $timestamp;
+    }
+
+    /**
+     * Absolute value
+     *
+     * @since 0.3.0
+     *
+     * @return \Inane\Datetime\Timespan An absolute copy
+     */
+    public function abs(): Timespan {
+        return new static(abs($this->timespan));
     }
 }

@@ -25,6 +25,7 @@ use DateTime;
 use DateTimeImmutable;
 use Stringable;
 
+use function abs;
 use function date;
 use function is_int;
 use function is_null;
@@ -37,7 +38,7 @@ use function time;
  *
  * @package Inane\Datetime
  *
- * @version 0.1.0
+ * @version 0.2.0
  */
 class Timestamp implements TimeWrapper, Stringable {
     /**
@@ -137,5 +138,16 @@ class Timestamp implements TimeWrapper, Stringable {
     public function diff(int|Timestamp $timestamp): Timespan {
         $ts = is_int($timestamp) ? $timestamp : $timestamp->timestamp;
         return new Timespan($ts - $this->timestamp);
+    }
+
+    /**
+     * Absolute value
+     *
+     * @since 0.2.0
+     *
+     * @return \Inane\Datetime\Timestamp An absolute copy
+     */
+    public function abs(): Timestamp {
+        return new static(abs($this->timestamp));
     }
 }
