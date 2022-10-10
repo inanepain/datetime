@@ -24,7 +24,7 @@ namespace Inane\Datetime;
 /**
  * Interface: TimeWrapper
  *
- * Used by unit type classes usable in formatting and calculations.
+ * Used by time unit type classes ensuring they can be formatted and offer the raw value in seconds.
  *
  * @package Inane\Datetime
  *

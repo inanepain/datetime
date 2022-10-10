@@ -46,8 +46,10 @@ use function str_split;
 use function str_starts_with;
 use const null;
 
-/** Timespan
+/**
  * Timespan
+ *
+ * A duration of time stored as a number of seconds and can be formatted for display as desired.
  *
  * @package Inane\Datetime
  *
@@ -85,7 +87,7 @@ class Timespan implements TimeWrapper, Stringable {
         's' => ['symbols' => ['seconds', 'second', 's', 'secs', 'sec'], 'value'=> 1],
     ];
 
-    /** __construct
+    /**
      * Timespan constructor
      *
      * symbol format 2: word
@@ -194,7 +196,7 @@ class Timespan implements TimeWrapper, Stringable {
         return $s * $invert;
     }
 
-    /** ts2dur
+    /**
      * Convert timespan to duration
      *
      * symbol format 2: word

@@ -34,6 +34,9 @@ use function time;
 /**
  * Timestamp
  *
+ * A point in time, a date.
+ * Unix time is measured as the number of seconds since or prior to <strong>01 January 1970 00:00:00 AM GMT</strong>.
+ *
  * @property int $timestamp - unix timestamp
  *
  * @package Inane\Datetime

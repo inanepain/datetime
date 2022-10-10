@@ -1,3 +1,7 @@
+# inanepain/datetime
+# version: $Id$
+# date: $Date$
+
 set shell := ["zsh", "-cu"]
 set positional-arguments
 
@@ -11,5 +15,4 @@ _default:
 # generate php doc
 @doc:
 	mkdir -p doc/code
-	phpdoc -d src -t doc/code --title="{{project}}"
-
+	phpdoc -d src -t doc/code --title="{{project}}" --defaultpackagename="Inane"
