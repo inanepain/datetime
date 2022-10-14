@@ -9,13 +9,15 @@
 :source-highlighter: highlight.js
 :toc: auto
 
- version: $Id: 0.1.0$ ($Date: Sun Aug 14 01:02:03 2022 +0200$)
+ version: $Id$ ($Date$)
 
 == History
 
 === current: 0.3.0 (2022 Xxx xx)
 
-* next
+* new: `TimeWrapper::absoluteCopy` Get a copy with an absolute value
+* new: `Timestamp::createFromFormat` Parses a time string according to a specified format
+* update: Improvements to documentation
 
 === 0.2.0 (2022 Sep 22)
 

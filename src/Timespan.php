@@ -9,6 +9,7 @@
  *
  * @author Philip Michael Raab<peep@inane.co.za>
  * @package Inane\Datetime
+ * @category datetime
  *
  * @license UNLICENSE
  * @license https://github.com/inanepain/datetime/raw/develop/UNLICENSE UNLICENSE
@@ -354,13 +355,13 @@ class Timespan implements TimeWrapper, Stringable {
     }
 
     /**
-     * Absolute value
+     * Get a copy with an absolute value
      *
      * @since 0.3.0
      *
      * @return \Inane\Datetime\Timespan An absolute copy
      */
-    public function abs(): Timespan {
+    public function absoluteCopy(): Timespan {
         return new static(abs($this->timespan));
     }
 }
