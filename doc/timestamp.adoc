@@ -1,8 +1,8 @@
 = Timestamp
 :author: Philip Michael Raab
 :email: <peep@inane.co.za>
-:revnumber: 0.1.0
-:revdate: 2022-08-19
+:revnumber: 0.1.1
+:revdate: 2022-10-14
 :experimental:
 :icons: font
 :source-highlighter: highlight.js
