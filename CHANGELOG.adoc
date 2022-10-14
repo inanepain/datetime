@@ -2,8 +2,8 @@
 :author: Philip Michael Raab
 :email: <peep@inane.co.za>
 :revnumber: 0.3.0
-:revdate: 2022-09-22
-:revremark: dev
+:revdate: 2022-10-14
+:revremark: release
 :experimental:
 :icons: font
 :source-highlighter: highlight.js
@@ -13,7 +13,7 @@
 
 == History
 
-=== current: 0.3.0 (2022 Xxx xx)
+=== 0.3.0 (2022 Oct 14)
 
 * new: `TimeWrapper::absoluteCopy` Get a copy with an absolute value
 * new: `Timestamp::createFromFormat` Parses a time string according to a specified format
