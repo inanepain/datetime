@@ -9,6 +9,7 @@
  *
  * @author Philip Michael Raab<peep@inane.co.za>
  * @package Inane\Datetime
+ * @category datetime
  *
  * @license UNLICENSE
  * @license https://github.com/inanepain/datetime/raw/develop/UNLICENSE UNLICENSE
@@ -24,11 +25,11 @@ namespace Inane\Datetime;
 /**
  * Interface: TimeWrapper
  *
- * Used by unit type classes usable in formatting and calculations.
+ * Used by time unit type classes ensuring they can be formatted and offer the raw value in seconds.
  *
  * @package Inane\Datetime
  *
- * @version 0.1.0
+ * @version 0.2.0
  */
 interface TimeWrapper {
     /**
@@ -46,4 +47,13 @@ interface TimeWrapper {
      * @return int seconds
      */
     public function getSeconds(): int;
+
+    /**
+     * Get a copy with an absolute value
+     *
+     * @since 0.2.0
+     *
+     * @return \Inane\Datetime\TimeWrapper An absolute copy
+     */
+    public function absoluteCopy(): TimeWrapper;
 }

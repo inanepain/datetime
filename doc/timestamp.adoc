@@ -1,15 +1,15 @@
 = Timestamp
 :author: Philip Michael Raab
 :email: <peep@inane.co.za>
-:revnumber: 0.1.0
-:revdate: 2022-08-19
+:revnumber: 0.1.1
+:revdate: 2022-10-14
 :experimental:
 :icons: font
 :source-highlighter: highlight.js
 :sectnums: |,all|
 :toc: auto
 
-The `Timestamp` *class* is a truly simple wrapper for *epoch timestamp*. It's mainly useful when combined with link:timespan.adoc[`Timespan`] to do chained date calculations and then displaying the formatted result. Essentially it saves typing a few lines of code here and there and I think it looks a tad neater too. Nuff said, let's see what it can do.
+The `Timestamp` *class* is a truly simple wrapper for an *epoch timestamp*. It's mainly useful when used in combination with a link:timespan.adoc[`Timespan`] to do chained date calculations and then displaying the formatted result. Essentially it saves typing a few lines of code here and there and I think it looks a tad neater too. Nuff said, here comes it's breakdown.
 
 <<<
 
@@ -20,9 +20,9 @@ The value for `NOW` in the examples is taken to be `1660896907`.
 .example 1: basic usage
 [source,php]
 ----
-// Create Timestamp with default value NOW
-$t1 = new \Inane\Datetime\Timestamp(1660896907);
-$log("TS 1: $t1");                                      // TS 1: 2022-08-19 10:15:07
+// Create Timestamp with default value NOW (1660896907)
+$t1 = new \Inane\Datetime\Timestamp();
+echo 'TS 1: ', $t1;                                      // TS 1: 2022-08-19 10:15:07
 ----
 
 .example 2: format
@@ -30,19 +30,19 @@ $log("TS 1: $t1");                                      // TS 1: 2022-08-19 10:1
 ----
 // Create another in the past
 $t2 = new \Inane\Datetime\Timestamp(236988000);
-$log('TS 2: ' . $t2->format('g:ia \o\n l jS F Y'));     // TS 2: 12:00am on Wednesday 6th July 1977
+echo 'TS 2: ', $t2->format('g:ia \o\n l jS F Y');     // TS 2: 12:00am on Wednesday 6th July 1977
 ----
 
-Using the variables from example 1 and 2 to get a Timespan.
+Using the variables from example *1* and *2* to get a `Timespan`.
 
 .example 3: timespan
 [source,php]
 ----
 // What's the timespan between them?
-$log("\nTime between: {$t1->diff($t2)}");               // Time between: - 45yrs 1month 2weeks 1hr 52mins 1sec
+echo 'Time between: ', $t1->diff($t2);               // Time between: - 45yrs 1month 2weeks 1hr 52mins 1sec
 
 $between = $t1->diff($t2);
-$log("Formatted time between: {$between->format('%r%y years and %m months')}");
+echo $between->format('Formatted time between: %r%y years and %m months');
 ----
 
 That how easy it is to use.

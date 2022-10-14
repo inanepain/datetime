@@ -9,6 +9,7 @@
  *
  * @author Philip Michael Raab<peep@inane.co.za>
  * @package Inane\Datetime
+ * @category datetime
  *
  * @license UNLICENSE
  * @license https://github.com/inanepain/datetime/raw/develop/UNLICENSE UNLICENSE
@@ -34,11 +35,14 @@ use function time;
 /**
  * Timestamp
  *
+ * A point in time, a date.
+ * Unix time is measured as the number of seconds since or prior to <strong>01 January 1970 00:00:00 AM GMT</strong>.
+ *
  * @property int $timestamp - unix timestamp
  *
  * @package Inane\Datetime
  *
- * @version 0.2.0
+ * @version 0.3.0
  */
 class Timestamp implements TimeWrapper, Stringable {
     /**
@@ -78,6 +82,25 @@ class Timestamp implements TimeWrapper, Stringable {
      */
     public function __toString(): string {
         return $this->format();
+    }
+
+    /**
+     * Parses a time string according to a specified format
+     *
+     * @since 0.3.0
+     *
+     * @see doc/timewrapper.adoc#format about format symbols
+     * @see \DateTimeImmutable::createFromFormat about format symbols
+     *
+     * @param string $format The format that the passed in string should be in
+     * @param string $datetime String representing the time
+     *
+     * @return static|false Returns a new Timestamp instance or false on failure.
+     */
+    public static function createFromFormat(string $format, string $datetime): static|false {
+        $datetime = \DateTime::createFromFormat($format, $datetime);
+
+        return $datetime === false ? false : new static(intval($datetime->format('U')));
     }
 
     /**
@@ -141,13 +164,13 @@ class Timestamp implements TimeWrapper, Stringable {
     }
 
     /**
-     * Absolute value
+     * Get a copy with an absolute value
      *
      * @since 0.2.0
      *
      * @return \Inane\Datetime\Timestamp An absolute copy
      */
-    public function abs(): Timestamp {
+    public function absoluteCopy(): Timestamp {
         return new static(abs($this->timestamp));
     }
 }

@@ -1,15 +1,16 @@
 = TimeWrapper
 :author: Philip Michael Raab
 :email: <peep@inane.co.za>
-:revnumber: 0.1.0
-:revdate: 2022-08-19
+:revnumber: 0.2.0
+:revdate: 2022-10-14
 :experimental:
+:table-stripes: even
 :icons: font
 :source-highlighter: highlight.js
 :sectnums: |,all|
 :toc: auto
 
-The `TimeWrapper` *interface* implemented by link:timespan.adoc[`Timespan`] and link:timestamp.adoc[`Timestamp`], possibly more to come, started more as a convenience class in the code. As bonus the interoperability this enabled opened the classes up to a greater variety of use cases. Enough rambling and there's nothing left to say about that anyway so let's get a move on.
+The `TimeWrapper` *interface* implemented by link:timespan.adoc[`Timespan`] and link:timestamp.adoc[`Timestamp`] (possibly more to come), started more as a convenience than actually any real requirement. Soon after implementing this interface the usage of the `Datetime` classes increased, thanks to the greater interoperability they had acquired. This in turn resulted in them quickly evolving from the skinny classes they were to what they are now, skinny but with some meat on them. Enough rambling and there's nothing left to say about it anyway.
 
 <<<
 
@@ -24,10 +25,10 @@ Thus far the *interface* defines to methods:
 
 At the core it's all numbers and for these numbers it's the seconds returned by this method.
 
-.method: format
+.method: getSeconds
 [source,php]
 ----
-public function format(string $format = ''): string;
+public function getSeconds(): int;
 ----
 
 ***
@@ -39,5 +40,51 @@ The method uses the same formatting pattern as `date` and `DateTime` as well as 
 .method: format
 [source,php]
 ----
-public function getSeconds(): int;
+public function format(string $format = ''): string;
 ----
+
+***
+
+=== absoluteCopy: TimeWrapper
+
+Get a copy of the object with an absolute value.
+
+.method: absoluteCopy
+[source,php]
+----
+public function absoluteCopy(): TimeWrapper;
+----
+
+== Format
+
+A subset of format options commonly used by `Datetime` classes.
+
+.Format Subset
+["%autowidth"opts="header"]
+|===
+| format character  | Description                                           | Example returned values
+| *Day*             | *---*                                                 | *---*
+| d	                | Day of the month, 2 digits with leading zeros         | 01 to 31
+| D                 | A textual representation of a day, three letters      | Mon through Sun
+| j                 | Day of the month without leading zeros                | 1 to 31
+| l (lowercase 'L') | A full textual representation of the day of the week  | Sunday through Saturday
+| *Month*           | *---*                                                 | *---*
+| F                 | A full textual representation of a month              | January through December
+| m                 | Numeric representation of a month, with leading zeros | 01 through 12
+| M                 | A three letter textual representation of a month      | Jan through Dec
+| n                 | Numeric representation of a month, no leading zeros   | 1 through 12
+| *Year*            | *---*                                                 | *---*
+| Y                 | Full numeric year, at least 4 digits, - for years BCE | Examples: -0055, 0787, 1999, 2003, 10191
+| *Time*            | *---*                                                 | *---*
+| a                 | Lowercase Ante meridiem and Post meridiem             | am or pm
+| A                 | Uppercase Ante meridiem and Post meridiem             | AM or PM
+| g                 | 12-hour format of an hour without leading zeros       | 1 through 12
+| G                 | 24-hour format of an hour without leading zeros       | 0 through 23
+| h                 | 12-hour format of an hour with leading zeros          | 01 through 12
+| H                 | 24-hour format of an hour with leading zeros          | 00 through 23
+| i                 | Minutes with leading zeros                            | 00 to 59
+| s                 | Seconds with leading zeros                            | 00 through 59
+| *Full date/time*  | *---*                                                 | *---*
+| c	                | ISO 8601 date                                         | 2004-02-12T15:19:21+00:00
+| r                 | » RFC 2822/» RFC 5322 formatted date                  | Example: Thu, 21 Dec 2000 16:01:07 +0200
+|===

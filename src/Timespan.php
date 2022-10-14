@@ -9,6 +9,7 @@
  *
  * @author Philip Michael Raab<peep@inane.co.za>
  * @package Inane\Datetime
+ * @category datetime
  *
  * @license UNLICENSE
  * @license https://github.com/inanepain/datetime/raw/develop/UNLICENSE UNLICENSE
@@ -46,8 +47,10 @@ use function str_split;
 use function str_starts_with;
 use const null;
 
-/** Timespan
+/**
  * Timespan
+ *
+ * A duration of time stored as a number of seconds and can be formatted for display as desired.
  *
  * @package Inane\Datetime
  *
@@ -85,7 +88,7 @@ class Timespan implements TimeWrapper, Stringable {
         's' => ['symbols' => ['seconds', 'second', 's', 'secs', 'sec'], 'value'=> 1],
     ];
 
-    /** __construct
+    /**
      * Timespan constructor
      *
      * symbol format 2: word
@@ -194,7 +197,7 @@ class Timespan implements TimeWrapper, Stringable {
         return $s * $invert;
     }
 
-    /** ts2dur
+    /**
      * Convert timespan to duration
      *
      * symbol format 2: word
@@ -352,13 +355,13 @@ class Timespan implements TimeWrapper, Stringable {
     }
 
     /**
-     * Absolute value
+     * Get a copy with an absolute value
      *
      * @since 0.3.0
      *
      * @return \Inane\Datetime\Timespan An absolute copy
      */
-    public function abs(): Timespan {
+    public function absoluteCopy(): Timespan {
         return new static(abs($this->timespan));
     }
 }
