@@ -13,6 +13,11 @@
 
 == History
 
+=== 0.4.0-dev (2022 Xxx xx)
+
+* new: `Timestamp::now:int` Get current unix time
+* doc: Improved php doc comments
+
 === 0.3.0 (2022 Oct 14)
 
 * new: `TimeWrapper::absoluteCopy` Get a copy with an absolute value

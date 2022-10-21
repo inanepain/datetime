@@ -42,7 +42,7 @@ use function time;
  *
  * @package Inane\Datetime
  *
- * @version 0.3.0
+ * @version 0.3.1
  */
 class Timestamp implements TimeWrapper, Stringable {
     /**
@@ -87,6 +87,13 @@ class Timestamp implements TimeWrapper, Stringable {
     /**
      * Parses a time string according to a specified format
      *
+     * Format Examples:
+     *  - 'd F Y'           : 05 May 2022
+     *  - 'D d F Y'         : Thu 05 May 2022
+     *  - 'l g:i:sa'        : Thursday 5:05:05am
+     *  - 'd F Y g:i:s A T' : 05 May 2022 05:05:05 AM SAST
+     *  - 'U'               : 1651719905 (string)
+     *
      * @since 0.3.0
      *
      * @see doc/timewrapper.adoc#format about format symbols
@@ -101,6 +108,17 @@ class Timestamp implements TimeWrapper, Stringable {
         $datetime = \DateTime::createFromFormat($format, $datetime);
 
         return $datetime === false ? false : new static(intval($datetime->format('U')));
+    }
+
+    /**
+     * Get current unix time
+     *
+     * @since 0.3.1
+     *
+     * @return int timestamp
+     */
+    public static function now(): int {
+        return time();
     }
 
     /**
