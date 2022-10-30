@@ -28,17 +28,18 @@ $ composer require inanepain/datetime
 
 == Datetime
 :sectnums:
+:view-mode: project
 
 This is meant as more of an introduction to the various classes, interfaces, enums and anything else found in the `Inane\Datetime` namespace and not an in-depth guide.
 
 <<<
 
-include::doc/timewrapper.adoc[leveloffset=+2]
+include::./doc/timewrapper.adoc[leveloffset=+2]
 
 <<<
 
-include::doc/timespan.adoc[leveloffset=+2]
+include::./doc/timespan.adoc[leveloffset=+2]
 
 <<<
 
-include::doc/timestamp.adoc[leveloffset=+2]
+include::./doc/timestamp.adoc[leveloffset=+2]

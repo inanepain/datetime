@@ -14,12 +14,18 @@ The `TimeWrapper` *interface* implemented by link:timespan.adoc[`Timespan`] and 
 
 <<<
 
-== Defined Methods
+== Interface Methods
 
-Thus far the *interface* defines to methods:
+# tag::interfaceMethods[]
 
-. getSeconds
-. format
+There are _three_ *interface* methods shared by `Datetime`` classes:
+
+.interface methods
+* public function getSeconds(): int
+* public function format(string $format = 'Y-m-d H:i:s'): string
+* public function absoluteCopy(): Timestamp
+
+# end::interfaceMethods[]
 
 === getSeconds: int
 
