@@ -34,6 +34,8 @@ This is meant as more of an introduction to the various classes, interfaces, enu
 
 <<<
 
+link:doc/timewrapper.adoc[timewrapper]
+
 include::./doc/timewrapper.adoc[leveloffset=+2]
 
 <<<
