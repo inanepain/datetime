@@ -9,40 +9,97 @@
 :sectnums: |,all|
 :toc: auto
 
-The `Timestamp` *class* is a truly simple wrapper for an *epoch timestamp*. It's mainly useful when used in combination with a link:timespan.adoc[`Timespan`] to do chained date calculations and then displaying the formatted result. Essentially it saves typing a few lines of code here and there and I think it looks a tad neater too. Nuff said, here comes it's breakdown.
+The `Timestamp` *class* is a truly simple wrapper for an *epoch timestamp*. It's mainly useful when used in combination with a link:timespan.adoc[`Timespan`] to do chained date calculations and then displaying the formatted result. Essentially it saves typing a few lines of code here and there and I think it looks a tad neater too. The original bit of code was primarily used as a convenience class to easily switch between various date and time structures.
+
+Nuff said, here comes it's breakdown.
 
 <<<
 
-== Examples
+== Methods
 
-The value for `NOW` in the examples is taken to be `1660896907`.
+include::timewrapper.adoc[tag=interfaceMethods,leveloffset=+1]
 
-.example 1: basic usage
+And _six_ class methods.
+
+.class methods
+* public function __construct(?int $timestamp = null)
+* public static function createFromFormat(string $format, string $datetime): static|false
+* public static function now(): int
+* public function getDateTime(bool $immutable = false): DateTime|DateTimeImmutable
+* public function adjust(int|Timespan $timespan): self
+* public function diff(int|Timestamp $timestamp): Timespan
+
+=== Create / New
+
+In addition to instantiating a `Timestamp` using `new` the static method `createFromFormat` can also be used to create a `Timestamp` instance. The constructor only takes a unix timestamp, for all other values the create method is used.
+
+.Creating Timestamps: default and custom values.
 [source,php]
 ----
-// Create Timestamp with default value NOW (1660896907)
-$t1 = new \Inane\Datetime\Timestamp();
-echo 'TS 1: ', $t1;                                      // TS 1: 2022-08-19 10:15:07
+$now = new Timestamp(); // <1>
+$then = Timestamp::createFromFormat('g:ia \o\n l jS F Y', '12:00am on Wednesday 6th July 1977');
 ----
+<1> creating a new Timestamp without any parameters uses the current unix time
 
-.example 2: format
+=== Get / Show
+
+Once you have a Timestamp it's easy to retrieve the date as various types that best suite the situation.
+
+.datetime types
+* string
+* int
+* DateTime/DateTimeImmutable
+
+.Getting values to work with or display.
 [source,php]
 ----
-// Create another in the past
-$t2 = new \Inane\Datetime\Timestamp(236988000);
-echo 'TS 2: ', $t2->format('g:ia \o\n l jS F Y');     // TS 2: 12:00am on Wednesday 6th July 1977
+$user->setAnniversary($then->getSeconds()); // <1>
+echo "The time between $now and $then.", PHP_EOL; <2>
+$tokyoTime = $now->getDateTime()->setTimezone($timeZone); // <3>
 ----
+<1> Add to entity as int to store in database
+<2> as a string to show on screen
+<3> and as a DateTime to work with a DateTimeZone
 
-Using the variables from example *1* and *2* to get a `Timespan`.
+=== Calculate
 
-.example 3: timespan
+A Timestamp can also work directly on DateTime to do calculations. When getting the difference between two Timestamps the result will be positive when the end Timestamp is greater then the source/initial Timestamp.
+Using `$now->diff($then)`, we can read it as; how much time needs to be added to `$now` to get to `$then`.
+If `$now` is today and `$then` is yesterday, we need to add a negative day; `-1`. But if `$then` were tomorrow, it would be the same distance `1`, but this time positive.
+
+If the it's the just size of the gap between Timestamps that's needed the `absoluteCopy` method can be used on the result or use the format method and ignore sign format symbol.
+
+.Time Manipulating
 [source,php]
 ----
-// What's the timespan between them?
-echo 'Time between: ', $t1->diff($t2);               // Time between: - 45yrs 1month 2weeks 1hr 52mins 1sec
-
-$between = $t1->diff($t2);
-echo $between->format('Formatted time between: %r%y years and %m months');
+$between = $now->diff($then); <1>
+echo $between, PHP_EOL; // <2>
+echo $between->format('Formatted time between: %r%y years and %m months'), PHP_EOL; // <3>
 ----
+<1> using the variables we created before
+<2> when this document was drafted, the result was: - 45yrs 3months 3weeks 6hrs 14mins 29secs
+<3> Formatted time between: -45 years and 3 months
 
-That how easy it is to use.
+=== Comparing Timestamps
+
+Figuring out what came first, the chicken or the egg, might be an unending debate. But with a `Timestamp` is just as easy as a *timestamp*, simply use the usual _great_ (>), _less_ (<) or _equals_ (==) comparators.
+
+.What came first, chicken or egg?
+[source,php]
+----
+$chicken = new \Inane\Datetime\Timestamp(-27106883520);
+$egg = \Inane\Datetime\Timestamp::createFromFormat('d F Y g:i:s', '01 January 1111 00:00:00');
+
+if ($chicken < $egg) echo "The chicken preceded the egg!", PHP_EOL; // <1>
+else if ($egg < $chicken) echo "The egg preceded the chicken!", PHP_EOL; // <1>
+else if ($egg == $chicken) echo "Apparently the chicken and the egg arrived together!", PHP_EOL; // <2>
+else echo "Something impossible has happened!!!", PHP_EOL;
+----
+<1> greater or less than works as normal, using the seconds for comparison
+<2> same goes for equality
+
+<<<
+
+== That's it for now
+
+Easy isn't it.

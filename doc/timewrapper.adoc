@@ -14,12 +14,18 @@ The `TimeWrapper` *interface* implemented by link:timespan.adoc[`Timespan`] and 
 
 <<<
 
-== Defined Methods
+== Interface Methods
 
-Thus far the *interface* defines to methods:
+# tag::interfaceMethods[]
 
-. getSeconds
-. format
+There are _three_ *interface* methods shared by `Datetime`` classes:
+
+.interface methods
+* public function getSeconds(): int
+* public function format(string $format = 'Y-m-d H:i:s'): string
+* public function absoluteCopy(): Timestamp
+
+# end::interfaceMethods[]
 
 === getSeconds: int
 
@@ -35,7 +41,13 @@ public function getSeconds(): int;
 
 === format: string
 
-The method uses the same formatting pattern as `date` and `DateTime` as well as numerous other functions and classes in php to return a string representation of the object.
+Used to get the object as a string using a custom format pattern. The actual implementations may use different format options best suited to the type of data they contain. Where possible patterns mimic existing php patterns.
+
+* `Timestamp`: `\DateTimeInterface::format()`
+* `Timespan`: `\DateTimeInterface::format()`
+
+
+The method uses the same formatting pattern as `date` and `DateTime`, as well as numerous other php functions, to return a string representation of the object.
 
 .method: format
 [source,php]

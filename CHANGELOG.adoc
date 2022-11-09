@@ -1,8 +1,8 @@
 = Changelog: Datetime
 :author: Philip Michael Raab
 :email: <peep@inane.co.za>
-:revnumber: 0.3.0
-:revdate: 2022-10-14
+:revnumber: 0.3.1
+:revdate: 2022-11-09
 :revremark: release
 :experimental:
 :icons: font
@@ -12,6 +12,11 @@
  version: $Id$ ($Date$)
 
 == History
+
+=== 0.3.1 (2022 Nov 09)
+
+* new: `Timestamp::now:int` Get current unix time
+* doc: Improved php doc comments
 
 === 0.3.0 (2022 Oct 14)
 

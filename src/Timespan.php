@@ -294,6 +294,10 @@ class Timespan implements TimeWrapper, Stringable {
     /**
      * Get a formatted duration string
      *
+     * Formatting patterns are akin to those of the `date` function
+     *  Except that a percent (`%`) symbol is used to denote them
+     *  Only a select subset of applicable symbols are available
+     *
      * Units:
      * - %r: sign (only shown if negative)
      * - %y: years
@@ -304,7 +308,7 @@ class Timespan implements TimeWrapper, Stringable {
      * - %i: minutes
      * - %s: seconds
      *
-     * @param string $format specify desired units
+     * @param string $format string template with symbols as placeholders to be filled
      *
      * @return string formatted timespan string
      */
