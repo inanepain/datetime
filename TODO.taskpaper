@@ -1,5 +1,5 @@
 Inane\Datetime:
-	website: http://vaieen.local:3000/inane/datetime
+	website: https://github.com/inanepain/datetime
 	- Create an Interface for Time classes
 	DatetimeInterface:
 		- Use interface for types
