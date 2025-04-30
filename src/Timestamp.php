@@ -5,7 +5,7 @@
  *
  * Inane Datetime Library
  *
- * PHP version 8.1
+ * PHP version 8.4
  *
  * @author Philip Michael Raab<peep@inane.co.za>
  * @package Inane\Datetime

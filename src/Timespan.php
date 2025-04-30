@@ -5,7 +5,7 @@
  *
  * Inane Datetime Library
  *
- * PHP version 8.1
+ * PHP version 8.4
  *
  * @author Philip Michael Raab<peep@inane.co.za>
  * @package Inane\Datetime
@@ -57,7 +57,7 @@ use const null;
  *
  * @package Inane\Datetime
  *
- * @version 0.3.1
+ * @version 0.4.0
  */
 class Timespan implements TimeWrapper, Stringable {
     /**
@@ -101,6 +101,10 @@ class Timespan implements TimeWrapper, Stringable {
         's' => ['symbols' => ['seconds', 'second', 's', 'secs', 'sec'], 'value'=> 1],
     ];
 
+    /**
+     * Uses the TimeTrait to provide additional functionality
+     * related to time operations within the Timespan class.
+     */
     use TimeTrait;
 
     /**

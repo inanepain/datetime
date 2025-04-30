@@ -5,7 +5,7 @@
  *
  * Inane Datetime Library
  *
- * PHP version 8.1
+ * PHP version 8.4
  *
  * @author Philip Michael Raab<peep@inane.co.za>
  * @package Inane\Datetime
@@ -21,6 +21,13 @@
 declare(strict_types=1);
 
 namespace Inane\Datetime;
+
+use function intval;
+use function str_pad;
+use function strlen;
+use function strval;
+
+use const STR_PAD_RIGHT;
 
 /**
  * TimeTrait
@@ -72,7 +79,7 @@ trait TimeTrait {
         set(?int $value) {
             if ($value === null) $value = Timescale::MICROSECOND->timestamp();
             if (strlen(strval($value)) < 16)
-                $value = intval(str_pad(strval($value), 16, '0', \STR_PAD_RIGHT));
+                $value = intval(str_pad(strval($value), 16, '0', STR_PAD_RIGHT));
 
             $this->microseconds = $value;
         }

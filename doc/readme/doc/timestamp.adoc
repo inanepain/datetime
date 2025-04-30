@@ -1,19 +1,27 @@
 = Timestamp
 :author: Philip Michael Raab
-:email: <peep@inane.co.za>
-:revnumber: 0.1.1
-:revdate: 2022-10-14
+:email: <philip@cathedral.co.za>
+:keywords: datetime, date, time, timespan, timestamp, duration
+:revnumber: 0.4.0
+:revdate: 2025-04-30
+:copyright: Unlicense
 :experimental:
+:hide-uri-scheme:
 :icons: font
 :source-highlighter: highlight.js
 :sectnums: |,all|
 :toc: auto
+:sectanchors:
 
 The `Timestamp` *class* is a truly simple wrapper for an *epoch timestamp*. It's mainly useful when used in combination with a link:timespan.adoc[`Timespan`] to do chained date calculations and then displaying the formatted result. Essentially it saves typing a few lines of code here and there and I think it looks a tad neater too. The original bit of code was primarily used as a convenience class to easily switch between various date and time structures.
 
 Nuff said, here comes it's breakdown.
 
 <<<
+
+== Properties
+
+include::timetrait.adoc[tag=traitProperties,leveloffset=+1]
 
 == Methods
 

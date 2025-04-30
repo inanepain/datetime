@@ -5,7 +5,7 @@
  *
  * Inane Datetime Library
  *
- * PHP version 8.1
+ * PHP version 8.4
  *
  * @author Philip Michael Raab<peep@inane.co.za>
  * @package Inane\Datetime
@@ -24,49 +24,66 @@ namespace Inane\Datetime;
 
 use Inane\Stdlib\Enum\CoreEnumInterface;
 
+use Inane\Stdlib\Enum\CoreEnumTrait;
 use function intval;
 use function microtime;
-use function strcasecmp;
+use function preg_match;
+use function strlen;
 
 use const false;
+use const null;
 use const true;
 
 /**
- * TimeScale
+ * Enum Timescale
  *
- * @package Inane\Datetime
+ * Represents a timescale with integer values.
+ * This enum implements the `CoreEnumInterface`, providing additional functionality for working with enumerated types.
+ *
+ * @package inanepain\datetime
  *
  * @version 0.1.0
  */
 enum Timescale: int implements CoreEnumInterface {
-/**
-     * Represents the time scale in microseconds.
+
+    /**
+     * Represents the timescale unit for microseconds.
+     *
+     * This constant is used to define a precision level of 16,
+     * corresponding to microsecond-level granularity in time measurement.
      */
     case MICROSECOND = 16;
-/**
-     * Represents the millisecond time scale.
+
+    /**
+     * Represents the millisecond timescale.
+     *
+     * This constant is used to define a timescale with a precision of milliseconds.
+     */
+    /**
+     * Represents the timescale unit for milliseconds.
+     *
+     * This constant is used to define a precision level of 13,
+     * corresponding to millisecond-level granularity in time measurement.
      */
     case MILLISECOND = 13;
-/**
-     * Represents a time scale measured in seconds.
+
+    /**
+     * Represents the timescale unit for seconds.
+     *
+     * This constant is used to define a precision level of 10,
+     * corresponding to second-level granularity in time measurement.
      */
     case SECOND = 10;
 
     /**
-     * Example implementation: Try get enum from name
+     * This file is part of the inanepain datetime library.
      *
-     * @param string $name       enum name
-     * @param bool   $ignoreCase case insensitive option
+     * It includes the usage of the CoreEnumTrait, which provides
+     * additional functionality or behavior to the Timescale class.
      *
-     * @return null|static
+     * @uses CoreEnumTrait
      */
-    public static function tryFromName(string $name, bool $ignoreCase = false): ?static {
-        foreach (static::cases() as $case)
-            if (($ignoreCase && strcasecmp($case->name, $name) == 0) || $case->name === $name)
-                return $case;
-
-        return null;
-    }
+    use CoreEnumTrait;
 
     /**
      * Attempts to determine the time scale of the given timestamp.
@@ -79,7 +96,7 @@ enum Timescale: int implements CoreEnumInterface {
         if ($timestamp instanceof Timestamp)
             $timestamp = $timestamp->microseconds;
 
-        $timestamp = (string)$timestamp;
+        $timestamp = (string) $timestamp;
         $length = strlen($timestamp);
 
         switch ($length) {
@@ -105,9 +122,12 @@ enum Timescale: int implements CoreEnumInterface {
     }
 
     /**
-     * Creates a timestamp based on the current time scale.
+     * Retrieves the current timestamp at the current scale.
      *
-     * @return int|Timestamp The generated timestamp as an integer.
+     * @param bool $asObject If *true*, returns the timestamp as a `Timestamp` object.
+     *                       If *false*, returns the timestamp as an integer.
+     *
+     * @return int|Timestamp The current timestamp, either as an integer or a `Timestamp` object.
      */
     public function timestamp(bool $asObject = false): int|Timestamp {
         $ts = match ($this) {
@@ -119,6 +139,11 @@ enum Timescale: int implements CoreEnumInterface {
         return $asObject ? new Timestamp($ts) : $ts;
     }
 
+    /**
+     * Retrieves the unit of time as a string.
+     *
+     * @return string The unit of time.
+     */
     public function unit(): string {
         return match ($this) {
             self::MICROSECOND => 'microseconds',

@@ -1,0 +1,73 @@
+= Datetime
+:author: Philip Michael Raab
+:email: <philip@cathedral.co.za>
+:keywords: datetime, date, time, timespan, timestamp, duration
+:revnumber: 0.4.0
+:revdate: 2025-04-30
+:copyright: Unlicense
+:experimental:
+:hide-uri-scheme:
+:icons: font
+:source-highlighter: highlight.js
+:toc: auto
+:sectanchors:
+
+version: $Id$ ($Date$)
+
+Things to help you bend space and time to your will. Or at least do some calculations with it.
+
+.Interfaces
+* <<TimeWrapper>>
+
+.Traits
+* <<Timescale>>
+
+.Enums
+* <<TimeTrait>>
+
+.Classes
+ - <<Timespan>>
+ - <<Timestamp>>
+
+== Install
+
+[source,shell]
+----
+$ composer require inanepain/datetime
+----
+
+<<<
+
+== Datetime
+:sectnums:
+:view-mode: project
+
+This is meant as more of an introduction to the various classes, interfaces, enums and anything else found in the `Inane\Datetime` namespace and not an in-depth guide.
+
+<<<
+
+* link:doc/timewrapper.adoc[timewrapper]
+* link:doc/timetrait.adoc[timetrait]
+* link:doc/timescale.adoc[timescale]
+* link:doc/timespan.adoc[timespan]
+* link:doc/timestamp.adoc[timestamp]
+
+<<<
+
+include::./doc/timewrapper.adoc[leveloffset=+2]
+
+<<<
+
+include::./doc/timetrait.adoc[leveloffset=+2]
+
+<<<
+
+include::./doc/timescale.adoc[leveloffset=+2]
+
+<<<
+
+include::./doc/timespan.adoc[leveloffset=+2]
+
+<<<
+
+include::./doc/timestamp.adoc[leveloffset=+2]

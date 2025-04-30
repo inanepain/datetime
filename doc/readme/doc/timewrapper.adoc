@@ -1,14 +1,18 @@
 = TimeWrapper
 :author: Philip Michael Raab
-:email: <peep@inane.co.za>
+:email: <philip@cathedral.co.za>
+:keywords: datetime, date, time, timespan, timestamp, duration
 :revnumber: 0.2.0
 :revdate: 2022-10-14
+:copyright: Unlicense
 :experimental:
+:hide-uri-scheme:
 :table-stripes: even
 :icons: font
 :source-highlighter: highlight.js
 :sectnums: |,all|
 :toc: auto
+:sectanchors:
 
 The `TimeWrapper` *interface* implemented by link:timespan.adoc[`Timespan`] and link:timestamp.adoc[`Timestamp`] (possibly more to come), started more as a convenience than actually any real requirement. Soon after implementing this interface the usage of the `Datetime` classes increased, thanks to the greater interoperability they had acquired. This in turn resulted in them quickly evolving from the skinny classes they were to what they are now, skinny but with some meat on them. Enough rambling and there's nothing left to say about it anyway.
 
@@ -16,7 +20,7 @@ The `TimeWrapper` *interface* implemented by link:timespan.adoc[`Timespan`] and 
 
 == Interface Methods
 
-# tag::interfaceMethods[]
+// tag::interfaceMethods[]
 
 There are _three_ *interface* methods shared by `Datetime`` classes:
 
@@ -25,7 +29,7 @@ There are _three_ *interface* methods shared by `Datetime`` classes:
 * public function format(string $format = 'Y-m-d H:i:s'): string
 * public function absoluteCopy(): Timestamp
 
-# end::interfaceMethods[]
+// end::interfaceMethods[]
 
 === getSeconds: int
 
@@ -45,7 +49,6 @@ Used to get the object as a string using a custom format pattern. The actual imp
 
 * `Timestamp`: `\DateTimeInterface::format()`
 * `Timespan`: `\DateTimeInterface::format()`
-
 
 The method uses the same formatting pattern as `date` and `DateTime`, as well as numerous other php functions, to return a string representation of the object.
 

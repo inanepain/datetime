@@ -22,8 +22,8 @@
 
 * new: `Timestamp` now stores the time as a microsecond timestamp
 * new: `Timestamp` has new *readonly* properties for: *seconds*, *milliseconds*, *microseconds*
-* new: `Timescale` enum for time scale units
-* new: `TimeTrait` common methods for time unit classes
+* new: `Timescale` enum for timestamp precision: seconds, milliseconds, microseconds
+* new: `TimeTrait` common methods for time classes
 * minor bugfixes and improvements to code and documentation
 
 === 0.3.1 (2022 Nov 09)
