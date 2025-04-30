@@ -1,17 +1,30 @@
 = Changelog: Datetime
 :author: Philip Michael Raab
-:email: <peep@inane.co.za>
+:email: <philip@cathedral.co.za>
 :revnumber: 0.3.1
-:revdate: 2022-11-09
+:revdate: 2025-04-30
 :revremark: release
+:version-label: dev
+:copyright: Unlicense
+:keywords: inane, datetime, date, time, timespan, timestamp, duration, timescale
 :experimental:
+:hide-uri-scheme:
 :icons: font
 :source-highlighter: highlight.js
 :toc: auto
+:sectanchors:
 
  version: $Id$ ($Date$)
 
 == History
+
+=== 0.4.0-dev (2025 Apr xx)
+
+* new: `Timestamp` now stores the time as a microsecond timestamp
+* new: `Timestamp` has new *readonly* properties for: *seconds*, *milliseconds*, *microseconds*
+* new: `Timescale` enum for time scale units
+* new: `TimeTrait` common methods for time unit classes
+* minor bugfixes and improvements to code and documentation
 
 === 0.3.1 (2022 Nov 09)
 

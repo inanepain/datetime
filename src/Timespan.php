@@ -25,6 +25,7 @@ namespace Inane\Datetime;
 use DateInterval;
 use Stringable;
 
+use function abs;
 use function array_combine;
 use function array_fill;
 use function array_filter;
@@ -43,8 +44,10 @@ use function is_numeric;
 use function is_string;
 use function preg_match_all;
 use function preg_replace;
+use function str_replace;
 use function str_split;
 use function str_starts_with;
+
 use const null;
 
 /**
@@ -54,27 +57,37 @@ use const null;
  *
  * @package Inane\Datetime
  *
- * @version 0.3.0
+ * @version 0.3.1
  */
 class Timespan implements TimeWrapper, Stringable {
     /**
      * Single character symbol
+     *
+     * @var int
      */
-    public const SYMBOL_CHAR = 0;
+    public const int SYMBOL_CHAR = 0;
 
     /**
      * Abbreviated symbol
      *  In some cases this is the full symbol
+     *
+     * @var int
      */
-    public const SYMBOL_ABBREVIATED = 1;
+    public const int SYMBOL_ABBREVIATED = 1;
 
     /**
      * Symbol word
+     *
+     * @var int
      */
-    public const SYMBOL_WORD = 2;
+    public const int SYMBOL_WORD = 2;
 
     /**
      * Time period units (symbols and values)
+     *
+     * The $units data defines how to parse a duration string
+     *  first by the unit symbol, which tells us what to look for
+     *  then by the unit value, which gives us the units second value
      *
      * @var array
      */
@@ -87,6 +100,8 @@ class Timespan implements TimeWrapper, Stringable {
         'i' => ['symbols' => ['minutes', 'minute', 'i', 'mins', 'min'], 'value'=> 60],
         's' => ['symbols' => ['seconds', 'second', 's', 'secs', 'sec'], 'value'=> 1],
     ];
+
+    use TimeTrait;
 
     /**
      * Timespan constructor
@@ -194,7 +209,7 @@ class Timespan implements TimeWrapper, Stringable {
         foreach ($r as $u => $a)
             $s += static::$units[$u]['value'] * $a;
 
-        return $s * $invert;
+        return intval($s * $invert);
     }
 
     /**
@@ -205,7 +220,7 @@ class Timespan implements TimeWrapper, Stringable {
      * symbol format 0: char
      *
      * @param int $timespan seconds
-     * @param bool $symbolFormat unit symbol character, abbreviation, word
+     * @param int $symbolFormat unit symbol character, abbreviation, word
      * @param array $units array of units to include in duration, single char to be used
      *
      * @return string duration
@@ -219,7 +234,9 @@ class Timespan implements TimeWrapper, Stringable {
 
         $r = [];
         if ($timespan < 0) {
-            $timespan = $timespan * -1;
+            dd('$timespan = $timespan * -1', 'Testing Code');
+            // $timespan = $timespan * -1;
+            $timespan *= -1;
             $r[] = '-';
         }
 
@@ -229,7 +246,8 @@ class Timespan implements TimeWrapper, Stringable {
             $a = intval($timespan / $u['value']);
             if ($a > 0) {
                 $r[] = "$a" . static::getUnitSymbol($a == 1, $symbolFormat, $u['symbols']);
-                $timespan = $timespan % $u['value'];
+                // $timespan = $timespan % $u['value'];
+                $timespan %= $u['value'];
             }
         }
 
@@ -285,8 +303,7 @@ class Timespan implements TimeWrapper, Stringable {
      * @return string duration
      */
     public function duration(string $units = 'ymdhis'): string {
-        if (empty($units)) $units = ['y','m','d','h','i','s'];
-        else $units = str_split($units);
+        $units = empty($units) ? ['y','m','d','h','i','s'] : str_split($units);
 
         return static::ts2dur($this->timespan, $this->symbolFormat, $units);
     }
@@ -317,7 +334,7 @@ class Timespan implements TimeWrapper, Stringable {
         $r['r'] = $r['r'] < 0 ? '-' : '';
 
         foreach($r as $u => $v)
-            $format = \str_replace("%$u", "$v", $format);
+            $format = str_replace("%$u", "$v", $format);
 
         return $format;
     }
@@ -353,7 +370,7 @@ class Timespan implements TimeWrapper, Stringable {
         if (is_null($timestamp)) $timestamp = new Timestamp();
         else if (is_int($timestamp)) $timestamp = new Timestamp($timestamp);
 
-        $timestamp->adjust($this->timespan);
+        $timestamp->adjust($this);
 
         return $timestamp;
     }
