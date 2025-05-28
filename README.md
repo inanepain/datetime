@@ -1,23 +1,9 @@
+# 
+
 version: $Id$ ($Date$)
 
 Things to help you bend space and time to your will. Or at least do some
 calculations with it.
-
--   [TimeWrapper](#_timewrapper)
-
-<!-- -->
-
--   [Timescale](#_timescale)
-
-<!-- -->
-
--   [???](#TimeTrait)
-
-<!-- -->
-
--   [Timespan](#_timespan)
-
--   [Timestamp](#_timestamp)
 
 # Install
 
@@ -29,45 +15,62 @@ This is meant as more of an introduction to the various classes,
 interfaces, enums and anything else found in the `Inane\Datetime`
 namespace and not an in-depth guide.
 
--   [timewrapper](doc/timewrapper.adoc)
+Interfaces
 
--   [timetrait](doc/timetrait.adoc)
+- [TimeWrapper](#topic-timewrapper)
 
--   [timescale](doc/timescale.adoc)
+Traits
 
--   [timespan](doc/timespan.adoc)
+- [Timescale](#topic-timescale)
 
--   [timestamp](doc/timestamp.adoc)
+Enums
+
+- [TimeTrait](#topic-timetrait)
+
+Classes
+
+- [Timespan](#topic-timespan)
+
+- [Timestamp](#topic-timestamp)
 
 ## TimeWrapper
 
-The `TimeWrapper` **interface** implemented by
+The `TimeWrapper TimeWrapper` **<span class="indexterm"
+primary="interface"></span>interface** implemented by
 [`Timespan`](timespan.adoc) and [`Timestamp`](timestamp.adoc) (possibly
 more to come), started more as a convenience than actually any real
 requirement. Soon after implementing this interface the usage of the
-`Datetime` classes increased, thanks to the greater interoperability
-they had acquired. This in turn resulted in them quickly evolving from
-the skinny classes they were to what they are now, skinny but with some
-meat on them. Enough rambling and there’s nothing left to say about it
-anyway.
+`Datetime Datetime` classes increased, thanks to the greater
+interoperability they had acquired. This in turn resulted in them
+quickly evolving from the skinny classes they were to what they are now,
+skinny but with some meat on them. Enough rambling and there’s nothing
+left to say about it anyway.
 
 ### Interface Methods
 
-There are *three* **interface** methods shared by `` Datetime` ``
-classes:
+There are *three* **interface** methods shared by
+`` Datetime Datetime` `` classes:
 
--   public function getSeconds(): int
+<span class="indexterm" primary="method"
+secondary="interface"></span>interface methods
 
--   public function format(string $format = 'Y-m-d H:i:s'): string
+- <span class="indexterm" primary="TimeWrapper"
+  secondary="getSeconds"></span>public function getSeconds(): int
 
--   public function absoluteCopy(): Timestamp
+- <span class="indexterm" primary="TimeWrapper"
+  secondary="format"></span>public function format(string $format =
+  'Y-m-d H:i:s'): string
+
+- <span class="indexterm" primary="TimeWrapper"
+  secondary="absoluteCopy"></span>public function absoluteCopy():
+  Timestamp
 
 #### getSeconds: int
 
 At the core it’s all numbers and for these numbers it’s the seconds
 returned by this method.
 
-**method: getSeconds**
+method: getSeconds
 
     public function getSeconds(): int;
 
@@ -78,15 +81,15 @@ actual implementations may use different format options best suited to
 the type of data they contain. Where possible patterns mimic existing
 php patterns.
 
--   `Timestamp`: `\DateTimeInterface::format()`
+- `Timestamp`: `\DateTimeInterface::format()`
 
--   `Timespan`: `\DateTimeInterface::format()`
+- `Timespan`: `\DateTimeInterface::format()`
 
 The method uses the same formatting pattern as `date` and `DateTime`, as
 well as numerous other php functions, to return a string representation
 of the object.
 
-**method: format**
+method: format
 
     public function format(string $format = ''): string;
 
@@ -94,162 +97,163 @@ of the object.
 
 Get a copy of the object with an absolute value.
 
-**method: absoluteCopy**
+method: absoluteCopy
 
-    public function absoluteCopy(): TimeWrapper;
+    public function absoluteCopy(): ((TimeWrapper));
 
 ### Format
 
-A subset of format options commonly used by `Datetime` classes.
+A subset of format options commonly used by `Datetime Datetime` classes.
 
 <table>
-<caption>Format Subset</caption>
+<caption><span class="indexterm"
+data-primary="format string"></span>Format Subset</caption>
 <colgroup>
 <col style="width: 33%" />
 <col style="width: 33%" />
 <col style="width: 33%" />
 </colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th style="text-align: left;">format character</th>
 <th style="text-align: left;">Description</th>
 <th style="text-align: left;">Example returned values</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td style="text-align: left;"><p><strong>Day</strong></p></td>
 <td style="text-align: left;"><p><strong>---</strong></p></td>
 <td style="text-align: left;"><p><strong>---</strong></p></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;"><p>d</p></td>
 <td style="text-align: left;"><p>Day of the month, 2 digits with leading
 zeros</p></td>
 <td style="text-align: left;"><p>01 to 31</p></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;"><p>D</p></td>
 <td style="text-align: left;"><p>A textual representation of a day,
 three letters</p></td>
 <td style="text-align: left;"><p>Mon through Sun</p></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;"><p>j</p></td>
 <td style="text-align: left;"><p>Day of the month without leading
 zeros</p></td>
 <td style="text-align: left;"><p>1 to 31</p></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;"><p>l (lowercase 'L')</p></td>
 <td style="text-align: left;"><p>A full textual representation of the
 day of the week</p></td>
 <td style="text-align: left;"><p>Sunday through Saturday</p></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;"><p><strong>Month</strong></p></td>
 <td style="text-align: left;"><p><strong>---</strong></p></td>
 <td style="text-align: left;"><p><strong>---</strong></p></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;"><p>F</p></td>
 <td style="text-align: left;"><p>A full textual representation of a
 month</p></td>
 <td style="text-align: left;"><p>January through December</p></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;"><p>m</p></td>
 <td style="text-align: left;"><p>Numeric representation of a month, with
 leading zeros</p></td>
 <td style="text-align: left;"><p>01 through 12</p></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;"><p>M</p></td>
 <td style="text-align: left;"><p>A three letter textual representation
 of a month</p></td>
 <td style="text-align: left;"><p>Jan through Dec</p></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;"><p>n</p></td>
 <td style="text-align: left;"><p>Numeric representation of a month, no
 leading zeros</p></td>
 <td style="text-align: left;"><p>1 through 12</p></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;"><p><strong>Year</strong></p></td>
 <td style="text-align: left;"><p><strong>---</strong></p></td>
 <td style="text-align: left;"><p><strong>---</strong></p></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;"><p>Y</p></td>
 <td style="text-align: left;"><p>Full numeric year, at least 4 digits, -
 for years BCE</p></td>
 <td style="text-align: left;"><p>Examples: -0055, 0787, 1999, 2003,
 10191</p></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;"><p><strong>Time</strong></p></td>
 <td style="text-align: left;"><p><strong>---</strong></p></td>
 <td style="text-align: left;"><p><strong>---</strong></p></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;"><p>a</p></td>
 <td style="text-align: left;"><p>Lowercase Ante meridiem and Post
 meridiem</p></td>
 <td style="text-align: left;"><p>am or pm</p></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;"><p>A</p></td>
 <td style="text-align: left;"><p>Uppercase Ante meridiem and Post
 meridiem</p></td>
 <td style="text-align: left;"><p>AM or PM</p></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;"><p>g</p></td>
 <td style="text-align: left;"><p>12-hour format of an hour without
 leading zeros</p></td>
 <td style="text-align: left;"><p>1 through 12</p></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;"><p>G</p></td>
 <td style="text-align: left;"><p>24-hour format of an hour without
 leading zeros</p></td>
 <td style="text-align: left;"><p>0 through 23</p></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;"><p>h</p></td>
 <td style="text-align: left;"><p>12-hour format of an hour with leading
 zeros</p></td>
 <td style="text-align: left;"><p>01 through 12</p></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;"><p>H</p></td>
 <td style="text-align: left;"><p>24-hour format of an hour with leading
 zeros</p></td>
 <td style="text-align: left;"><p>00 through 23</p></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;"><p>i</p></td>
 <td style="text-align: left;"><p>Minutes with leading zeros</p></td>
 <td style="text-align: left;"><p>00 to 59</p></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;"><p>s</p></td>
 <td style="text-align: left;"><p>Seconds with leading zeros</p></td>
 <td style="text-align: left;"><p>00 through 59</p></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;"><p><strong>Full
 date/time</strong></p></td>
 <td style="text-align: left;"><p><strong>---</strong></p></td>
 <td style="text-align: left;"><p><strong>---</strong></p></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;"><p>c</p></td>
 <td style="text-align: left;"><p>ISO 8601 date</p></td>
 <td style="text-align: left;"><p>2004-02-12T15:19:21+00:00</p></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;"><p>r</p></td>
 <td style="text-align: left;"><p>» RFC 2822/» RFC 5322 formatted
 date</p></td>
@@ -259,22 +263,29 @@ date</p></td>
 </tbody>
 </table>
 
-Format Subset
+## TimeTrait
 
-## Timetrait
-
-The `TimesTrait` **trait** simple addes some properties for the three
-timestamps: **seconds**, **milliseconds** and **microseconds**.
+The `TimeTrait TimeTrait` **<span class="indexterm"
+primary="trait"></span>trait** simple adds some properties for the three
+timestamps: **<span class="indexterm"
+primary="seconds"></span>seconds**, **<span class="indexterm"
+primary="milliseconds"></span>milliseconds** and
+**<span class="indexterm" primary="microseconds"></span>microseconds**.
 
 ### Properties
 
 There are *three* **properties** added by `TimeTrait`:
 
--   public private(set) int $seconds
+trait <span class="indexterm" primary="properties"></span>properties
 
--   public private(set) int $milliseconds
+- <span class="indexterm" primary="Timescale"
+  secondary="seconds"></span>public private(set) int $seconds
 
--   public private(set) int $microseconds
+- <span class="indexterm" primary="Timescale"
+  secondary="milliseconds"></span>public private(set) int $milliseconds
+
+- <span class="indexterm" primary="Timescale"
+  secondary="microseconds"></span>public private(set) int $microseconds
 
 Only `$microseconds` actually stores a value while the `$milliseconds`
 and `$seconds` calculate their value from it.
@@ -283,7 +294,7 @@ and `$seconds` calculate their value from it.
 
 Returns a timestamp the has 10 digits.
 
-**example**
+example
 
     1746045170
 
@@ -291,7 +302,7 @@ Returns a timestamp the has 10 digits.
 
 Returns a timestamp the has 13 digits.
 
-**example**
+example
 
     1746045170733
 
@@ -299,59 +310,92 @@ Returns a timestamp the has 13 digits.
 
 Returns a timestamp the has 16 digits.
 
-**example**
+example
 
     1746045170733444
 
 ## Timescale
 
-The `Timescale` **enum** simply defines three **timestamps** of various
-length: **seconds** (10 digits), **milliseconds** (13 digits) and
-**microseconds** (16 digits).
+The `Timescale Timescale` **<span class="indexterm"
+primary="enum"></span>enum** simply defines three
+**<span class="indexterm" primary="timestamps"></span>timestamps** of
+various length: **<span class="indexterm"
+primary="seconds"></span>seconds** (10 digits),
+**<span class="indexterm" primary="milliseconds"></span>milliseconds**
+(13 digits) and **<span class="indexterm"
+primary="microseconds"></span>microseconds** (16 digits).
 
 ### Cases
 
--   SECOND
+- <span class="indexterm" primary="unit"
+  secondary="seconds"></span>SECOND
 
-    -   10 digits
+  - 10 digits
 
--   MILLISECOND
+- <span class="indexterm" primary="unit"
+  secondary="milliseconds"></span>MILLISECOND
 
-    -   13 digits
+  - 13 digits
 
--   MICROSECOND
+- <span class="indexterm" primary="unit"
+  secondary="microseconds"></span>MICROSECOND
 
-    -   16 digits
+  - 16 digits
 
 ### Methods
 
--   public static function **tryFromName**(string $name, bool
-    $ignoreCase = false): ?static
+<span class="indexterm" primary="method" secondary="class"></span>class
+methods
 
--   public static function **tryFromTimestamp**(int|Timestamp
-    $timestamp): ?Timescale
+- <span class="indexterm" primary="Timescale"
+  secondary="tryFromName"></span>public static function
+  **tryFromName**(string $name, bool $ignoreCase = false): ?static
 
-<!-- -->
+- <span class="indexterm" primary="Timescale"
+  secondary="tryFromTimestamp"></span>public static function
+  **tryFromTimestamp**(int|Timestamp $timestamp): ?Timescale
 
--   public function **timestamp**(bool $asObject = false): int|Timestamp
+<span class="indexterm" primary="method"
+secondary="instance"></span>instance methods
 
--   public function **unit**(): string
+- <span class="indexterm" primary="Timescale"
+  secondary="timestamp"></span>public function **timestamp**(bool
+  $asObject = false): int|Timestamp
+
+- <span class="indexterm" primary="Timescale"
+  secondary="unit"></span>public function **unit**(): string
 
 ## Timespan
 
-The `Timespan` **class** represents a *timespan* or
-*duration*(fn-duration) which is essentially a number of seconds. As
-with most things, seconds can be expressed in various formats to suite
-the situation, for instance `5400` and `2years 3d 7secs`, `Timespan`
-makes this easy for you.
+The `Timespan Timespan` **<span class="indexterm"
+primary="class"></span>class** represents a *timespan* or
+*<span class="indexterm"
+primary="duration"></span>duration*(fn-duration) which is essentially a
+number of seconds. As with most things, seconds can be expressed in
+various formats to suite the situation, for instance `5400` and
+`2years 3d 7secs`, `Timespan` makes this easy for you.
 
 Quickly get a *moment*[1] in the *future* or *past* by **adding** or
 **subtracting** a `Timespan` from a [`Timestamp`](timestamp.adoc).
 Working together these two classes have you covered in the *past*,
 *present*, *future* or anytime in *between*.
 
-The Timespan as is a period of time or duration and a Timestamp[2] is a
-moment or point in time.
+The Timespan as is a <span class="indexterm"
+primary="period"></span>period of time or <span class="indexterm"
+primary="duration"></span>duration and a Timestamp[2] is a moment or
+point in time.
+
+### Notes on Methods
+
+The methods `format` and `getDuration` are similar but there are bigger
+differences between the two than that `format` allows for a far great
+level of customising the output string. The main difference is a big one
+with far-reaching consequences if not understood correctly. The `format`
+method is a pure display method that will only substitute existing
+values into the template string. Hence, all it takes as a parameter is
+the template string. The `duration` method calculates the duration using
+the supplied unit of measurement. The only formatting options it has is
+weather to show the unit of time: character, abbreviated, word.
 
 ### Moments and Durations
 
@@ -370,24 +414,24 @@ A length of time, like **5 minutes** which is the same as a **timespan
 <col style="width: 50%" />
 </colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th style="text-align: left;">Name</th>
 <th style="text-align: left;">Type</th>
 <th style="text-align: left;">Example</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td style="text-align: left;"><p>timespan</p></td>
 <td style="text-align: left;"><p>int (seconds)</p></td>
 <td style="text-align: left;"><p><code>5400</code></p></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;"><p>duration</p></td>
 <td style="text-align: left;"><p>string</p></td>
 <td style="text-align: left;"><p><code>2years 3d 7secs</code></p></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;"><p>DateInterval</p></td>
 <td style="text-align: left;"><p>class</p></td>
 <td
@@ -395,8 +439,6 @@ style="text-align: left;"><p><code>new DateInterval('PT300S')`</code></p></td>
 </tr>
 </tbody>
 </table>
-
-Supported Time Durations
 
 #### Moments in Time
 
@@ -414,25 +456,25 @@ also a **duration**, the number of seconds since the **epoch** (**0**).
 <col style="width: 50%" />
 </colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th style="text-align: left;">Name</th>
 <th style="text-align: left;">Type</th>
 <th style="text-align: left;">Example</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td style="text-align: left;"><p>timestamp</p></td>
 <td style="text-align: left;"><p>seconds</p></td>
 <td style="text-align: left;"><p><code>236988000</code></p></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: left;"><p>formatted date</p></td>
 <td style="text-align: left;"><p>string</p></td>
 <td
 style="text-align: left;"><p><code>06 July 1977 12:00:00 AM SAST</code></p></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: left;"><p>DateTime(Immutable)</p></td>
 <td style="text-align: left;"><p>class</p></td>
 <td
@@ -441,11 +483,9 @@ style="text-align: left;"><p><code>new DateTime('NOW')</code></p></td>
 </tbody>
 </table>
 
-Supported Date Times
+### <span class="indexterm" primary="example" secondary="Timespan"></span>Examples
 
-### Examples
-
-**example**
+example
 
     // Create with current seconds since epoch
     $epoch = new \Inane\Datetime\Timespan(time());
@@ -485,7 +525,8 @@ Supported Date Times
 
 ## Timestamp
 
-The `Timestamp` **class** is a truly simple wrapper for an **epoch
+The `Timestamp Timestamp` **<span class="indexterm"
+primary="class"></span>class** is a truly simple wrapper for an **epoch
 timestamp**. It’s mainly useful when used in combination with a
 [`Timespan`](timespan.adoc) to do chained date calculations and then
 displaying the formatted result. Essentially it saves typing a few lines
@@ -493,47 +534,72 @@ of code here and there and I think it looks a tad neater too. The
 original bit of code was primarily used as a convenience class to easily
 switch between various date and time structures.
 
-Nuff said, here comes it’s breakdown.
+Enough chatter, here comes it’s breakdown.
 
 ### Properties
 
 There are *three* **properties** added by `TimeTrait`:
 
--   public private(set) int $seconds
+trait <span class="indexterm" primary="properties"></span>properties
 
--   public private(set) int $milliseconds
+- <span class="indexterm" primary="Timescale"
+  secondary="seconds"></span>public private(set) int $seconds
 
--   public private(set) int $microseconds
+- <span class="indexterm" primary="Timescale"
+  secondary="milliseconds"></span>public private(set) int $milliseconds
+
+- <span class="indexterm" primary="Timescale"
+  secondary="microseconds"></span>public private(set) int $microseconds
 
 Only `$microseconds` actually stores a value while the `$milliseconds`
 and `$seconds` calculate their value from it.
 
 ### Methods
 
-There are *three* **interface** methods shared by `` Datetime` ``
-classes:
+There are *three* **interface** methods shared by
+`` Datetime Datetime` `` classes:
 
--   public function getSeconds(): int
+<span class="indexterm" primary="method"
+secondary="interface"></span>interface methods
 
--   public function format(string $format = 'Y-m-d H:i:s'): string
+- <span class="indexterm" primary="TimeWrapper"
+  secondary="getSeconds"></span>public function getSeconds(): int
 
--   public function absoluteCopy(): Timestamp
+- <span class="indexterm" primary="TimeWrapper"
+  secondary="format"></span>public function format(string $format =
+  'Y-m-d H:i:s'): string
+
+- <span class="indexterm" primary="TimeWrapper"
+  secondary="absoluteCopy"></span>public function absoluteCopy():
+  Timestamp
 
 And *six* class methods.
 
--   public function \_\_construct(?int $timestamp = null)
+<span class="indexterm" primary="method" secondary="class"></span>class
+methods
 
--   public static function createFromFormat(string $format, string
-    $datetime): static|false
+- <span class="indexterm" primary="Timestamp"
+  secondary="construct"></span>public function \_\_construct(?int
+  $timestamp = null)
 
--   public static function now(): int
+- <span class="indexterm" primary="Timestamp"
+  secondary="createFromFormat"></span>public static function
+  createFromFormat(string $format, string $datetime): static|false
 
--   public function getDateTime(bool $immutable = false):
-    DateTime|DateTimeImmutable
+- <span class="indexterm" primary="Timestamp"
+  secondary="now"></span>public static function now(): int
 
--   public function adjust(int|Timespan $timespan): self
+- <span class="indexterm" primary="Timestamp"
+  secondary="getDateTime"></span>public function getDateTime(bool
+  $immutable = false): DateTime|DateTimeImmutable
 
--   public function diff(int|Timestamp $timestamp): Timespan
+- <span class="indexterm" primary="Timestamp"
+  secondary="adjust"></span>public function adjust(int|Timespan
+  $timespan): self
+
+- <span class="indexterm" primary="Timestamp"
+  secondary="diff"></span>public function diff(int|Timestamp
+  $timestamp): Timespan
 
 #### Create / New
 
@@ -542,64 +608,70 @@ In addition to instantiating a `Timestamp` using `new` the static method
 The constructor only takes a unix timestamp, for all other values the
 create method is used.
 
-**Creating Timestamps: default and custom values.**
+<span class="indexterm" primary="example"
+secondary="Timestamp"></span>Creating Timestamps: default and custom
+values.
 
     $now = new Timestamp(); 
     $then = Timestamp::createFromFormat('g:ia \o\n l jS F Y', '12:00am on Wednesday 6th July 1977');
 
--   creating a new Timestamp without any parameters uses the current
-    unix time
+- creating a new Timestamp without any parameters uses the current unix
+  time
 
 #### Get / Show
 
 Once you have a Timestamp it’s easy to retrieve the date as various
 types that best suite the situation.
 
--   string
+datetime types
 
--   int
+- string
 
--   DateTime/DateTimeImmutable
+- int
 
-**Getting values to work with or display.**
+- DateTime/DateTimeImmutable
+
+<span class="indexterm" primary="example"
+secondary="Timestamp"></span>Getting values to work with or display.
 
     $user->setAnniversary($then->getSeconds()); 
     echo "The time between $now and $then.", PHP_EOL; 
     $tokyoTime = $now->getDateTime()->setTimezone($timeZone); 
 
--   Add to entity as int to store in database
+- Add to entity as int to store in database
 
--   as a string to show on screen
+- as a string to show on screen
 
--   and as a DateTime to work with a DateTimeZone
+- and as a DateTime to work with a DateTimeZone
 
 #### Calculate
 
 A Timestamp can also work directly on DateTime to do calculations. When
 getting the difference between two Timestamps the result will be
-positive when the end Timestamp is greater then the source/initial
+positive when the end Timestamp is greater than the source/initial
 Timestamp. Using `$now→diff($then)`, we can read it as; how much time
 needs to be added to `$now` to get to `$then`. If `$now` is today and
 `$then` is yesterday, we need to add a negative day; `-1`. But if
 `$then` were tomorrow, it would be the same distance `1`, but this time
 positive.
 
-If the it’s the just size of the gap between Timestamps that’s needed
-the `absoluteCopy` method can be used on the result or use the format
-method and ignore sign format symbol.
+If it’s the just size of the gap between Timestamps that’s needed the
+`absoluteCopy` method can be used on the result or use the format method
+and ignore sign format symbol.
 
-**Time Manipulating**
+<span class="indexterm" primary="example"
+secondary="Timestamp"></span>Time Manipulating
 
     $between = $now->diff($then); 
     echo $between, PHP_EOL; 
     echo $between->format('Formatted time between: %r%y years and %m months'), PHP_EOL; 
 
--   using the variables we created before
+- using the variables we created before
 
--   when this document was drafted, the result was: - 45yrs 3months
-    3weeks 6hrs 14mins 29secs
+- when this document was drafted, the result was: - 45yrs 3months 3weeks
+  6hrs 14mins 29secs
 
--   Formatted time between: -45 years and 3 months
+- Formatted time between: -45 years and 3 months
 
 #### Comparing Timestamps
 
@@ -608,7 +680,8 @@ unending debate. But with a `Timestamp` is just as easy as a
 **timestamp**, simply use the usual *great* (&gt;), *less* (&lt;) or
 *equals* (==) comparators.
 
-**What came first, chicken or egg?**
+<span class="indexterm" primary="example"
+secondary="Timestamp"></span>What came first, chicken or egg?
 
     $chicken = new \Inane\Datetime\Timestamp(-27106883520);
     $egg = \Inane\Datetime\Timestamp::createFromFormat('d F Y g:i:s', '01 January 1111 00:00:00');
@@ -618,14 +691,35 @@ unending debate. But with a `Timestamp` is just as easy as a
     else if ($egg == $chicken) echo "Apparently the chicken and the egg arrived together!", PHP_EOL; 
     else echo "Something impossible has happened!!!", PHP_EOL;
 
--   greater or less than works as normal, using the seconds for
-    comparison
+- greater or less than works as normal, using the seconds for comparison
 
--   same goes for equality
+- same goes for equality
 
-### That’s it for now
+# Glossary
 
-Easy isn’t it.
+Timespan
+
+a duration of time, a period of time, a length of time
+
+Timestamp
+
+a moment in time, a point in time, a date and time
+
+Timescale
+
+a unit of time, a scale of time, a measurement of time
+
+seconds
+
+10 digits
+
+milliseconds
+
+13 digits
+
+microseconds
+
+16 digits
 
 [1] **moment:** exact point in time.
 

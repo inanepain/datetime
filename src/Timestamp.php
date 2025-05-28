@@ -5,17 +5,19 @@
  *
  * Inane Datetime Library
  *
+ * $Id$
+ * $Date$
+ *
  * PHP version 8.4
  *
  * @author Philip Michael Raab<peep@inane.co.za>
- * @package Inane\Datetime
+ * @package inanepain\datetime
  * @category datetime
  *
  * @license UNLICENSE
- * @license https://github.com/inanepain/datetime/raw/develop/UNLICENSE UNLICENSE
+ * @license https://unlicense.org/UNLICENSE UNLICENSE
  *
- * @version $Id$
- * $Date$
+ * @version $version
  */
 
 declare(strict_types=1);
@@ -39,8 +41,6 @@ use function time;
  * Unix time is measured as the number of seconds since or prior to <strong>01 January 1970 00:00:00 AM GMT</strong>.
  *
  * @property int $timestamp - unix timestamp
- *
- * @package Inane\Datetime
  *
  * @version 0.4.0
  */

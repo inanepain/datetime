@@ -2,32 +2,23 @@
 :author: Philip Michael Raab
 :email: <philip@cathedral.co.za>
 :keywords: datetime, date, time, timespan, timestamp, duration
+:description: Things to help you bend space and time to your will. Or at least do some calculations with it.
 :revnumber: 0.4.0
-:revdate: 2025-04-30
+:revdate: 2025-05-27
 :copyright: Unlicense
 :experimental:
+:doctype: book
 :hide-uri-scheme:
 :icons: font
 :source-highlighter: highlight.js
-:toc: auto
+:toc: left
 :sectanchors:
+:idprefix: topic-
+:idseparator: -
 
 version: $Id$ ($Date$)
 
 Things to help you bend space and time to your will. Or at least do some calculations with it.
-
-.Interfaces
-* <<TimeWrapper>>
-
-.Traits
-* <<Timescale>>
-
-.Enums
-* <<TimeTrait>>
-
-.Classes
- - <<Timespan>>
- - <<Timestamp>>
 
 == Install
 
@@ -39,18 +30,23 @@ $ composer require inanepain/datetime
 <<<
 
 == Datetime
-:sectnums:
+:sectnums: |,all|
 :view-mode: project
 
 This is meant as more of an introduction to the various classes, interfaces, enums and anything else found in the `Inane\Datetime` namespace and not an in-depth guide.
 
-<<<
+.Interfaces
+* <<TimeWrapper>>
 
-* link:doc/timewrapper.adoc[timewrapper]
-* link:doc/timetrait.adoc[timetrait]
-* link:doc/timescale.adoc[timescale]
-* link:doc/timespan.adoc[timespan]
-* link:doc/timestamp.adoc[timestamp]
+.Traits
+* <<Timescale>>
+
+.Enums
+* <<TimeTrait>>
+
+.Classes
+* <<Timespan>>
+* <<Timestamp>>
 
 <<<
 
@@ -72,7 +68,7 @@ This is meant as more of an introduction to the various classes, interfaces, enu
 :toc: auto
 :sectanchors:
 
-The `TimeWrapper` *interface* implemented by link:timespan.adoc[`Timespan`] and link:timestamp.adoc[`Timestamp`] (possibly more to come), started more as a convenience than actually any real requirement. Soon after implementing this interface the usage of the `Datetime` classes increased, thanks to the greater interoperability they had acquired. This in turn resulted in them quickly evolving from the skinny classes they were to what they are now, skinny but with some meat on them. Enough rambling and there's nothing left to say about it anyway.
+The `((TimeWrapper))` *((interface))* implemented by link:timespan.adoc[`Timespan`] and link:timestamp.adoc[`Timestamp`] (possibly more to come), started more as a convenience than actually any real requirement. Soon after implementing this interface the usage of the `((Datetime))` classes increased, thanks to the greater interoperability they had acquired. This in turn resulted in them quickly evolving from the skinny classes they were to what they are now, skinny but with some meat on them. Enough rambling and there's nothing left to say about it anyway.
 
 <<<
 
@@ -80,12 +76,12 @@ The `TimeWrapper` *interface* implemented by link:timespan.adoc[`Timespan`] and 
 
 // tag::interfaceMethods[]
 
-There are _three_ *interface* methods shared by `Datetime`` classes:
+There are _three_ *interface* methods shared by `((Datetime))`` classes:
 
-.interface methods
-* public function getSeconds(): int
-* public function format(string $format = 'Y-m-d H:i:s'): string
-* public function absoluteCopy(): Timestamp
+.(((method, interface)))interface methods
+* (((TimeWrapper, getSeconds)))public function getSeconds(): int
+* (((TimeWrapper, format)))public function format(string $format = 'Y-m-d H:i:s'): string
+* (((TimeWrapper, absoluteCopy)))public function absoluteCopy(): Timestamp
 
 // end::interfaceMethods[]
 
@@ -99,7 +95,7 @@ At the core it's all numbers and for these numbers it's the seconds returned by 
 public function getSeconds(): int;
 ----
 
-***
+'''
 
 === format: string
 
@@ -116,7 +112,7 @@ The method uses the same formatting pattern as `date` and `DateTime`, as well as
 public function format(string $format = ''): string;
 ----
 
-***
+'''
 
 === absoluteCopy: TimeWrapper
 
@@ -125,14 +121,16 @@ Get a copy of the object with an absolute value.
 .method: absoluteCopy
 [source,php]
 ----
-public function absoluteCopy(): TimeWrapper;
+public function absoluteCopy(): ((TimeWrapper));
 ----
+
+<<<
 
 == Format
 
-A subset of format options commonly used by `Datetime` classes.
+A subset of format options commonly used by `((Datetime))` classes.
 
-.Format Subset
+.(((format string)))Format Subset
 ["%autowidth"opts="header"]
 |===
 | format character  | Description                                           | Example returned values
@@ -168,7 +166,7 @@ A subset of format options commonly used by `Datetime` classes.
 
 :leveloffset: +2
 
-= Timetrait
+= TimeTrait
 :author: Philip Michael Raab
 :email: <philip@cathedral.co.za>
 :keywords: datetime, date, time, timespan, timestamp, duration
@@ -183,7 +181,7 @@ A subset of format options commonly used by `Datetime` classes.
 :toc: auto
 :sectanchors:
 
-The `TimesTrait` *trait* simple addes some properties for the three timestamps: *seconds*, *milliseconds* and *microseconds*.
+The `((TimeTrait))` *((trait))* simple adds some properties for the three timestamps: *((seconds))*, *((milliseconds))* and *((microseconds))*.
 
 <<<
 
@@ -193,10 +191,10 @@ The `TimesTrait` *trait* simple addes some properties for the three timestamps: 
 
 There are _three_ *properties* added by `TimeTrait`:
 
-.trait properties
-* public private(set) int $seconds
-* public private(set) int $milliseconds
-* public private(set) int $microseconds
+.trait ((properties))
+* (((Timescale, seconds)))public private(set) int $seconds
+* (((Timescale, milliseconds)))public private(set) int $milliseconds
+* (((Timescale, microseconds)))public private(set) int $microseconds
 
 Only `$microseconds` actually stores a value while the `$milliseconds` and `$seconds` calculate their value from it.
 
@@ -244,26 +242,26 @@ Returns a timestamp the has 16 digits.
 :toc: auto
 :sectanchors:
 
-The `Timescale` *enum* simply defines three *timestamps* of various length: *seconds* (10 digits), *milliseconds* (13 digits) and *microseconds* (16 digits).
+The `((Timescale))` *((enum))* simply defines three *((timestamps))* of various length: *((seconds))* (10 digits), *((milliseconds))* (13 digits) and *((microseconds))* (16 digits).
 
 == Cases
 
-* SECOND
+* (((unit, seconds)))SECOND
     - 10 digits
-* MILLISECOND
+* (((unit, milliseconds)))MILLISECOND
     - 13 digits
-* MICROSECOND
+* (((unit, microseconds)))MICROSECOND
     - 16 digits
 
 == Methods
 
-.class methods
-* public static function *tryFromName*(string $name, bool $ignoreCase = false): ?static
-* public static function *tryFromTimestamp*(int|Timestamp $timestamp): ?Timescale
+.(((method, class)))class methods
+* (((Timescale, tryFromName)))public static function *tryFromName*(string $name, bool $ignoreCase = false): ?static
+* (((Timescale, tryFromTimestamp)))public static function *tryFromTimestamp*(int|Timestamp $timestamp): ?Timescale
 
-.instance methods
-* public function *timestamp*(bool $asObject = false): int|Timestamp
-* public function *unit*(): string
+.(((method, instance)))instance methods
+* (((Timescale, timestamp)))public function *timestamp*(bool $asObject = false): int|Timestamp
+* (((Timescale, unit)))public function *unit*(): string
 
 :leveloffset!:
 
@@ -290,11 +288,19 @@ The `Timescale` *enum* simply defines three *timestamps* of various length: *sec
 :toc: auto
 :sectanchors:
 
-The `Timespan` *class* represents a _timespan_ or _duration_(fn-duration) which is essentially a number of seconds. As with most things, seconds can be expressed in various formats to suite the situation, for instance `5400` and `2years 3d 7secs`, `Timespan` makes this easy for you.
+The `((Timespan))` *((class))* represents a _timespan_ or _((duration))_(fn-duration) which is essentially a number of seconds. As with most things, seconds can be expressed in various formats to suite the situation, for instance `5400` and `2years 3d 7secs`, `Timespan` makes this easy for you.
 
 Quickly get a _moment_{fn-moment} in the _future_ or _past_ by *adding* or *subtracting* a `Timespan` from a link:timestamp.adoc[`Timestamp`]. Working together these two classes have you covered in the _past_, _present_, _future_ or anytime in _between_.
 
-NOTE: The Timespan as is a period of time or duration and a Timestamp{fn-timestamp} is a moment or point in time.
+NOTE: The Timespan as is a ((period)) of time or ((duration)) and a Timestamp{fn-timestamp} is a moment or point in time.
+
+== Notes on Methods
+
+The methods `format` and `getDuration` are similar but there are bigger differences between the two than that `format` allows for a far great level of customising the output string.
+The main difference is a big one with far-reaching consequences if not understood correctly. The `format` method is a pure display method that will only substitute existing values into the template string. Hence, all it takes as a parameter is the template string.
+The `duration` method calculates the duration using the supplied unit of measurement. The only formatting options it has is weather to show the unit of time: character, abbreviated, word.
+
+<<<
 
 == Moments and Durations
 
@@ -330,7 +336,7 @@ NOTE: A *unix timestamp* or *epoc time* while being a moment in time as also a *
 
 <<<
 
-== Examples
+== (((example, Timespan)))Examples
 
 .example
 [source,php]
@@ -393,9 +399,9 @@ echo "$s1 == $d1";                                      // 10800 == 1hr 30min
 :toc: auto
 :sectanchors:
 
-The `Timestamp` *class* is a truly simple wrapper for an *epoch timestamp*. It's mainly useful when used in combination with a link:timespan.adoc[`Timespan`] to do chained date calculations and then displaying the formatted result. Essentially it saves typing a few lines of code here and there and I think it looks a tad neater too. The original bit of code was primarily used as a convenience class to easily switch between various date and time structures.
+The `((Timestamp))` *((class))* is a truly simple wrapper for an *epoch timestamp*. It's mainly useful when used in combination with a link:timespan.adoc[`Timespan`] to do chained date calculations and then displaying the formatted result. Essentially it saves typing a few lines of code here and there and I think it looks a tad neater too. The original bit of code was primarily used as a convenience class to easily switch between various date and time structures.
 
-Nuff said, here comes it's breakdown.
+Enough chatter, here comes it's breakdown.
 
 <<<
 
@@ -406,10 +412,10 @@ Nuff said, here comes it's breakdown.
 
 There are _three_ *properties* added by `TimeTrait`:
 
-.trait properties
-* public private(set) int $seconds
-* public private(set) int $milliseconds
-* public private(set) int $microseconds
+.trait ((properties))
+* (((Timescale, seconds)))public private(set) int $seconds
+* (((Timescale, milliseconds)))public private(set) int $milliseconds
+* (((Timescale, microseconds)))public private(set) int $microseconds
 
 Only `$microseconds` actually stores a value while the `$milliseconds` and `$seconds` calculate their value from it.
 
@@ -421,31 +427,31 @@ Only `$microseconds` actually stores a value while the `$milliseconds` and `$sec
 :leveloffset: +1
 
 
-There are _three_ *interface* methods shared by `Datetime`` classes:
+There are _three_ *interface* methods shared by `((Datetime))`` classes:
 
-.interface methods
-* public function getSeconds(): int
-* public function format(string $format = 'Y-m-d H:i:s'): string
-* public function absoluteCopy(): Timestamp
+.(((method, interface)))interface methods
+* (((TimeWrapper, getSeconds)))public function getSeconds(): int
+* (((TimeWrapper, format)))public function format(string $format = 'Y-m-d H:i:s'): string
+* (((TimeWrapper, absoluteCopy)))public function absoluteCopy(): Timestamp
 
 
 :leveloffset: 2
 
 And _six_ class methods.
 
-.class methods
-* public function __construct(?int $timestamp = null)
-* public static function createFromFormat(string $format, string $datetime): static|false
-* public static function now(): int
-* public function getDateTime(bool $immutable = false): DateTime|DateTimeImmutable
-* public function adjust(int|Timespan $timespan): self
-* public function diff(int|Timestamp $timestamp): Timespan
+.(((method, class)))class methods
+* (((Timestamp, construct)))public function __construct(?int $timestamp = null)
+* (((Timestamp, createFromFormat)))public static function createFromFormat(string $format, string $datetime): static|false
+* (((Timestamp, now)))public static function now(): int
+* (((Timestamp, getDateTime)))public function getDateTime(bool $immutable = false): DateTime|DateTimeImmutable
+* (((Timestamp, adjust)))public function adjust(int|Timespan $timespan): self
+* (((Timestamp, diff)))public function diff(int|Timestamp $timestamp): Timespan
 
 === Create / New
 
 In addition to instantiating a `Timestamp` using `new` the static method `createFromFormat` can also be used to create a `Timestamp` instance. The constructor only takes a unix timestamp, for all other values the create method is used.
 
-.Creating Timestamps: default and custom values.
+.(((example, Timestamp)))Creating Timestamps: default and custom values.
 [source,php]
 ----
 $now = new Timestamp(); // <1>
@@ -462,7 +468,7 @@ Once you have a Timestamp it's easy to retrieve the date as various types that b
 * int
 * DateTime/DateTimeImmutable
 
-.Getting values to work with or display.
+.(((example, Timestamp)))Getting values to work with or display.
 [source,php]
 ----
 $user->setAnniversary($then->getSeconds()); // <1>
@@ -475,13 +481,13 @@ $tokyoTime = $now->getDateTime()->setTimezone($timeZone); // <3>
 
 === Calculate
 
-A Timestamp can also work directly on DateTime to do calculations. When getting the difference between two Timestamps the result will be positive when the end Timestamp is greater then the source/initial Timestamp.
+A Timestamp can also work directly on DateTime to do calculations. When getting the difference between two Timestamps the result will be positive when the end Timestamp is greater than the source/initial Timestamp.
 Using `$now->diff($then)`, we can read it as; how much time needs to be added to `$now` to get to `$then`.
 If `$now` is today and `$then` is yesterday, we need to add a negative day; `-1`. But if `$then` were tomorrow, it would be the same distance `1`, but this time positive.
 
-If the it's the just size of the gap between Timestamps that's needed the `absoluteCopy` method can be used on the result or use the format method and ignore sign format symbol.
+If it's the just size of the gap between Timestamps that's needed the `absoluteCopy` method can be used on the result or use the format method and ignore sign format symbol.
 
-.Time Manipulating
+.(((example, Timestamp)))Time Manipulating
 [source,php]
 ----
 $between = $now->diff($then); <1>
@@ -496,7 +502,7 @@ echo $between->format('Formatted time between: %r%y years and %m months'), PHP_E
 
 Figuring out what came first, the chicken or the egg, might be an unending debate. But with a `Timestamp` is just as easy as a *timestamp*, simply use the usual _great_ (>), _less_ (<) or _equals_ (==) comparators.
 
-.What came first, chicken or egg?
+.(((example, Timestamp)))What came first, chicken or egg?
 [source,php]
 ----
 $chicken = new \Inane\Datetime\Timestamp(-27106883520);
@@ -510,10 +516,18 @@ else echo "Something impossible has happened!!!", PHP_EOL;
 <1> greater or less than works as normal, using the seconds for comparison
 <2> same goes for equality
 
-<<<
-
-== That's it for now
-
-Easy isn't it.
-
 :leveloffset!:
+
+[glossary]
+== Glossary
+
+[glossary]
+Timespan:: a duration of time, a period of time, a length of time
+Timestamp:: a moment in time, a point in time, a date and time
+Timescale:: a unit of time, a scale of time, a measurement of time
+seconds:: 10 digits
+milliseconds:: 13 digits
+microseconds:: 16 digits
+
+[index]
+== Index

@@ -5,17 +5,19 @@
  *
  * Inane Datetime Library
  *
+ * $Id$
+ * $Date$
+ *
  * PHP version 8.4
  *
  * @author Philip Michael Raab<peep@inane.co.za>
- * @package Inane\Datetime
+ * @package inanepain\datetime
  * @category datetime
  *
  * @license UNLICENSE
- * @license https://github.com/inanepain/datetime/raw/develop/UNLICENSE UNLICENSE
+ * @license https://unlicense.org/UNLICENSE UNLICENSE
  *
- * @version $Id$
- * $Date$
+ * @version $version
  */
 
 declare(strict_types=1);
@@ -39,7 +41,6 @@ use function implode;
 use function in_array;
 use function intval;
 use function is_int;
-use function is_null;
 use function is_numeric;
 use function is_string;
 use function preg_match_all;
@@ -54,8 +55,6 @@ use const null;
  * Timespan
  *
  * A duration of time stored as a number of seconds and can be formatted for display as desired.
- *
- * @package Inane\Datetime
  *
  * @version 0.4.0
  */
@@ -93,7 +92,7 @@ class Timespan implements TimeWrapper, Stringable {
      */
     private static array $units = [
         'y' => ['symbols' => ['years', 'year', 'y', 'yrs', 'yr'], 'value'=> 31556952],
-        'm' => ['symbols' => ['months', 'month', 'm', 'months', 'month'], 'value'=> 2629746],
+        'm' => ['symbols' => ['months', 'month', 'm', 'months', 'month'], 'value'=> 2628029],
         'w' => ['symbols' => ['weeks', 'week', 'w','weeks', 'week'], 'value'=> 604800],
         'd' => ['symbols' => ['days', 'day', 'd','days', 'day'], 'value'=> 86400],
         'h' => ['symbols' => ['hours', 'hour', 'h', 'hrs', 'hr'], 'value'=> 3600],
@@ -147,7 +146,7 @@ class Timespan implements TimeWrapper, Stringable {
     /**
      * Create Timespan from $duration string
      *
-     * @param string $duration
+     * @param string $duration A duration string (e.g. "1hr 30mins 15secs")
      *
      * @return static Timespan
      */
@@ -171,7 +170,7 @@ class Timespan implements TimeWrapper, Stringable {
     /**
      * Parses a duration string into array by unit
      *
-     * @param string $duration
+     * @param string $duration A duration string (e.g. "1hr 30mins 15secs")
      *
      * @return array unit values
      */
@@ -197,9 +196,9 @@ class Timespan implements TimeWrapper, Stringable {
     }
 
     /**
-     * Convert duration to timespan
+     * Convert a duration string into timespan as seconds
      *
-     * @param string $duration text duration
+     * @param string $duration A duration string (e.g. "1hr 30mins 15secs")
      *
      * @return int timespan (seconds)
      */
@@ -223,22 +222,27 @@ class Timespan implements TimeWrapper, Stringable {
      * symbol format 1: abbreviated
      * symbol format 0: char
      *
-     * @param int $timespan seconds
-     * @param int $symbolFormat unit symbol character, abbreviation, word
-     * @param array $units array of units to include in duration, single char to be used
+     * @since 0.4.0 added $spaced parameter
      *
-     * @return string duration
+     * @param int $timespan the length of the timespan in seconds
+     * @param int $symbolFormat unit symbol: character, abbreviation, word
+     * @param array $units array of units to include in the duration, single char to be used (e.g. ['y','m','d','h','i','s'])
+     * @param bool $spaced should there be a space between the unit and the value (e.g. '1 h' vs '1h')
+     *
+     * @return string the duration string using the specified units of time
      */
-    public static function ts2dur(int $timespan, int $symbolFormat = Timespan::SYMBOL_ABBREVIATED, array $units = []): string {
+    public static function ts2dur(int $timespan, int $symbolFormat = Timespan::SYMBOL_ABBREVIATED, array $units = [], bool $spaced = false): string {
         if ($timespan == 0) return match($symbolFormat) {
             static::SYMBOL_CHAR => '0s',
             static::SYMBOL_WORD => '0seconds',
             default => '0secs',
         };
 
+        $gap = $spaced ? ' ' : '';
+
         $r = [];
         if ($timespan < 0) {
-            dd('$timespan = $timespan * -1', 'Testing Code');
+            // dd('$timespan = $timespan * -1', 'Testing Code');
             // $timespan = $timespan * -1;
             $timespan *= -1;
             $r[] = '-';
@@ -249,7 +253,7 @@ class Timespan implements TimeWrapper, Stringable {
 
             $a = intval($timespan / $u['value']);
             if ($a > 0) {
-                $r[] = "$a" . static::getUnitSymbol($a == 1, $symbolFormat, $u['symbols']);
+                $r[] = (string)$a . $gap . static::getUnitSymbol($a == 1, $symbolFormat, $u['symbols']);
                 // $timespan = $timespan % $u['value'];
                 $timespan %= $u['value'];
             }
@@ -261,7 +265,7 @@ class Timespan implements TimeWrapper, Stringable {
     /**
      * Get Timespan in seconds
      *
-     * @return int seconds
+     * @return int the length of the timespan in seconds
      */
     public function getSeconds(): int {
         return $this->timespan;
@@ -270,13 +274,16 @@ class Timespan implements TimeWrapper, Stringable {
     /**
      * Get Duration
      *
-     * @param null|int $symbolFormat  unit symbol current, character, abbreviation, word
-     * @param array $units array of units to include in duration, single char to be used
+     * @since 0.4.0 added $spaced parameter
      *
-     * @return string duration
+     * @param null|int $symbolFormat  unit symbol current, character, abbreviation, word
+     * @param array $units array of units to include in duration, single char to be used (e.g. ['y','m','d','h','i','s'])
+     * @param bool $spaced should there be a space between the unit and the value (e.g. '1 h' vs '1h')
+     *
+     * @return string the duration string using the specified units of time
      */
-    public function getDuration(?int $symbolFormat = null, array $units = []): string {
-        return static::ts2dur($this->timespan, $symbolFormat ?? $this->symbolFormat, $units);
+    public function getDuration(?int $symbolFormat = null, array $units = [], bool $spaced = false): string {
+        return static::ts2dur($this->timespan, $symbolFormat ?? $this->symbolFormat, $units, $spaced);
     }
 
     /**
@@ -285,7 +292,7 @@ class Timespan implements TimeWrapper, Stringable {
      * @return \DateInterval DateInterval
      */
     public function getDateInterval(): DateInterval {
-        return DateInterval::createFromDateString($this->getDuration(Timespan::SYMBOL_ABBREVIATED));
+        return DateInterval::createFromDateString($this->getDuration(symbolFormat: Timespan::SYMBOL_WORD, spaced: false));
     }
 
     /**
@@ -304,7 +311,7 @@ class Timespan implements TimeWrapper, Stringable {
      *
      * @param string $units specify desired units
      *
-     * @return string duration
+     * @return string the duration string using the specified units of time
      */
     public function duration(string $units = 'ymdhis'): string {
         $units = empty($units) ? ['y','m','d','h','i','s'] : str_split($units);
@@ -338,7 +345,7 @@ class Timespan implements TimeWrapper, Stringable {
         $r['r'] = $r['r'] < 0 ? '-' : '';
 
         foreach($r as $u => $v)
-            $format = str_replace("%$u", "$v", $format);
+            $format = str_replace("%$u", (string)$v, $format);
 
         return $format;
     }
@@ -354,7 +361,7 @@ class Timespan implements TimeWrapper, Stringable {
      */
     public function adjust(int|string|Timespan $tsORdur): self {
         if ($tsORdur instanceof Timespan) $tsORdur = $tsORdur->getSeconds();
-        else if (is_string($tsORdur) && !is_numeric($tsORdur)) $tsORdur = static::dur2ts("$tsORdur");
+        else if (is_string($tsORdur) && !is_numeric($tsORdur)) $tsORdur = static::dur2ts((string)$tsORdur);
         else if (is_string($tsORdur) && is_numeric($tsORdur)) $tsORdur = intval($tsORdur);
 
         $this->timespan += $tsORdur;
@@ -371,7 +378,7 @@ class Timespan implements TimeWrapper, Stringable {
      * @return \Inane\Datetime\Timestamp
      */
     public function apply2Timestamp(null|int|Timestamp $timestamp = null): Timestamp {
-        if (is_null($timestamp)) $timestamp = new Timestamp();
+        if ($timestamp === null) $timestamp = new Timestamp();
         else if (is_int($timestamp)) $timestamp = new Timestamp($timestamp);
 
         $timestamp->adjust($this);

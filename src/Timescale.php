@@ -5,17 +5,19 @@
  *
  * Inane Datetime Library
  *
+ * $Id$
+ * $Date$
+ *
  * PHP version 8.4
  *
  * @author Philip Michael Raab<peep@inane.co.za>
- * @package Inane\Datetime
+ * @package inanepain\datetime
  * @category datetime
  *
  * @license UNLICENSE
- * @license https://github.com/inanepain/datetime/raw/develop/UNLICENSE UNLICENSE
+ * @license https://unlicense.org/UNLICENSE UNLICENSE
  *
- * @version $Id$
- * $Date$
+ * @version $version
  */
 
 declare(strict_types=1);
@@ -35,12 +37,10 @@ use const null;
 use const true;
 
 /**
- * Enum Timescale
+ * Enum Timescale sets the level of precision.
  *
  * Represents a timescale with integer values.
  * This enum implements the `CoreEnumInterface`, providing additional functionality for working with enumerated types.
- *
- * @package inanepain\datetime
  *
  * @version 0.1.0
  */
@@ -79,7 +79,7 @@ enum Timescale: int implements CoreEnumInterface {
      * This file is part of the inanepain datetime library.
      *
      * It includes the usage of the CoreEnumTrait, which provides
-     * additional functionality or behavior to the Timescale class.
+     * additional functionality or behavior to the Timescale enum.
      *
      * @uses CoreEnumTrait
      */

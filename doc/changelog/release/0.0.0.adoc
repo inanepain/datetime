@@ -1,0 +1,23 @@
+= 0.4.0-dev (2025 May xx)
+:author: Philip Michael Raab
+:email: <philip@cathedral.co.za>
+:revnumber: 0.4.0
+:revdate: 2025-05-xx
+:revremark: -dev
+:copyright: Unlicense
+:keywords: inane, datetime, date, time, timespan, timestamp, duration, timescale
+:experimental:
+:hide-uri-scheme:
+:icons: font
+:source-highlighter: highlight.js
+:sectnums!:
+:toc: auto
+:sectanchors:
+
+* new: `Timestamp` now stores the time as a microsecond timestamp
+* new: `Timestamp` has new *readonly* properties for: *seconds*, *milliseconds*, *microseconds*
+* new: `Timescale` enum for timestamp precision: *seconds*, *milliseconds*, *microseconds*
+* update: `Timespan` `ts2dur` & `getDuration` new param `$spaced` toggle space between *number* & *unit*
+* new: `TimeTrait` common methods for time classes
+* update: `Timespan` updated the months calculation to be more accurate (avarage 30.44 days)
+* minor bugfixes and improvements to code and documentation

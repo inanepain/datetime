@@ -13,23 +13,23 @@
 :toc: auto
 :sectanchors:
 
-The `Timescale` *enum* simply defines three *timestamps* of various length: *seconds* (10 digits), *milliseconds* (13 digits) and *microseconds* (16 digits).
+The `((Timescale))` *((enum))* simply defines three *((timestamps))* of various length: *((seconds))* (10 digits), *((milliseconds))* (13 digits) and *((microseconds))* (16 digits).
 
 == Cases
 
-* SECOND
+* (((unit, seconds)))SECOND
     - 10 digits
-* MILLISECOND
+* (((unit, milliseconds)))MILLISECOND
     - 13 digits
-* MICROSECOND
+* (((unit, microseconds)))MICROSECOND
     - 16 digits
 
 == Methods
 
-.class methods
-* public static function *tryFromName*(string $name, bool $ignoreCase = false): ?static
-* public static function *tryFromTimestamp*(int|Timestamp $timestamp): ?Timescale
+.(((method, class)))class methods
+* (((Timescale, tryFromName)))public static function *tryFromName*(string $name, bool $ignoreCase = false): ?static
+* (((Timescale, tryFromTimestamp)))public static function *tryFromTimestamp*(int|Timestamp $timestamp): ?Timescale
 
-.instance methods
-* public function *timestamp*(bool $asObject = false): int|Timestamp
-* public function *unit*(): string
+.(((method, instance)))instance methods
+* (((Timescale, timestamp)))public function *timestamp*(bool $asObject = false): int|Timestamp
+* (((Timescale, unit)))public function *unit*(): string

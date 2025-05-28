@@ -2,32 +2,23 @@
 :author: Philip Michael Raab
 :email: <philip@cathedral.co.za>
 :keywords: datetime, date, time, timespan, timestamp, duration
+:description: Things to help you bend space and time to your will. Or at least do some calculations with it.
 :revnumber: 0.4.0
-:revdate: 2025-04-30
+:revdate: 2025-05-27
 :copyright: Unlicense
 :experimental:
+:doctype: book
 :hide-uri-scheme:
 :icons: font
 :source-highlighter: highlight.js
-:toc: auto
+:toc: left
 :sectanchors:
+:idprefix: topic-
+:idseparator: -
 
 version: $Id$ ($Date$)
 
 Things to help you bend space and time to your will. Or at least do some calculations with it.
-
-.Interfaces
-* <<TimeWrapper>>
-
-.Traits
-* <<Timescale>>
-
-.Enums
-* <<TimeTrait>>
-
-.Classes
- - <<Timespan>>
- - <<Timestamp>>
 
 == Install
 
@@ -39,23 +30,29 @@ $ composer require inanepain/datetime
 <<<
 
 == Datetime
-:sectnums:
+:sectnums: |,all|
 :view-mode: project
 
 This is meant as more of an introduction to the various classes, interfaces, enums and anything else found in the `Inane\Datetime` namespace and not an in-depth guide.
 
-<<<
+.Interfaces
+* <<TimeWrapper>>
 
-* link:doc/timewrapper.adoc[timewrapper]
-* link:doc/timetrait.adoc[timetrait]
-* link:doc/timescale.adoc[timescale]
-* link:doc/timespan.adoc[timespan]
-* link:doc/timestamp.adoc[timestamp]
+.Traits
+* <<Timescale>>
+
+.Enums
+* <<TimeTrait>>
+
+.Classes
+* <<Timespan>>
+* <<Timestamp>>
 
 <<<
 
 include::./doc/timewrapper.adoc[leveloffset=+2]
 
+[page-layout=portrait]
 <<<
 
 include::./doc/timetrait.adoc[leveloffset=+2]
@@ -71,3 +68,17 @@ include::./doc/timespan.adoc[leveloffset=+2]
 <<<
 
 include::./doc/timestamp.adoc[leveloffset=+2]
+
+[glossary]
+== Glossary
+
+[glossary]
+Timespan:: a duration of time, a period of time, a length of time
+Timestamp:: a moment in time, a point in time, a date and time
+Timescale:: a unit of time, a scale of time, a measurement of time
+seconds:: 10 digits
+milliseconds:: 13 digits
+microseconds:: 16 digits
+
+[index]
+== Index

@@ -5,17 +5,19 @@
  *
  * Inane Datetime Library
  *
+ * $Id$
+ * $Date$
+ *
  * PHP version 8.4
  *
  * @author Philip Michael Raab<peep@inane.co.za>
- * @package Inane\Datetime
+ * @package inanepain\datetime
  * @category datetime
  *
  * @license UNLICENSE
- * @license https://github.com/inanepain/datetime/raw/develop/UNLICENSE UNLICENSE
+ * @license https://unlicense.org/UNLICENSE UNLICENSE
  *
- * @version $Id$
- * $Date$
+ * @version $version
  */
 
 declare(strict_types=1);
@@ -26,8 +28,6 @@ namespace Inane\Datetime;
  * Interface: TimeWrapper
  *
  * Used by time unit type classes ensuring they can be formatted and offer the raw value in seconds.
- *
- * @package Inane\Datetime
  *
  * @version 0.2.0
  */
