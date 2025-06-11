@@ -1,0 +1,19 @@
+= Install
+:author: Philip Michael Raab
+:email: <philip@cathedral.co.za>
+:keywords: datetime, date, time, timespan, timestamp, duration
+:revnumber: 0.1.0
+:revdate: 2025-04-30
+:copyright: Unlicense
+:experimental:
+:hide-uri-scheme:
+:icons: font
+:source-highlighter: highlight.js
+:sectnums: |,all|
+:toc: auto
+:sectanchors:
+
+[source,shell]
+----
+$ composer require {pkg-id}
+----

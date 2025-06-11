@@ -1,7 +1,7 @@
-= Datetime
+= Datetime image:../icon.png[title=inanepain/datetime,25]
 :author: Philip Michael Raab
 :email: <philip@cathedral.co.za>
-:keywords: datetime, date, time, timespan, timestamp, duration
+:keywords: inanepain, library, datetime, date, time, timespan, timestamp, duration
 :description: Things to help you bend space and time to your will. Or at least do some calculations with it.
 :revnumber: 0.4.0
 :revdate: 2025-05-27
@@ -15,17 +15,39 @@
 :sectanchors:
 :idprefix: topic-
 :idseparator: -
+:pkg-vendor: inanepain
+:pkg-name: datetime
+:pkg-id: {pkg-vendor}/{pkg-name}
+
+== image:../icon.png[title={pkg-id},25] {pkg-id}
 
 version: $Id$ ($Date$)
 
-Things to help you bend space and time to your will. Or at least do some calculations with it.
+{description}
 
-== Install
+:leveloffset: +2
+
+== Installw
+:author: Philip Michael Raab
+:email: <philip@cathedral.co.za>
+:keywords: datetime, date, time, timespan, timestamp, duration
+:revnumber: 0.1.0
+:revdate: 2025-04-30
+:copyright: Unlicense
+:experimental:
+:hide-uri-scheme:
+:icons: font
+:source-highlighter: highlight.js
+:sectnums: |,all|
+:toc: auto
+:sectanchors:
 
 [source,shell]
 ----
-$ composer require inanepain/datetime
+$ composer require {pkg-id}
 ----
+
+:leveloffset!:
 
 <<<
 
@@ -124,44 +146,44 @@ Get a copy of the object with an absolute value.
 public function absoluteCopy(): ((TimeWrapper));
 ----
 
+[page-layout=landscape]
 <<<
 
 == Format
 
-A subset of format options commonly used by `((Datetime))` classes.
-
-.(((format string)))Format Subset
-["%autowidth"opts="header"]
+.(((format string)))A subset of format options commonly used by `((Datetime))` classes.
+[cols="15%m,50%,35%l",options=header]
 |===
-| format character  | Description                                           | Example returned values
-| *Day*             | *---*                                                 | *---*
-| d	                | Day of the month, 2 digits with leading zeros         | 01 to 31
-| D                 | A textual representation of a day, three letters      | Mon through Sun
-| j                 | Day of the month without leading zeros                | 1 to 31
-| l (lowercase 'L') | A full textual representation of the day of the week  | Sunday through Saturday
-| *Month*           | *---*                                                 | *---*
-| F                 | A full textual representation of a month              | January through December
-| m                 | Numeric representation of a month, with leading zeros | 01 through 12
-| M                 | A three letter textual representation of a month      | Jan through Dec
-| n                 | Numeric representation of a month, no leading zeros   | 1 through 12
-| *Year*            | *---*                                                 | *---*
-| Y                 | Full numeric year, at least 4 digits, - for years BCE | Examples: -0055, 0787, 1999, 2003, 10191
-| *Time*            | *---*                                                 | *---*
-| a                 | Lowercase Ante meridiem and Post meridiem             | am or pm
-| A                 | Uppercase Ante meridiem and Post meridiem             | AM or PM
-| g                 | 12-hour format of an hour without leading zeros       | 1 through 12
-| G                 | 24-hour format of an hour without leading zeros       | 0 through 23
-| h                 | 12-hour format of an hour with leading zeros          | 01 through 12
-| H                 | 24-hour format of an hour with leading zeros          | 00 through 23
-| i                 | Minutes with leading zeros                            | 00 to 59
-| s                 | Seconds with leading zeros                            | 00 through 59
-| *Full date/time*  | *---*                                                 | *---*
-| c	                | ISO 8601 date                                         | 2004-02-12T15:19:21+00:00
-| r                 | » RFC 2822/» RFC 5322 formatted date                  | Example: Thu, 21 Dec 2000 16:01:07 +0200
+| Format character    | Description                                           | Example returned values
+^d| *Day*            ^| *---*                                               ^d| *---*
+| d	                  | Day of the month, 2 digits with leading zeros         | 01 to 31
+| D                   | A textual representation of a day, 3 letters          | Mon through Sun
+| j                   | Day of the month no leading zeros                     | 1 to 31
+| l (lowercase 'L')   | A full textual representation of the day of the week  | Sunday through Saturday
+^d| *Month*          ^| *---*                                               ^d| *---*
+| F                   | A full textual representation of a month              | January through December
+| m                   | Numeric representation of a month, with leading zeros | 01 through 12
+| M                   | A 3 letter textual representation of a month          | Jan through Dec
+| n                   | Numeric representation of a month, no leading zeros   | 1 through 12
+^d| *Year*           ^| *---*                                               ^d| *---*
+| Y                   | Full numeric year, at least 4 digits, *-* for BCE     | Examples: -0055, 0787, 1999, 2003, 10191
+^d| *Time*           ^| *---*                                               ^d| *---*
+| a                   | Lowercase Ante meridiem and Post meridiem             | am or pm
+| A                   | Uppercase Ante meridiem and Post meridiem             | AM or PM
+| g                   | 12-hr format of an hour no leading zeros              | 1 through 12
+| G                   | 24-hr format of an hour no leading zeros              | 0 through 23
+| h                   | 12-hr format of an hour with leading zeros            | 01 through 12
+| H                   | 24-hr format of an hour with leading zeros            | 00 through 23
+| i                   | Minutes with leading zeros                            | 00 to 59
+| s                   | Seconds with leading zeros                            | 00 through 59
+^d| *Full date/time* ^| *---*                                               ^d| *---*
+| c	                  | ISO 8601 date                                         | 2004-02-12T15:19:21+00:00
+| r                   | » RFC 2822/» RFC 5322 formatted date                  | Example: Thu, 21 Dec 2000 16:01:07 +0200
 |===
 
 :leveloffset!:
 
+[page-layout=portrait]
 <<<
 
 :leveloffset: +2

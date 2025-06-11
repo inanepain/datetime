@@ -1,13 +1,13 @@
-# 
+# ![icon](../icon.png) inanepain/datetime
 
 version: $Id$ ($Date$)
 
 Things to help you bend space and time to your will. Or at least do some
 calculations with it.
 
-# Install
+## Install
 
-    $ composer require inanepain/datetime
+    $ composer require {pkg-id}
 
 # Datetime
 
@@ -103,162 +103,159 @@ method: absoluteCopy
 
 ### Format
 
-A subset of format options commonly used by `Datetime Datetime` classes.
-
 <table>
-<caption><span class="indexterm"
-data-primary="format string"></span>Format Subset</caption>
+<caption><span class="indexterm" data-primary="format string"></span>A
+subset of format options commonly used by <code>Datetime Datetime</code>
+classes.</caption>
 <colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
+<col style="width: 15%" />
+<col style="width: 50%" />
+<col style="width: 35%" />
 </colgroup>
 <thead>
 <tr>
-<th style="text-align: left;">format character</th>
+<th style="text-align: left;">Format character</th>
 <th style="text-align: left;">Description</th>
 <th style="text-align: left;">Example returned values</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><p><strong>Day</strong></p></td>
-<td style="text-align: left;"><p><strong>---</strong></p></td>
-<td style="text-align: left;"><p><strong>---</strong></p></td>
+<td style="text-align: center;"><p><strong>Day</strong></p></td>
+<td style="text-align: center;"><p><strong>---</strong></p></td>
+<td style="text-align: center;"><p><strong>---</strong></p></td>
 </tr>
 <tr>
-<td style="text-align: left;"><p>d</p></td>
+<td style="text-align: left;"><p><code>d</code></p></td>
 <td style="text-align: left;"><p>Day of the month, 2 digits with leading
 zeros</p></td>
-<td style="text-align: left;"><p>01 to 31</p></td>
+<td style="text-align: left;"><pre><code> 01 to 31</code></pre></td>
 </tr>
 <tr>
-<td style="text-align: left;"><p>D</p></td>
-<td style="text-align: left;"><p>A textual representation of a day,
-three letters</p></td>
-<td style="text-align: left;"><p>Mon through Sun</p></td>
+<td style="text-align: left;"><p><code>D</code></p></td>
+<td style="text-align: left;"><p>A textual representation of a day, 3
+letters</p></td>
+<td style="text-align: left;"><pre><code> Mon through Sun</code></pre></td>
 </tr>
 <tr>
-<td style="text-align: left;"><p>j</p></td>
-<td style="text-align: left;"><p>Day of the month without leading
+<td style="text-align: left;"><p><code>j</code></p></td>
+<td style="text-align: left;"><p>Day of the month no leading
 zeros</p></td>
-<td style="text-align: left;"><p>1 to 31</p></td>
+<td style="text-align: left;"><pre><code> 1 to 31</code></pre></td>
 </tr>
 <tr>
-<td style="text-align: left;"><p>l (lowercase 'L')</p></td>
+<td style="text-align: left;"><p><code>l (lowercase 'L')</code></p></td>
 <td style="text-align: left;"><p>A full textual representation of the
 day of the week</p></td>
-<td style="text-align: left;"><p>Sunday through Saturday</p></td>
+<td style="text-align: left;"><pre><code> Sunday through Saturday</code></pre></td>
 </tr>
 <tr>
-<td style="text-align: left;"><p><strong>Month</strong></p></td>
-<td style="text-align: left;"><p><strong>---</strong></p></td>
-<td style="text-align: left;"><p><strong>---</strong></p></td>
+<td style="text-align: center;"><p><strong>Month</strong></p></td>
+<td style="text-align: center;"><p><strong>---</strong></p></td>
+<td style="text-align: center;"><p><strong>---</strong></p></td>
 </tr>
 <tr>
-<td style="text-align: left;"><p>F</p></td>
+<td style="text-align: left;"><p><code>F</code></p></td>
 <td style="text-align: left;"><p>A full textual representation of a
 month</p></td>
-<td style="text-align: left;"><p>January through December</p></td>
+<td style="text-align: left;"><pre><code> January through December</code></pre></td>
 </tr>
 <tr>
-<td style="text-align: left;"><p>m</p></td>
+<td style="text-align: left;"><p><code>m</code></p></td>
 <td style="text-align: left;"><p>Numeric representation of a month, with
 leading zeros</p></td>
-<td style="text-align: left;"><p>01 through 12</p></td>
+<td style="text-align: left;"><pre><code> 01 through 12</code></pre></td>
 </tr>
 <tr>
-<td style="text-align: left;"><p>M</p></td>
-<td style="text-align: left;"><p>A three letter textual representation
-of a month</p></td>
-<td style="text-align: left;"><p>Jan through Dec</p></td>
+<td style="text-align: left;"><p><code>M</code></p></td>
+<td style="text-align: left;"><p>A 3 letter textual representation of a
+month</p></td>
+<td style="text-align: left;"><pre><code> Jan through Dec</code></pre></td>
 </tr>
 <tr>
-<td style="text-align: left;"><p>n</p></td>
+<td style="text-align: left;"><p><code>n</code></p></td>
 <td style="text-align: left;"><p>Numeric representation of a month, no
 leading zeros</p></td>
-<td style="text-align: left;"><p>1 through 12</p></td>
+<td style="text-align: left;"><pre><code> 1 through 12</code></pre></td>
 </tr>
 <tr>
-<td style="text-align: left;"><p><strong>Year</strong></p></td>
-<td style="text-align: left;"><p><strong>---</strong></p></td>
-<td style="text-align: left;"><p><strong>---</strong></p></td>
+<td style="text-align: center;"><p><strong>Year</strong></p></td>
+<td style="text-align: center;"><p><strong>---</strong></p></td>
+<td style="text-align: center;"><p><strong>---</strong></p></td>
 </tr>
 <tr>
-<td style="text-align: left;"><p>Y</p></td>
-<td style="text-align: left;"><p>Full numeric year, at least 4 digits, -
-for years BCE</p></td>
-<td style="text-align: left;"><p>Examples: -0055, 0787, 1999, 2003,
-10191</p></td>
+<td style="text-align: left;"><p><code>Y</code></p></td>
+<td style="text-align: left;"><p>Full numeric year, at least 4 digits,
+<strong>-</strong> for BCE</p></td>
+<td style="text-align: left;"><pre><code> Examples: -0055, 0787, 1999, 2003, 10191</code></pre></td>
 </tr>
 <tr>
-<td style="text-align: left;"><p><strong>Time</strong></p></td>
-<td style="text-align: left;"><p><strong>---</strong></p></td>
-<td style="text-align: left;"><p><strong>---</strong></p></td>
+<td style="text-align: center;"><p><strong>Time</strong></p></td>
+<td style="text-align: center;"><p><strong>---</strong></p></td>
+<td style="text-align: center;"><p><strong>---</strong></p></td>
 </tr>
 <tr>
-<td style="text-align: left;"><p>a</p></td>
+<td style="text-align: left;"><p><code>a</code></p></td>
 <td style="text-align: left;"><p>Lowercase Ante meridiem and Post
 meridiem</p></td>
-<td style="text-align: left;"><p>am or pm</p></td>
+<td style="text-align: left;"><pre><code> am or pm</code></pre></td>
 </tr>
 <tr>
-<td style="text-align: left;"><p>A</p></td>
+<td style="text-align: left;"><p><code>A</code></p></td>
 <td style="text-align: left;"><p>Uppercase Ante meridiem and Post
 meridiem</p></td>
-<td style="text-align: left;"><p>AM or PM</p></td>
+<td style="text-align: left;"><pre><code> AM or PM</code></pre></td>
 </tr>
 <tr>
-<td style="text-align: left;"><p>g</p></td>
-<td style="text-align: left;"><p>12-hour format of an hour without
-leading zeros</p></td>
-<td style="text-align: left;"><p>1 through 12</p></td>
-</tr>
-<tr>
-<td style="text-align: left;"><p>G</p></td>
-<td style="text-align: left;"><p>24-hour format of an hour without
-leading zeros</p></td>
-<td style="text-align: left;"><p>0 through 23</p></td>
-</tr>
-<tr>
-<td style="text-align: left;"><p>h</p></td>
-<td style="text-align: left;"><p>12-hour format of an hour with leading
+<td style="text-align: left;"><p><code>g</code></p></td>
+<td style="text-align: left;"><p>12-hr format of an hour no leading
 zeros</p></td>
-<td style="text-align: left;"><p>01 through 12</p></td>
+<td style="text-align: left;"><pre><code> 1 through 12</code></pre></td>
 </tr>
 <tr>
-<td style="text-align: left;"><p>H</p></td>
-<td style="text-align: left;"><p>24-hour format of an hour with leading
+<td style="text-align: left;"><p><code>G</code></p></td>
+<td style="text-align: left;"><p>24-hr format of an hour no leading
 zeros</p></td>
-<td style="text-align: left;"><p>00 through 23</p></td>
+<td style="text-align: left;"><pre><code> 0 through 23</code></pre></td>
 </tr>
 <tr>
-<td style="text-align: left;"><p>i</p></td>
+<td style="text-align: left;"><p><code>h</code></p></td>
+<td style="text-align: left;"><p>12-hr format of an hour with leading
+zeros</p></td>
+<td style="text-align: left;"><pre><code> 01 through 12</code></pre></td>
+</tr>
+<tr>
+<td style="text-align: left;"><p><code>H</code></p></td>
+<td style="text-align: left;"><p>24-hr format of an hour with leading
+zeros</p></td>
+<td style="text-align: left;"><pre><code> 00 through 23</code></pre></td>
+</tr>
+<tr>
+<td style="text-align: left;"><p><code>i</code></p></td>
 <td style="text-align: left;"><p>Minutes with leading zeros</p></td>
-<td style="text-align: left;"><p>00 to 59</p></td>
+<td style="text-align: left;"><pre><code> 00 to 59</code></pre></td>
 </tr>
 <tr>
-<td style="text-align: left;"><p>s</p></td>
+<td style="text-align: left;"><p><code>s</code></p></td>
 <td style="text-align: left;"><p>Seconds with leading zeros</p></td>
-<td style="text-align: left;"><p>00 through 59</p></td>
+<td style="text-align: left;"><pre><code> 00 through 59</code></pre></td>
 </tr>
 <tr>
-<td style="text-align: left;"><p><strong>Full
+<td style="text-align: center;"><p><strong>Full
 date/time</strong></p></td>
-<td style="text-align: left;"><p><strong>---</strong></p></td>
-<td style="text-align: left;"><p><strong>---</strong></p></td>
+<td style="text-align: center;"><p><strong>---</strong></p></td>
+<td style="text-align: center;"><p><strong>---</strong></p></td>
 </tr>
 <tr>
-<td style="text-align: left;"><p>c</p></td>
+<td style="text-align: left;"><p><code>c</code></p></td>
 <td style="text-align: left;"><p>ISO 8601 date</p></td>
-<td style="text-align: left;"><p>2004-02-12T15:19:21+00:00</p></td>
+<td style="text-align: left;"><pre><code> 2004-02-12T15:19:21+00:00</code></pre></td>
 </tr>
 <tr>
-<td style="text-align: left;"><p>r</p></td>
+<td style="text-align: left;"><p><code>r</code></p></td>
 <td style="text-align: left;"><p>» RFC 2822/» RFC 5322 formatted
 date</p></td>
-<td style="text-align: left;"><p>Example: Thu, 21 Dec 2000 16:01:07
-+0200</p></td>
+<td style="text-align: left;"><pre><code> Example: Thu, 21 Dec 2000 16:01:07 +0200</code></pre></td>
 </tr>
 </tbody>
 </table>

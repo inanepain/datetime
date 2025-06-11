@@ -10,7 +10,7 @@
  *
  * PHP version 8.4
  *
- * @author Philip Michael Raab<peep@inane.co.za>
+ * @author Philip Michael Raab<philip@cathedral.co.za>
  * @package inanepain\datetime
  * @category datetime
  *
@@ -104,7 +104,51 @@ class Timespan implements TimeWrapper, Stringable {
      * Uses the TimeTrait to provide additional functionality
      * related to time operations within the Timespan class.
      */
-    use TimeTrait;
+    // use TimeTrait;
+    /**
+     * Represents the number of seconds as an integer.
+     *
+     * @since 0.4.0
+     *
+     * @var int $seconds The number of seconds.
+     */
+    public private(set) int $seconds {
+        get => intval($this->milliseconds * 1000);
+        set(?int $value) {
+            $this->milliseconds = $value / 1000;
+        }
+    }
+
+    /**
+     * Represents the number of milliseconds.
+     *
+     * @since 0.4.0
+     *
+     * @var float $milliseconds The number of milliseconds as a float.
+     */
+    public private(set) float $milliseconds {
+        get => $this->microseconds * 1000;
+        // get => intval($this->microseconds * 1000);
+        set(?float $value) {
+            $this->microseconds = $value / 1000;
+        }
+    }
+
+    /**
+     * The number of microseconds.
+     *
+     * @since 0.4.0
+     *
+     * This property represents the microsecond component of a timestamp.
+     *
+     * @var float $microseconds The number of microseconds as a float.
+     */
+    public private(set) float $microseconds {
+        get => $this->microseconds;
+        set(?float $value) {
+            $this->microseconds = $value;
+        }
+    }
 
     /**
      * Timespan constructor
@@ -124,7 +168,13 @@ class Timespan implements TimeWrapper, Stringable {
          *
          * @var int
          */
-        private int $timespan = 0,
+        private int $timespan = 0 {
+            get => $this->timespan;
+            set(?int $value) {
+                $this->timespan = $value ?? 0;
+                $this->seconds = $value;
+            }
+        },
         /**
          * unit symbol character, abbreviation, word
          *

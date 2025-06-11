@@ -1,7 +1,7 @@
-= Datetime
+= Datetime image:../icon.png[title=inanepain/datetime,25]
 :author: Philip Michael Raab
 :email: <philip@cathedral.co.za>
-:keywords: datetime, date, time, timespan, timestamp, duration
+:keywords: inanepain, library, datetime, date, time, timespan, timestamp, duration
 :description: Things to help you bend space and time to your will. Or at least do some calculations with it.
 :revnumber: 0.4.0
 :revdate: 2025-05-27
@@ -15,17 +15,17 @@
 :sectanchors:
 :idprefix: topic-
 :idseparator: -
+:pkg-vendor: inanepain
+:pkg-name: datetime
+:pkg-id: {pkg-vendor}/{pkg-name}
+
+== image:../icon.png[title={pkg-id},25] {pkg-id}
 
 version: $Id$ ($Date$)
 
-Things to help you bend space and time to your will. Or at least do some calculations with it.
+{description}
 
-== Install
-
-[source,shell]
-----
-$ composer require inanepain/datetime
-----
+include::./doc/install.adoc[leveloffset=+2]
 
 <<<
 
