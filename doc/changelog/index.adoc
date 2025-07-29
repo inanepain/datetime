@@ -4,7 +4,6 @@
 :revnumber: 0.3.0
 :revdate: 2025-05-02
 :revremark: -dev
-// :version-label: Version
 :copyright: Unlicense
 :keywords: inane, datetime, date, time, timespan, timestamp, duration, timescale
 :experimental:
