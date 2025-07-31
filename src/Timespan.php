@@ -242,7 +242,7 @@ class Timespan implements TimeWrapper, Stringable {
             if (array_key_exists('symbols', $match)) $k[$match['symbols'][2]] = intval($a);
         }
 
-        return array_merge($invert, $k);;
+        return array_merge($invert, $k);
     }
 
     /**
