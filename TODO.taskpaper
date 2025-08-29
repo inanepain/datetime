@@ -1,18 +1,2 @@
-inanepain\datetime:
-  website: https://github.com/inanepain/datetime
-  - Create an Interface for Time classes
-  DatetimeInterface:
-    - Use interface for types
-  - Allow for custom units to be specified when formatting as duration @version
-  - Parse `DateInterval` @version(0.2.0)
-  - Set / Get custom point of reference to use when getting date time. @version(0.2.0)
-  general:
-    - logo / icon @done(2022-08-18)
-  doc:
-    Using Datetime to try AsciiDoc. So far I'm loving it, especially being able to split up the doc which is flaky in md at best/
-    - Timespan
-    - Timestamp
-    - README - includes indevidual class documents
-  - Get `DateInterval` @version(0.1.0) @done(2022-08-13)
-  - Get as `DateTime` or `DateTimeImmutable` @version(0.1.0) @done(2022-08-13)
-  - Add code docs @version(0.1.0) @done(2022-08-13)
+inanepain/datetime:
+  Things to help you bend space and time to your will. Or at least do some calculations with it.
