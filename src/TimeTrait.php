@@ -45,9 +45,9 @@ trait TimeTrait {
      * @var int $seconds The number of seconds.
      */
     public private(set) int $seconds {
-        get => intval($this->milliseconds / 1000);
-        set(?int $value) {
-            $this->milliseconds = $value;
+        get => intval($this->timestamp);
+        set(null|int|float $value) {
+            $this->timestamp = $value;
         }
     }
 
@@ -58,10 +58,10 @@ trait TimeTrait {
      *
      * @var int $milliseconds The number of milliseconds as an integer.
      */
-    public private(set) int $milliseconds {
-        get => intval($this->microseconds / 1000);
-        set(?int $value) {
-            $this->microseconds = $value;
+    public private(set) float $milliseconds {
+        get => intval($this->seconds * 1000);
+        set(float $value) {
+            $this->seconds = $value / 1000;
         }
     }
 
@@ -74,14 +74,10 @@ trait TimeTrait {
      *
      * @var int $microseconds The number of microseconds as an integer.
      */
-    public private(set) int $microseconds {
-        get => $this->microseconds;
-        set(?int $value) {
-            if ($value === null) $value = Timescale::MICROSECOND->timestamp();
-            if (strlen(strval($value)) < 16)
-                $value = intval(str_pad(strval($value), 16, '0', STR_PAD_RIGHT));
-
-            $this->microseconds = $value;
+    public private(set) float $microseconds {
+        get => intval($this->milliseconds * 1000);
+        set(float $value) {
+            $this->milliseconds = $value / 1000;
         }
     }
 }

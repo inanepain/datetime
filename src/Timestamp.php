@@ -53,15 +53,9 @@ class Timestamp implements TimeWrapper, Stringable {
      * @var int the timestamp
      */
     public private(set) int $timestamp {
-        get {
-            return match ($this->timescale) {
-                Timescale::SECOND => $this->seconds,
-                Timescale::MILLISECOND => $this->milliseconds,
-                Timescale::MICROSECOND => $this->microseconds,
-            };
-        }
-        set(?int $value) {
-            $this->seconds = $value;
+        get => intval($this->timestamp);
+        set(null|int|float $value) {
+            $this->timestamp = $value ?: time();
         }
     }
 
@@ -76,12 +70,11 @@ class Timestamp implements TimeWrapper, Stringable {
     /**
      * Constructor for the Timestamp class.
      *
-     * @param int|null $timestamp The timestamp value. If null, the current time will be used.
-     * @param ?Timescale $timescale The timescale unit for precision. If null will autodetect the timescale.
+     * @param int|null $seconds The timestamp value. If null, the current time will be used.
      */
-    public function __construct(?int $timestamp = null, ?Timescale $timescale = null) {
-        $this->timescale = $timescale ?: (Timescale::tryFromTimestamp($timestamp ?: Timescale::SECOND->timestamp()) ?: Timescale::SECOND);
-        $this->timestamp = $timestamp ?: $this->timescale->timestamp();
+    public function __construct(?int $seconds = null) {
+        $this->timescale = Timescale::SECOND;
+        $this->timestamp = $seconds ?? time();
     }
 
     /**
@@ -219,7 +212,7 @@ class Timestamp implements TimeWrapper, Stringable {
     public function diff(int|Timestamp $timestamp): Timespan {
         // $ts = is_int($timestamp) ? $timestamp : $timestamp->timestamp;
         $ts = is_int($timestamp) ? $timestamp : $timestamp->{$this->timescale->unit()};
-        return new Timespan($ts - $this->timestamp);
+        return new Timespan($this->timestamp - $ts);
     }
 
     /**

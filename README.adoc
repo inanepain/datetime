@@ -27,7 +27,7 @@ version: $Id$ ($Date$)
 
 :leveloffset: +2
 
-== Installw
+= Install
 :author: Philip Michael Raab
 :email: <philip@cathedral.co.za>
 :keywords: datetime, date, time, timespan, timestamp, duration

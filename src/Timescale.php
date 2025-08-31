@@ -41,6 +41,8 @@ use const true;
  *
  * Represents a timescale with integer values.
  * This enum implements the `CoreEnumInterface`, providing additional functionality for working with enumerated types.
+ * 
+ * TODO: version bump
  *
  * @version 0.1.0
  */
@@ -100,6 +102,15 @@ enum Timescale: int implements CoreEnumInterface {
         $length = strlen($timestamp);
 
         switch ($length) {
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
             case 10:
                 return static::SECOND;
             case 13:
@@ -131,9 +142,9 @@ enum Timescale: int implements CoreEnumInterface {
      */
     public function timestamp(bool $asObject = false): int|Timestamp {
         $ts = match ($this) {
-            self::MICROSECOND => intval(microtime(true) * 1000000),
-            self::MILLISECOND => intval(microtime(true) * 1000),
-            self::SECOND => intval(microtime(true)),
+            self::MICROSECOND => intval(time() * 1000000),
+            self::MILLISECOND => intval(time() * 1000),
+            self::SECOND => time(),
         };
 
         return $asObject ? new Timestamp($ts) : $ts;

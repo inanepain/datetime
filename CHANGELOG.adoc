@@ -1,43 +1,110 @@
-= Changelog: Datetime
+= Changelog: DateTime
 :author: Philip Michael Raab
 :email: <philip@cathedral.co.za>
-:revnumber: 0.3.1
-:revdate: 2025-04-30
-:revremark: release
-:version-label: dev
+:revnumber: 0.3.0
+:revdate: 2025-05-02
+:revremark: -dev
 :copyright: Unlicense
 :keywords: inane, datetime, date, time, timespan, timestamp, duration, timescale
 :experimental:
 :hide-uri-scheme:
 :icons: font
 :source-highlighter: highlight.js
+:sectnums!:
 :toc: auto
 :sectanchors:
 
- version: $Id$ ($Date$)
+Version: $Id$ ($Date$)
 
 == History
 
-=== 0.4.0-dev (2025 Apr xx)
+:leveloffset: +2
+
+= 0.4.0-dev (2025 May xx)
+:author: Philip Michael Raab
+:email: <philip@cathedral.co.za>
+:revnumber: 0.4.0
+:revdate: 2025-05-xx
+:revremark: -dev
+:copyright: Unlicense
+:keywords: inane, datetime, date, time, timespan, timestamp, duration, timescale
+:experimental:
+:hide-uri-scheme:
+:icons: font
+:source-highlighter: highlight.js
+:sectnums!:
+:toc: auto
+:sectanchors:
 
 * new: `Timestamp` now stores the time as a microsecond timestamp
 * new: `Timestamp` has new *readonly* properties for: *seconds*, *milliseconds*, *microseconds*
-* new: `Timescale` enum for timestamp precision: seconds, milliseconds, microseconds
+* new: `Timescale` enum for timestamp precision: *seconds*, *milliseconds*, *microseconds*
+* update: `Timespan` `ts2dur` & `getDuration` new param `$spaced` toggle space between *number* & *unit*
 * new: `TimeTrait` common methods for time classes
+* update: `Timespan` updated the months calculation to be more accurate (average 30.44 days)
+* new: `Timespan::format` added param `$units` to specify unites in duration
 * minor bugfixes and improvements to code and documentation
 
-=== 0.3.1 (2022 Nov 09)
+:leveloffset!:
+:leveloffset: +2
+
+= 0.3.1 (2022 Nov 09)
+:author: Philip Michael Raab
+:email: <philip@cathedral.co.za>
+:revnumber: 0.3.1
+:revdate: 2022-11-09
+:copyright: Unlicense
+:keywords: inane, datetime, date, time, timespan, timestamp, duration, timescale
+:experimental:
+:hide-uri-scheme:
+:icons: font
+:source-highlighter: highlight.js
+:sectnums!:
+:toc: auto
+:sectanchors:
 
 * new: `Timestamp::now:int` Get current unix time
 * doc: Improved php doc comments
 
-=== 0.3.0 (2022 Oct 14)
+:leveloffset!:
+:leveloffset: +2
+
+= 0.3.0 (2022 Oct 14)
+:author: Philip Michael Raab
+:email: <philip@cathedral.co.za>
+:revnumber: 0.3.0
+:revdate: 2022-10-14
+:copyright: Unlicense
+:keywords: inane, datetime, date, time, timespan, timestamp, duration, timescale
+:experimental:
+:hide-uri-scheme:
+:icons: font
+:source-highlighter: highlight.js
+:sectnums!:
+:toc: auto
+:sectanchors:
 
 * new: `TimeWrapper::absoluteCopy` Get a copy with an absolute value
 * new: `Timestamp::createFromFormat` Parses a time string according to a specified format
 * update: Improvements to documentation
 
-=== 0.2.0 (2022 Sep 22)
+:leveloffset!:
+:leveloffset: +2
+
+= 0.2.0 (2022 Sep 22)
+:author: Philip Michael Raab
+:email: <philip@cathedral.co.za>
+:revnumber: 0.2.0
+:revdate: 2022-09-22
+:copyright: Unlicense
+:keywords: inane, datetime, date, time, timespan, timestamp, duration, timescale
+:experimental:
+:hide-uri-scheme:
+:icons: font
+:source-highlighter: highlight.js
+:sectnums!:
+:toc: auto
+:sectanchors:
 
 * new: `TimeWrapper` interface for time unit classes
 * new: `Timestamp` wrapper around timestamps
@@ -49,6 +116,24 @@
 * update: `Timespan`: handles historic/negative values
 * update: `Timespan`: format now returns duration
 
-=== 0.1.0 (2022 Aug 13)
+:leveloffset!:
+:leveloffset: +2
+
+= 0.1.0 (2022 Aug 13)
+:author: Philip Michael Raab
+:email: <philip@cathedral.co.za>
+:revnumber: 0.1.0
+:revdate: 2022-08-13
+:copyright: Unlicense
+:keywords: inane, datetime, date, time, timespan, timestamp, duration, timescale
+:experimental:
+:hide-uri-scheme:
+:icons: font
+:source-highlighter: highlight.js
+:sectnums!:
+:toc: auto
+:sectanchors:
 
 * initial
+
+:leveloffset!:

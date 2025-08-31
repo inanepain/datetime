@@ -55,6 +55,8 @@ use const null;
  * Timespan
  *
  * A duration of time stored as a number of seconds and can be formatted for display as desired.
+ * 
+ * TODO: version bump
  *
  * @version 0.4.0
  */
@@ -385,13 +387,16 @@ class Timespan implements TimeWrapper, Stringable {
      * - %h: hours
      * - %i: minutes
      * - %s: seconds
+     * 
+     * @since version specify units used in duration.
      *
      * @param string $format string template with symbols as placeholders to be filled
+     * @param string $units units to populate
      *
      * @return string formatted timespan string
      */
-    public function format(string $format = '%r%yyrs %mmonth %ddays %hhrs %imin %ssecs'): string {
-        $r = static::parseDuration($this->getDuration());
+    public function format(string $format = '%r%yyrs %mmonth %ddays %hhrs %imin %ssecs', string $units = 'ymdhis'): string {
+        $r = static::parseDuration($this->getDuration(units: str_split($units)));
         $r['r'] = $r['r'] < 0 ? '-' : '';
 
         foreach($r as $u => $v)
