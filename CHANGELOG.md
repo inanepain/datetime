@@ -12,8 +12,8 @@ Version: $Id$ ($Date$)
 - new: `Timescale` enum for timestamp precision: **seconds**,
   **milliseconds**, **microseconds**
 
-- update: `Timespan` `ts2dur` & `getDuration` new param `$spaced` toggle
-  space between **number** & **unit**
+- update: `Timespan` `ts2dur` & `getDuration` new parameter `$spaced` to
+  add a space between **number** & **unit**
 
 - new: `TimeTrait` common methods for time classes
 

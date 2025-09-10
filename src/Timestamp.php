@@ -48,7 +48,7 @@ class Timestamp implements TimeWrapper, Stringable {
     /**
      * timestamp
      *
-     * Returns the timestamp based on the set timescale.
+     * Returns the unix timestamp in seconds.
      *
      * @var int the timestamp
      */
@@ -168,7 +168,6 @@ class Timestamp implements TimeWrapper, Stringable {
      * @return \DateTime|\DateTimeImmutable DateTime
      */
     public function getDateTime(bool $immutable = false): DateTime|DateTimeImmutable {
-        // return $immutable ? new DateTimeImmutable(datetime: "@{$this->timestamp}") : new DateTime("@{$this->timestamp}");
         return $immutable ? new DateTimeImmutable(datetime: "@{$this->seconds}") : new DateTime("@{$this->seconds}");
     }
 
@@ -185,7 +184,6 @@ class Timestamp implements TimeWrapper, Stringable {
     public function format(string $format = 'Y-m-d H:i:s'): string {
         if (empty($format)) $format = 'Y-m-d H:i:s';
 
-        // return date($format, $this->timestamp);
         return date($format, $this->seconds);
     }
 
@@ -197,7 +195,6 @@ class Timestamp implements TimeWrapper, Stringable {
      * @return \Inane\Datetime\Timestamp
      */
     public function adjust(int|Timespan $timespan): self {
-        // $this->timestamp += is_int($timespan) ? $timespan : $timespan->getSeconds();
         $this->timestamp += is_int($timespan) ? $timespan : $timespan->{$this->timescale->unit()};
         return $this;
     }
@@ -210,9 +207,8 @@ class Timestamp implements TimeWrapper, Stringable {
      * @return \Inane\Datetime\Timespan
      */
     public function diff(int|Timestamp $timestamp): Timespan {
-        // $ts = is_int($timestamp) ? $timestamp : $timestamp->timestamp;
         $ts = is_int($timestamp) ? $timestamp : $timestamp->{$this->timescale->unit()};
-        return new Timespan($this->timestamp - $ts);
+        return new Timespan($ts - $this->timestamp); // Gives same result as DateTime::diff
     }
 
     /**
