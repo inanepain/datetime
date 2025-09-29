@@ -26,6 +26,7 @@ namespace Inane\Datetime;
 
 use DateTime;
 use DateTimeImmutable;
+use Inane\Stdlib\Parser\FuzzyTimeTrait;
 use Stringable;
 
 use function abs;
@@ -45,6 +46,8 @@ use function time;
  * @version 0.4.0
  */
 class Timestamp implements TimeWrapper, Stringable {
+    use FuzzyTimeTrait;
+    
     /**
      * timestamp
      *
@@ -169,6 +172,15 @@ class Timestamp implements TimeWrapper, Stringable {
      */
     public function getDateTime(bool $immutable = false): DateTime|DateTimeImmutable {
         return $immutable ? new DateTimeImmutable(datetime: "@{$this->seconds}") : new DateTime("@{$this->seconds}");
+    }
+
+    /**
+     * Get current Timestamp as fuzzy time.
+     * 
+     * @return string fuzzy time.
+     */
+    public function getFuzzyTime(): string {
+        return self::fuzzyClock($this);
     }
 
     /**
