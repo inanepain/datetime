@@ -5,17 +5,19 @@
  *
  * Inane Datetime Library
  *
- * PHP version 8.1
+ * $Id$
+ * $Date$
  *
- * @author Philip Michael Raab<peep@inane.co.za>
- * @package Inane\Datetime
+ * PHP version 8.4
+ *
+ * @author Philip Michael Raab<philip@cathedral.co.za>
+ * @package inanepain\datetime
  * @category datetime
  *
  * @license UNLICENSE
- * @license https://github.com/inanepain/datetime/raw/develop/UNLICENSE UNLICENSE
+ * @license https://unlicense.org/UNLICENSE UNLICENSE
  *
- * @version $Id$
- * $Date$
+ * _version_ $version
  */
 
 declare(strict_types=1);
@@ -24,12 +26,13 @@ namespace Inane\Datetime;
 
 use DateTime;
 use DateTimeImmutable;
+use Inane\Stdlib\Parser\FuzzyTimeTrait;
 use Stringable;
 
 use function abs;
 use function date;
 use function is_int;
-use function is_null;
+use function intval;
 use function time;
 
 /**
@@ -40,39 +43,41 @@ use function time;
  *
  * @property int $timestamp - unix timestamp
  *
- * @package Inane\Datetime
- *
- * @version 0.3.1
+ * @version 0.4.0
  */
 class Timestamp implements TimeWrapper, Stringable {
+    use FuzzyTimeTrait;
+    
     /**
-     * Timestamp constructor
+     * timestamp
      *
-     * @param int $timestamp seconds
+     * Returns the unix timestamp in seconds.
      *
-     * @return void
+     * @var int the timestamp
      */
-    public function __construct(
-        /**
-         * timestamp (seconds)
-         *
-         * @var int
-         */
-        private ?int $timestamp = null,
-    ) {
-        if (is_null($this->timestamp)) $this->timestamp = time();
+    public private(set) int $timestamp {
+        get => intval($this->timestamp);
+        set(null|int|float $value) {
+            $this->timestamp = $value ?: time();
+        }
     }
 
     /**
-     * Get property $name
-     *
-     * @return string date
+     * @var Timescale $timescale The timescale used for the timestamp,
+     *                           defaulting to seconds.
      */
-    public function __get(string $name): mixed {
-        return match($name) {
-            'timestamp' => $this->timestamp,
-            default => throw new \Inane\Stdlib\Exception\InvalidPropertyException("Timestamp:=not found: `$name`!"),
-        };
+    private Timescale $timescale;
+
+    use TimeTrait;
+
+    /**
+     * Constructor for the Timestamp class.
+     *
+     * @param int|null $seconds The timestamp value. If null, the current time will be used.
+     */
+    public function __construct(?int $seconds = null) {
+        $this->timescale = Timescale::SECOND;
+        $this->timestamp = $seconds ?? time();
     }
 
     /**
@@ -105,7 +110,7 @@ class Timestamp implements TimeWrapper, Stringable {
      * @return static|false Returns a new Timestamp instance or false on failure.
      */
     public static function createFromFormat(string $format, string $datetime): static|false {
-        $datetime = \DateTime::createFromFormat($format, $datetime);
+        $datetime = DateTime::createFromFormat($format, $datetime);
 
         return $datetime === false ? false : new static(intval($datetime->format('U')));
     }
@@ -124,10 +129,38 @@ class Timestamp implements TimeWrapper, Stringable {
     /**
      * Get as seconds
      *
+     * length: 10 digits
+     *
      * @return int seconds
      */
     public function getSeconds(): int {
-        return $this->timestamp;
+        return $this->seconds;
+    }
+
+    /**
+     * Get as milliseconds
+     *
+     * length: 13 digits
+     *
+     * @since 0.4.0
+     *
+     * @return int milliseconds
+     */
+    public function getMilliseconds(): int {
+        return $this->milliseconds;
+    }
+
+    /**
+     * Get as microseconds
+     *
+     * length: 16 digits
+     *
+     * @since 0.4.0
+     *
+     * @return int microseconds
+     */
+    public function getMicroseconds(): int {
+        return $this->microseconds;
     }
 
     /**
@@ -138,7 +171,16 @@ class Timestamp implements TimeWrapper, Stringable {
      * @return \DateTime|\DateTimeImmutable DateTime
      */
     public function getDateTime(bool $immutable = false): DateTime|DateTimeImmutable {
-        return $immutable ? new DateTimeImmutable('@' . $this->timestamp) : new DateTime('@' . $this->timestamp);
+        return $immutable ? new DateTimeImmutable(datetime: "@{$this->seconds}") : new DateTime("@{$this->seconds}");
+    }
+
+    /**
+     * Get current Timestamp as fuzzy time.
+     * 
+     * @return string fuzzy time.
+     */
+    public function getFuzzyTime(): string {
+        return self::fuzzyClock($this);
     }
 
     /**
@@ -154,7 +196,7 @@ class Timestamp implements TimeWrapper, Stringable {
     public function format(string $format = 'Y-m-d H:i:s'): string {
         if (empty($format)) $format = 'Y-m-d H:i:s';
 
-        return date($format, $this->timestamp);
+        return date($format, $this->seconds);
     }
 
     /**
@@ -165,7 +207,7 @@ class Timestamp implements TimeWrapper, Stringable {
      * @return \Inane\Datetime\Timestamp
      */
     public function adjust(int|Timespan $timespan): self {
-        $this->timestamp += is_int($timespan) ? $timespan : $timespan->getSeconds();
+        $this->timestamp += is_int($timespan) ? $timespan : $timespan->{$this->timescale->unit()};
         return $this;
     }
 
@@ -177,8 +219,8 @@ class Timestamp implements TimeWrapper, Stringable {
      * @return \Inane\Datetime\Timespan
      */
     public function diff(int|Timestamp $timestamp): Timespan {
-        $ts = is_int($timestamp) ? $timestamp : $timestamp->timestamp;
-        return new Timespan($ts - $this->timestamp);
+        $ts = is_int($timestamp) ? $timestamp : $timestamp->{$this->timescale->unit()};
+        return new Timespan($ts - $this->timestamp); // Gives same result as DateTime::diff
     }
 
     /**
@@ -189,6 +231,6 @@ class Timestamp implements TimeWrapper, Stringable {
      * @return \Inane\Datetime\Timestamp An absolute copy
      */
     public function absoluteCopy(): Timestamp {
-        return new static(abs($this->timestamp));
+        return new static(abs($this->timestamp), $this->timescale);
     }
 }

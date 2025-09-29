@@ -1,0 +1,25 @@
+= Changelog: inanepain/datetime
+:author: Philip Michael Raab
+:email: <philip@cathedral.co.za>
+:revnumber: 0.4.0
+:revdate: 2025-09-29
+:copyright: Unlicense
+:description: Things to help you bend space and time to your will. Or at least do some calculations with it.
+:keywords: inane, datetime, date, time, timespan, timestamp, duration, timescale, FuzzyTime
+:experimental:
+:hide-uri-scheme:
+:icons: font
+:source-highlighter: highlight.js
+:sectnums!:
+:toc: auto
+:sectanchors:
+
+Version: $Id$ ($Date$)
+
+== History
+
+include::./release/0.4.0.adoc[leveloffset=+2]
+include::./release/0.3.1.adoc[leveloffset=+2]
+include::./release/0.3.0.adoc[leveloffset=+2]
+include::./release/0.2.0.adoc[leveloffset=+2]
+include::./release/0.1.0.adoc[leveloffset=+2]

@@ -1,0 +1,54 @@
+= TimeTrait
+:author: Philip Michael Raab
+:email: <philip@cathedral.co.za>
+:keywords: datetime, date, time, timespan, timestamp, duration
+:revnumber: 0.1.0
+:revdate: 2025-04-30
+:copyright: Unlicense
+:experimental:
+:hide-uri-scheme:
+:icons: font
+:source-highlighter: highlight.js
+:sectnums: |,all|
+:toc: auto
+:sectanchors:
+
+The `((TimeTrait))` *((trait))* simple adds some properties for the three timestamps: *((seconds))*, *((milliseconds))* and *((microseconds))*.
+
+<<<
+
+== Properties
+
+// tag::traitProperties[]
+
+There are _three_ *properties* added by `TimeTrait`:
+
+.trait ((properties))
+* (((Timescale, seconds)))public private(set) int $seconds
+* (((Timescale, milliseconds)))public private(set) int $milliseconds
+* (((Timescale, microseconds)))public private(set) int $microseconds
+
+Only `$microseconds` actually stores a value while the `$milliseconds` and `$seconds` calculate their value from it.
+
+// end::traitProperties[]
+
+=== $seconds (int)
+
+Returns a timestamp the has 10 digits.
+
+.example
+    1746045170
+
+=== $milliseconds (int)
+
+Returns a timestamp the has 13 digits.
+
+.example
+    1746045170733
+
+=== $microseconds (int)
+
+Returns a timestamp the has 16 digits.
+
+.example
+    1746045170733444

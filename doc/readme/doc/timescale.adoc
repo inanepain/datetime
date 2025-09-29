@@ -1,0 +1,35 @@
+= Timescale
+:author: Philip Michael Raab
+:email: <philip@cathedral.co.za>
+:keywords: datetime, date, time, timespan, timestamp, duration
+:revnumber: 0.1.0
+:revdate: 2025-04-30
+:copyright: Unlicense
+:experimental:
+:hide-uri-scheme:
+:icons: font
+:source-highlighter: highlight.js
+:sectnums: |,all|
+:toc: auto
+:sectanchors:
+
+The `((Timescale))` *((enum))* simply defines three *((timestamps))* of various length: *((seconds))* (10 digits), *((milliseconds))* (13 digits) and *((microseconds))* (16 digits).
+
+== Cases
+
+* (((unit, seconds)))SECOND
+    - 10 digits
+* (((unit, milliseconds)))MILLISECOND
+    - 13 digits
+* (((unit, microseconds)))MICROSECOND
+    - 16 digits
+
+== Methods
+
+.(((method, class)))class methods
+* (((Timescale, tryFromName)))public static function *tryFromName*(string $name, bool $ignoreCase = false): ?static
+* (((Timescale, tryFromTimestamp)))public static function *tryFromTimestamp*(int|Timestamp $timestamp): ?Timescale
+
+.(((method, instance)))instance methods
+* (((Timescale, timestamp)))public function *timestamp*(bool $asObject = false): int|Timestamp
+* (((Timescale, unit)))public function *unit*(): string

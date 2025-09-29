@@ -1,19 +1,27 @@
 = Timestamp
 :author: Philip Michael Raab
-:email: <peep@inane.co.za>
-:revnumber: 0.1.1
-:revdate: 2022-10-14
+:email: <philip@cathedral.co.za>
+:keywords: datetime, date, time, timespan, timestamp, duration
+:revnumber: 0.4.0
+:revdate: 2025-04-30
+:copyright: Unlicense
 :experimental:
+:hide-uri-scheme:
 :icons: font
 :source-highlighter: highlight.js
 :sectnums: |,all|
 :toc: auto
+:sectanchors:
 
-The `Timestamp` *class* is a truly simple wrapper for an *epoch timestamp*. It's mainly useful when used in combination with a link:timespan.adoc[`Timespan`] to do chained date calculations and then displaying the formatted result. Essentially it saves typing a few lines of code here and there and I think it looks a tad neater too. The original bit of code was primarily used as a convenience class to easily switch between various date and time structures.
+The `((Timestamp))` *((class))* is a truly simple wrapper for an *epoch timestamp*. It's mainly useful when used in combination with a link:timespan.adoc[`Timespan`] to do chained date calculations and then displaying the formatted result. Essentially it saves typing a few lines of code here and there and I think it looks a tad neater too. The original bit of code was primarily used as a convenience class to easily switch between various date and time structures.
 
-Nuff said, here comes it's breakdown.
+Enough chatter, here comes it's breakdown.
 
 <<<
+
+== Properties
+
+include::timetrait.adoc[tag=traitProperties,leveloffset=+1]
 
 == Methods
 
@@ -21,19 +29,19 @@ include::timewrapper.adoc[tag=interfaceMethods,leveloffset=+1]
 
 And _six_ class methods.
 
-.class methods
-* public function __construct(?int $timestamp = null)
-* public static function createFromFormat(string $format, string $datetime): static|false
-* public static function now(): int
-* public function getDateTime(bool $immutable = false): DateTime|DateTimeImmutable
-* public function adjust(int|Timespan $timespan): self
-* public function diff(int|Timestamp $timestamp): Timespan
+.(((method, class)))class methods
+* (((Timestamp, construct)))public function __construct(?int $timestamp = null)
+* (((Timestamp, createFromFormat)))public static function createFromFormat(string $format, string $datetime): static|false
+* (((Timestamp, now)))public static function now(): int
+* (((Timestamp, getDateTime)))public function getDateTime(bool $immutable = false): DateTime|DateTimeImmutable
+* (((Timestamp, adjust)))public function adjust(int|Timespan $timespan): self
+* (((Timestamp, diff)))public function diff(int|Timestamp $timestamp): Timespan
 
 === Create / New
 
 In addition to instantiating a `Timestamp` using `new` the static method `createFromFormat` can also be used to create a `Timestamp` instance. The constructor only takes a unix timestamp, for all other values the create method is used.
 
-.Creating Timestamps: default and custom values.
+.(((example, Timestamp)))Creating Timestamps: default and custom values.
 [source,php]
 ----
 $now = new Timestamp(); // <1>
@@ -50,7 +58,7 @@ Once you have a Timestamp it's easy to retrieve the date as various types that b
 * int
 * DateTime/DateTimeImmutable
 
-.Getting values to work with or display.
+.(((example, Timestamp)))Getting values to work with or display.
 [source,php]
 ----
 $user->setAnniversary($then->getSeconds()); // <1>
@@ -63,13 +71,13 @@ $tokyoTime = $now->getDateTime()->setTimezone($timeZone); // <3>
 
 === Calculate
 
-A Timestamp can also work directly on DateTime to do calculations. When getting the difference between two Timestamps the result will be positive when the end Timestamp is greater then the source/initial Timestamp.
+A Timestamp can also work directly on DateTime to do calculations. When getting the difference between two Timestamps the result will be positive when the end Timestamp is greater than the source/initial Timestamp.
 Using `$now->diff($then)`, we can read it as; how much time needs to be added to `$now` to get to `$then`.
 If `$now` is today and `$then` is yesterday, we need to add a negative day; `-1`. But if `$then` were tomorrow, it would be the same distance `1`, but this time positive.
 
-If the it's the just size of the gap between Timestamps that's needed the `absoluteCopy` method can be used on the result or use the format method and ignore sign format symbol.
+If it's the just size of the gap between Timestamps that's needed the `absoluteCopy` method can be used on the result or use the format method and ignore sign format symbol.
 
-.Time Manipulating
+.(((example, Timestamp)))Time Manipulating
 [source,php]
 ----
 $between = $now->diff($then); <1>
@@ -84,7 +92,7 @@ echo $between->format('Formatted time between: %r%y years and %m months'), PHP_E
 
 Figuring out what came first, the chicken or the egg, might be an unending debate. But with a `Timestamp` is just as easy as a *timestamp*, simply use the usual _great_ (>), _less_ (<) or _equals_ (==) comparators.
 
-.What came first, chicken or egg?
+.(((example, Timestamp)))What came first, chicken or egg?
 [source,php]
 ----
 $chicken = new \Inane\Datetime\Timestamp(-27106883520);
@@ -97,9 +105,3 @@ else echo "Something impossible has happened!!!", PHP_EOL;
 ----
 <1> greater or less than works as normal, using the seconds for comparison
 <2> same goes for equality
-
-<<<
-
-== That's it for now
-
-Easy isn't it.

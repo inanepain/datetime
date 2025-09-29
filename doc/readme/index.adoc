@@ -1,0 +1,84 @@
+= Datetime image:../icon.png[title=inanepain/datetime,25]
+:author: Philip Michael Raab
+:email: <philip@cathedral.co.za>
+:keywords: inanepain, library, datetime, date, time, timespan, timestamp, duration, FuzzyTime
+:description: Things to help you bend space and time to your will. Or at least do some calculations with it.
+:revnumber: 0.4.0
+:revdate: 2025-09-29
+:copyright: Unlicense
+:experimental:
+:doctype: book
+:hide-uri-scheme:
+:icons: font
+:source-highlighter: highlight.js
+:toc: left
+:sectanchors:
+:idprefix: topic-
+:idseparator: -
+:pkg-vendor: inanepain
+:pkg-name: datetime
+:pkg-id: {pkg-vendor}/{pkg-name}
+
+== image:../icon.png[title={pkg-id},25] {pkg-id}
+
+version: $Id$ ($Date$)
+
+{description}
+
+include::./doc/install.adoc[leveloffset=+2]
+
+<<<
+
+== Datetime
+:sectnums: |,all|
+:view-mode: project
+
+This is meant as more of an introduction to the various classes, interfaces, enums and anything else found in the `Inane\Datetime` namespace and not an in-depth guide.
+
+.Interfaces
+* <<TimeWrapper>>
+
+.Traits
+* <<Timescale>>
+
+.Enums
+* <<TimeTrait>>
+
+.Classes
+* <<Timespan>>
+* <<Timestamp>>
+
+<<<
+
+include::./doc/timewrapper.adoc[leveloffset=+2]
+
+[page-layout=portrait]
+<<<
+
+include::./doc/timetrait.adoc[leveloffset=+2]
+
+<<<
+
+include::./doc/timescale.adoc[leveloffset=+2]
+
+<<<
+
+include::./doc/timespan.adoc[leveloffset=+2]
+
+<<<
+
+include::./doc/timestamp.adoc[leveloffset=+2]
+
+[glossary]
+== Glossary
+
+[glossary]
+Timespan:: a duration of time, a period of time, a length of time
+Timestamp:: a moment in time, a point in time, a date and time
+Timescale:: a unit of time, a scale of time, a measurement of time
+seconds:: 10 digits
+milliseconds:: 13 digits
+microseconds:: 16 digits
+
+[index]
+== Index

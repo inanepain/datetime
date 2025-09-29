@@ -1,9 +1,12 @@
 = Timespan
 :author: Philip Michael Raab
-:email: <peep@inane.co.za>
-:revnumber: 0.2.1
-:revdate: 2022-10-14
+:email: <philip@cathedral.co.za>
+:keywords: datetime, date, time, timespan, timestamp, duration
+:revnumber: 0.4.0
+:revdate: 2025-04-30
+:copyright: Unlicense
 :experimental:
+:hide-uri-scheme:
 :table-stripes: even
 :icons: font
 :source-highlighter: highlight.js
@@ -12,12 +15,21 @@
 :fn-moment: pass:c,q[footnote:[*moment:* exact point in time.]]
 :fn-timestamp: pass:c,q[footnote:[*timestamp:* a.k.a. unix time, epoch time, posix time and various combinations there of.]]
 :toc: auto
+:sectanchors:
 
-The `Timespan` *class* represents a _timespan_ or _duration_(fn-duration) which is essentially a number of seconds. As with most things, seconds can be expressed in various formats to suite the situation, for instance `5400` and `2years 3d 7secs`, `Timespan` makes this easy for you.
+The `((Timespan))` *((class))* represents a _timespan_ or _((duration))_(fn-duration) which is essentially a number of seconds. As with most things, seconds can be expressed in various formats to suite the situation, for instance `5400` and `2years 3d 7secs`, `Timespan` makes this easy for you.
 
 Quickly get a _moment_{fn-moment} in the _future_ or _past_ by *adding* or *subtracting* a `Timespan` from a link:timestamp.adoc[`Timestamp`]. Working together these two classes have you covered in the _past_, _present_, _future_ or anytime in _between_.
 
-NOTE: The Timespan as is a period of time or duration and a Timestamp{fn-timestamp} is a moment or point in time.
+NOTE: The Timespan as is a ((period)) of time or ((duration)) and a Timestamp{fn-timestamp} is a moment or point in time.
+
+== Notes on Methods
+
+The methods `format` and `getDuration` are similar but there are bigger differences between the two than that `format` allows for a far great level of customising the output string.
+The main difference is a big one with far-reaching consequences if not understood correctly. The `format` method is a pure display method that will only substitute existing values into the template string. Hence, all it takes as a parameter is the template string.
+The `duration` method calculates the duration using the supplied unit of measurement. The only formatting options it has is weather to show the unit of time: character, abbreviated, word.
+
+<<<
 
 == Moments and Durations
 
@@ -53,7 +65,7 @@ NOTE: A *unix timestamp* or *epoc time* while being a moment in time as also a *
 
 <<<
 
-== Examples
+== (((example, Timespan)))Examples
 
 .example
 [source,php]

@@ -1,30 +1,66 @@
-= Changelog: Datetime
+= Changelog: inanepain/datetime
 :author: Philip Michael Raab
-:email: <peep@inane.co.za>
-:revnumber: 0.3.1
-:revdate: 2022-11-09
-:revremark: release
+:email: <philip@cathedral.co.za>
+:revnumber: 0.4.0
+:revdate: 2025-09-29
+:copyright: Unlicense
+:description: Things to help you bend space and time to your will. Or at least do some calculations with it.
+:keywords: inane, datetime, date, time, timespan, timestamp, duration, timescale, FuzzyTime
 :experimental:
+:hide-uri-scheme:
 :icons: font
 :source-highlighter: highlight.js
+:sectnums!:
 :toc: auto
+:sectanchors:
 
- version: $Id$ ($Date$)
+Version: $Id$ ($Date$)
 
 == History
 
-=== 0.3.1 (2022 Nov 09)
+:leveloffset: +2
+
+= 0.4.0 (2025 Sep 29)
+:revnumber: 0.4.0
+:revdate: 2025-09-29
+
+* new: `Timestamp` now stores the time as a microsecond timestamp
+* new: `Timestamp` has new *readonly* properties for: *seconds*, *milliseconds*, *microseconds*
+* new: `Timescale` enum for timestamp precision: *seconds*, *milliseconds*, *microseconds*
+* update: `Timespan` `ts2dur` & `getDuration` new parameter `$spaced` to add a space between *number* & *unit*
+* new: `TimeTrait` common methods for time classes
+* update: `Timespan` updated the months calculation to be more accurate (average 30.44 days)
+* new: `Timespan::format` added param `$units` to specify unites in duration
+* new: use `FuzzyTimeTrait` with methods 'static::fussyClock' with input and `getFuzzyTime` with current `Timestamp`
+* minor bugfixes and improvements to code and documentation
+
+:leveloffset!:
+:leveloffset: +2
+
+= 0.3.1 (2022 Nov 09)
+:revnumber: 0.3.1
+:revdate: 2022-11-09
 
 * new: `Timestamp::now:int` Get current unix time
 * doc: Improved php doc comments
 
-=== 0.3.0 (2022 Oct 14)
+:leveloffset!:
+:leveloffset: +2
+
+= 0.3.0 (2022 Oct 14)
+:revnumber: 0.3.0
+:revdate: 2022-10-14
 
 * new: `TimeWrapper::absoluteCopy` Get a copy with an absolute value
 * new: `Timestamp::createFromFormat` Parses a time string according to a specified format
 * update: Improvements to documentation
 
-=== 0.2.0 (2022 Sep 22)
+:leveloffset!:
+:leveloffset: +2
+
+= 0.2.0 (2022 Sep 22)
+:revnumber: 0.2.0
+:revdate: 2022-09-22
 
 * new: `TimeWrapper` interface for time unit classes
 * new: `Timestamp` wrapper around timestamps
@@ -36,6 +72,13 @@
 * update: `Timespan`: handles historic/negative values
 * update: `Timespan`: format now returns duration
 
-=== 0.1.0 (2022 Aug 13)
+:leveloffset!:
+:leveloffset: +2
+
+= 0.1.0 (2022 Aug 13)
+:revnumber: 0.1.0
+:revdate: 2022-08-13
 
 * initial
+
+:leveloffset!:

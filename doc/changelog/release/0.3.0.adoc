@@ -1,0 +1,7 @@
+= 0.3.0 (2022 Oct 14)
+:revnumber: 0.3.0
+:revdate: 2022-10-14
+
+* new: `TimeWrapper::absoluteCopy` Get a copy with an absolute value
+* new: `Timestamp::createFromFormat` Parses a time string according to a specified format
+* update: Improvements to documentation
