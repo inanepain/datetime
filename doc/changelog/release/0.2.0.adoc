@@ -1,17 +1,6 @@
 = 0.2.0 (2022 Sep 22)
-:author: Philip Michael Raab
-:email: <philip@cathedral.co.za>
 :revnumber: 0.2.0
 :revdate: 2022-09-22
-:copyright: Unlicense
-:keywords: inane, datetime, date, time, timespan, timestamp, duration, timescale
-:experimental:
-:hide-uri-scheme:
-:icons: font
-:source-highlighter: highlight.js
-:sectnums!:
-:toc: auto
-:sectanchors:
 
 * new: `TimeWrapper` interface for time unit classes
 * new: `Timestamp` wrapper around timestamps

@@ -1,25 +1,4 @@
-= 0.4.0-dev (2025 May xx)
-:author: Philip Michael Raab
-:email: <philip@cathedral.co.za>
-:revnumber: 0.4.0
-:revdate: 2025-05-xx
+= 0.5.0-dev (2025 Xxx xx)
+:revnumber: 0.5.0
+:revdate: 2025-xx-xx
 :revremark: -dev
-:copyright: Unlicense
-:keywords: inane, datetime, date, time, timespan, timestamp, duration, timescale
-:experimental:
-:hide-uri-scheme:
-:icons: font
-:source-highlighter: highlight.js
-:sectnums!:
-:toc: auto
-:sectanchors:
-
-* new: `Timestamp` now stores the time as a microsecond timestamp
-* new: `Timestamp` has new *readonly* properties for: *seconds*, *milliseconds*, *microseconds*
-* new: `Timescale` enum for timestamp precision: *seconds*, *milliseconds*, *microseconds*
-* update: `Timespan` `ts2dur` & `getDuration` new parameter `$spaced` to add a space between *number* & *unit*
-* new: `TimeTrait` common methods for time classes
-* update: `Timespan` updated the months calculation to be more accurate (average 30.44 days)
-* new: `Timespan::format` added param `$units` to specify unites in duration
-* new: use `FuzzyTimeTrait` with methods 'static::fussyClock' with input and `getFuzzyTime` with current `Timestamp`
-* minor bugfixes and improvements to code and documentation

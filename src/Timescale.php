@@ -41,10 +41,8 @@ use const true;
  *
  * Represents a timescale with integer values.
  * This enum implements the `CoreEnumInterface`, providing additional functionality for working with enumerated types.
- * 
- * TODO: version bump
  *
- * @version 0.1.0
+ * @version 0.2.0
  */
 enum Timescale: int implements CoreEnumInterface {
 

@@ -2,7 +2,7 @@ Version: $Id$ ($Date$)
 
 # History
 
-## 0.4.0-dev (2025 May xx)
+## 0.4.0 (2025 Sep 29)
 
 - new: `Timestamp` now stores the time as a microsecond timestamp
 
@@ -22,6 +22,9 @@ Version: $Id$ ($Date$)
 
 - new: `Timespan::format` added param `$units` to specify unites in
   duration
+
+- new: use `FuzzyTimeTrait` with methods 'static::fussyClock' with input
+  and `getFuzzyTime` with current `Timestamp`
 
 - minor bugfixes and improvements to code and documentation
 

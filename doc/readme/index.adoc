@@ -1,10 +1,10 @@
 = Datetime image:../icon.png[title=inanepain/datetime,25]
 :author: Philip Michael Raab
 :email: <philip@cathedral.co.za>
-:keywords: inanepain, library, datetime, date, time, timespan, timestamp, duration
+:keywords: inanepain, library, datetime, date, time, timespan, timestamp, duration, FuzzyTime
 :description: Things to help you bend space and time to your will. Or at least do some calculations with it.
 :revnumber: 0.4.0
-:revdate: 2025-05-27
+:revdate: 2025-09-29
 :copyright: Unlicense
 :experimental:
 :doctype: book
