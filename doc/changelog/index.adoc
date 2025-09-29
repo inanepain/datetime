@@ -14,8 +14,6 @@
 :toc: auto
 :sectanchors:
 
-Version: $Id$ ($Date$)
-
 == History
 
 include::./release/0.4.0.adoc[leveloffset=+2]

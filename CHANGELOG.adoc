@@ -14,8 +14,6 @@
 :toc: auto
 :sectanchors:
 
-Version: $Id$ ($Date$)
-
 == History
 
 :leveloffset: +2
