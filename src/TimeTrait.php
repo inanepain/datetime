@@ -56,12 +56,12 @@ trait TimeTrait {
      *
      * @since 0.4.0
      *
-     * @var int $milliseconds The number of milliseconds as an integer.
+     * @var float $milliseconds The number of milliseconds as an integer.
      */
     public private(set) float $milliseconds {
-        get => intval($this->seconds * 1000);
+        get => (int)($this->seconds * 1000);
         set(float $value) {
-            $this->seconds = $value / 1000;
+            $this->seconds = (int)($value / 1000);
         }
     }
 
@@ -75,7 +75,7 @@ trait TimeTrait {
      * @var int $microseconds The number of microseconds as an integer.
      */
     public private(set) float $microseconds {
-        get => intval($this->milliseconds * 1000);
+        get => (int)($this->milliseconds * 1000);
         set(float $value) {
             $this->milliseconds = $value / 1000;
         }
