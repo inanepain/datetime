@@ -1,4 +1,4 @@
-# ![icon](../icon.png) inanepain/datetime
+# ![icon](./icon.png) inanepain/datetime
 
 version: $Id$ ($Date$)
 
