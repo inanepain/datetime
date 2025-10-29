@@ -421,9 +421,9 @@ echo "$s1 == $d1";                                      // 10800 == 1hr 30min
 :toc: auto
 :sectanchors:
 
-The `((Timestamp))` *((class))* is a truly simple wrapper for an *epoch timestamp*. It's mainly useful when used in combination with a link:timespan.adoc[`Timespan`] to do chained date calculations and then displaying the formatted result. Essentially it saves typing a few lines of code here and there and I think it looks a tad neater too. The original bit of code was primarily used as a convenience class to easily switch between various date and time structures.
+The `((Timestamp))` *((class))* is a truly simple wrapper for an *epoch timestamp*. It's mainly useful when used in combination with a link:timespan.adoc[`Timespan`] to do chained date calculations and then display the formatted result. Essentially, it saves typing a few lines of code here and there, and I think it looks a tad neater too. The original bit of code was primarily used as a convenience class to easily switch between various date and time structures.
 
-Enough chatter, here comes it's breakdown.
+Enough chatter, here comes its breakdown.
 
 <<<
 
@@ -464,20 +464,30 @@ And _six_ class methods.
 .(((method, class)))class methods
 * (((Timestamp, construct)))public function __construct(?int $timestamp = null)
 * (((Timestamp, createFromFormat)))public static function createFromFormat(string $format, string $datetime): static|false
+* (((Timestamp, createFromString)))public static function createFromString(string $datetime = 'now'): static|false
 * (((Timestamp, now)))public static function now(): int
 * (((Timestamp, getDateTime)))public function getDateTime(bool $immutable = false): DateTime|DateTimeImmutable
 * (((Timestamp, adjust)))public function adjust(int|Timespan $timespan): self
 * (((Timestamp, diff)))public function diff(int|Timestamp $timestamp): Timespan
+* (((Timestamp, modify)))public function modify(string $modify): false|Timespan
 
 === Create / New
 
-In addition to instantiating a `Timestamp` using `new` the static method `createFromFormat` can also be used to create a `Timestamp` instance. The constructor only takes a unix timestamp, for all other values the create method is used.
+In addition to instantiating a `Timestamp` using `new` the static method `createFromFormat` can also be used to create a `Timestamp` instance. The constructor only takes an unix timestamp, for all other values the create method is used.
+
+A new kid on the block `createFromString` which uses the same format as `strtotime` can now also be used to create new `Timestamps`.
 
 .(((example, Timestamp)))Creating Timestamps: default and custom values.
 [source,php]
 ----
 $now = new Timestamp(); // <1>
+
 $then = Timestamp::createFromFormat('g:ia \o\n l jS F Y', '12:00am on Wednesday 6th July 1977');
+
+$and = Timestamp::createFromString('10 September 2000');
+$another = Timestamp::createFromString('next Thursday');
+$more = Timestamp::createFromString('+1 week 2 days 4 hours 2 seconds');
+$now = Timestamp::createFromString(); // <1>
 ----
 <1> creating a new Timestamp without any parameters uses the current unix time
 
@@ -507,6 +517,8 @@ A Timestamp can also work directly on DateTime to do calculations. When getting 
 Using `$now->diff($then)`, we can read it as; how much time needs to be added to `$now` to get to `$then`.
 If `$now` is today and `$then` is yesterday, we need to add a negative day; `-1`. But if `$then` were tomorrow, it would be the same distance `1`, but this time positive.
 
+Or you can use the `modify` method which uses the same format as `strtotime` making date calculations really easy.
+
 If it's the just size of the gap between Timestamps that's needed the `absoluteCopy` method can be used on the result or use the format method and ignore sign format symbol.
 
 .(((example, Timestamp)))Time Manipulating
@@ -515,10 +527,14 @@ If it's the just size of the gap between Timestamps that's needed the `absoluteC
 $between = $now->diff($then); <1>
 echo $between, PHP_EOL; // <2>
 echo $between->format('Formatted time between: %r%y years and %m months'), PHP_EOL; // <3>
+
+$now->modify('+1 month'); // next month
+$now->modify('Monday next week'); // next monday of the next month <4>
 ----
 <1> using the variables we created before
 <2> when this document was drafted, the result was: - 45yrs 3months 3weeks 6hrs 14mins 29secs
 <3> Formatted time between: -45 years and 3 months
+<4> The current object is modified when calling `modify`
 
 === Comparing Timestamps
 

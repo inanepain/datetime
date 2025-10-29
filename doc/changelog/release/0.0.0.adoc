@@ -2,3 +2,7 @@
 :revnumber: 0.5.0
 :revdate: 2025-xx-xx
 :revremark: -dev
+
+* new: `Timestamp::createFromString` uses the same format as `strtotime`.
+* new: `Timestamp::modify` uses the same format as `strtotime`.
+* update: General maintenance and optimisations.

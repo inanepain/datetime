@@ -24,15 +24,12 @@ declare(strict_types=1);
 
 namespace Inane\Datetime;
 
-use function intval;
-use function str_pad;
-use function strlen;
-use function strval;
-
-use const STR_PAD_RIGHT;
+use function time;
 
 /**
  * TimeTrait
+ * 
+ * @todo version bump
  *
  * @version 0.1.0
  */
@@ -45,9 +42,9 @@ trait TimeTrait {
      * @var int $seconds The number of seconds.
      */
     public private(set) int $seconds {
-        get => intval($this->timestamp);
-        set(null|int|float $value) {
-            $this->timestamp = $value;
+        get => (int)$this->timestamp;
+        set(null|int $value) {
+            $this->timestamp = $value ?: time();
         }
     }
 
@@ -56,11 +53,11 @@ trait TimeTrait {
      *
      * @since 0.4.0
      *
-     * @var float $milliseconds The number of milliseconds as an integer.
+     * @var int $milliseconds The number of milliseconds as an integer.
      */
-    public private(set) float $milliseconds {
-        get => (int)($this->seconds * 1000);
-        set(float $value) {
+    public private(set) int $milliseconds {
+        get => $this->seconds * 1000;
+        set(int $value) {
             $this->seconds = (int)($value / 1000);
         }
     }
@@ -74,10 +71,10 @@ trait TimeTrait {
      *
      * @var int $microseconds The number of microseconds as an integer.
      */
-    public private(set) float $microseconds {
+    public private(set) int $microseconds {
         get => (int)($this->milliseconds * 1000);
-        set(float $value) {
-            $this->milliseconds = $value / 1000;
+        set(int $value) {
+            $this->milliseconds = (int)($value / 1000);
         }
     }
 }

@@ -32,7 +32,7 @@ use Stringable;
 use function abs;
 use function date;
 use function is_int;
-use function intval;
+use function strtotime;
 use function time;
 
 /**
@@ -40,6 +40,8 @@ use function time;
  *
  * A point in time, a date.
  * Unix time is measured as the number of seconds since or prior to <strong>01 January 1970 00:00:00 AM GMT</strong>.
+ * 
+ * @todo: version bump
  *
  * @property int $timestamp - unix timestamp
  *
@@ -56,9 +58,9 @@ class Timestamp implements TimeWrapper, Stringable {
      * @var int the timestamp
      */
     public private(set) int $timestamp {
-        get => intval($this->timestamp);
-        set(null|int|float $value) {
-            $this->timestamp = $value ?: time();
+        get => (int)$this->timestamp;
+        set(null|int $value) {
+            $this->timestamp = $value ?? time();
         }
     }
 
@@ -77,7 +79,7 @@ class Timestamp implements TimeWrapper, Stringable {
      */
     public function __construct(?int $seconds = null) {
         $this->timescale = Timescale::SECOND;
-        $this->timestamp = $seconds ?? time();
+        $this->timestamp = $seconds;
     }
 
     /**
@@ -89,6 +91,7 @@ class Timestamp implements TimeWrapper, Stringable {
         return $this->format();
     }
 
+	#region Creator Methods
     /**
      * Parses a time string according to a specified format
      *
@@ -112,9 +115,27 @@ class Timestamp implements TimeWrapper, Stringable {
     public static function createFromFormat(string $format, string $datetime): static|false {
         $datetime = DateTime::createFromFormat($format, $datetime);
 
-        return $datetime === false ? false : new static(intval($datetime->format('U')));
+        return $datetime === false ? false : new static((int)$datetime->format('U'));
     }
 
+	/**
+	 * Creates an instance from a datetime string
+	 *
+	 * @since version bump
+	 *
+	 * @see strtotime for $datetime string format
+	 *
+	 * @param string $datetime The datetime string to parse
+	 *
+	 * @return static|false An instance of the class if parsing is successful, or false on failure
+	 */
+	public static function createFromString(string $datetime = 'now'): static|false {
+		$timestamp = strtotime($datetime);
+		return $timestamp === false ? false : new static($timestamp);
+	}
+	#endregion Creator Methods
+
+	#region Time getters
     /**
      * Get current unix time
      *
@@ -198,7 +219,9 @@ class Timestamp implements TimeWrapper, Stringable {
 
         return date($format, $this->seconds);
     }
+	#endregion Time getters
 
+	#region Time Calculations
     /**
      * Adjust timestamp by $timespan
      *
@@ -220,8 +243,28 @@ class Timestamp implements TimeWrapper, Stringable {
      */
     public function diff(int|Timestamp $timestamp): Timespan {
         $ts = is_int($timestamp) ? $timestamp : $timestamp->{$this->timescale->unit()};
-        return new Timespan($ts - $this->timestamp); // Gives same result as DateTime::diff
+        return new Timespan($ts - $this->timestamp); // Gives the same result as DateTime::diff
     }
+
+	/**
+	 * Modifies the current timestamp based on the given modification string.
+	 *
+	 * @since version bump
+	 *
+	 * @see   strtotime for $modify string format
+	 *
+	 * @param string $modify The modification string to adjust the timestamp.
+	 *
+	 * @return false|self Returns the updated object on success, or false on failure.
+	 */
+	public function modify(string $modify): false|self {
+		if ($timestamp = strtotime($modify, $this->timestamp)) {
+			$this->timestamp = $timestamp;
+			return $this;
+		}
+
+		return false;
+	}
 
     /**
      * Get a copy with an absolute value
@@ -233,4 +276,5 @@ class Timestamp implements TimeWrapper, Stringable {
     public function absoluteCopy(): Timestamp {
         return new static(abs($this->timestamp), $this->timescale);
     }
+	#endregion Time Calculations
 }

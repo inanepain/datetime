@@ -1,5 +1,14 @@
 # History
 
+## 0.5.0-dev (2025 Xxx xx)
+
+- new: `Timestamp::createFromString` uses the same format as
+  `strtotime`.
+
+- new: `Timestamp::modify` uses the same format as `strtotime`.
+
+- update: General maintenance and optimisations.
+
 ## 0.4.0 (2025 Sep 29)
 
 - new: `Timestamp` now stores the time as a microsecond timestamp

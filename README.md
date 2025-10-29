@@ -526,12 +526,12 @@ The `Timestamp Timestamp` **<span class="indexterm"
 primary="class"></span>class** is a truly simple wrapper for an **epoch
 timestamp**. It’s mainly useful when used in combination with a
 [`Timespan`](timespan.adoc) to do chained date calculations and then
-displaying the formatted result. Essentially it saves typing a few lines
-of code here and there and I think it looks a tad neater too. The
+display the formatted result. Essentially, it saves typing a few lines
+of code here and there, and I think it looks a tad neater too. The
 original bit of code was primarily used as a convenience class to easily
 switch between various date and time structures.
 
-Enough chatter, here comes it’s breakdown.
+Enough chatter, here comes its breakdown.
 
 ### Properties
 
@@ -584,6 +584,10 @@ methods
   createFromFormat(string $format, string $datetime): static|false
 
 - <span class="indexterm" primary="Timestamp"
+  secondary="createFromString"></span>public static function
+  createFromString(string $datetime = 'now'): static|false
+
+- <span class="indexterm" primary="Timestamp"
   secondary="now"></span>public static function now(): int
 
 - <span class="indexterm" primary="Timestamp"
@@ -598,19 +602,32 @@ methods
   secondary="diff"></span>public function diff(int|Timestamp
   $timestamp): Timespan
 
+- <span class="indexterm" primary="Timestamp"
+  secondary="modify"></span>public function modify(string $modify):
+  false|Timespan
+
 #### Create / New
 
 In addition to instantiating a `Timestamp` using `new` the static method
 `createFromFormat` can also be used to create a `Timestamp` instance.
-The constructor only takes a unix timestamp, for all other values the
+The constructor only takes an unix timestamp, for all other values the
 create method is used.
+
+A new kid on the block `createFromString` which uses the same format as
+`strtotime` can now also be used to create new `Timestamps`.
 
 <span class="indexterm" primary="example"
 secondary="Timestamp"></span>Creating Timestamps: default and custom
 values.
 
     $now = new Timestamp(); 
+
     $then = Timestamp::createFromFormat('g:ia \o\n l jS F Y', '12:00am on Wednesday 6th July 1977');
+
+    $and = Timestamp::createFromString('10 September 2000');
+    $another = Timestamp::createFromString('next Thursday');
+    $more = Timestamp::createFromString('+1 week 2 days 4 hours 2 seconds');
+    $now = Timestamp::createFromString(); 
 
 - creating a new Timestamp without any parameters uses the current unix
   time
@@ -652,6 +669,9 @@ needs to be added to `$now` to get to `$then`. If `$now` is today and
 `$then` were tomorrow, it would be the same distance `1`, but this time
 positive.
 
+Or you can use the `modify` method which uses the same format as
+`strtotime` making date calculations really easy.
+
 If it’s the just size of the gap between Timestamps that’s needed the
 `absoluteCopy` method can be used on the result or use the format method
 and ignore sign format symbol.
@@ -663,12 +683,17 @@ secondary="Timestamp"></span>Time Manipulating
     echo $between, PHP_EOL; 
     echo $between->format('Formatted time between: %r%y years and %m months'), PHP_EOL; 
 
+    $now->modify('+1 month'); // next month
+    $now->modify('Monday next week'); // next monday of the next month 
+
 - using the variables we created before
 
 - when this document was drafted, the result was: - 45yrs 3months 3weeks
   6hrs 14mins 29secs
 
 - Formatted time between: -45 years and 3 months
+
+- The current object is modified when calling `modify`
 
 #### Comparing Timestamps
 
