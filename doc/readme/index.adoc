@@ -1,4 +1,4 @@
-= Datetime image:../icon.png[title=inanepain/datetime,25]
+= Datetime image:./icon.png[title=inanepain/datetime,25]
 :author: Philip Michael Raab
 :email: <philip@cathedral.co.za>
 :keywords: inanepain, library, datetime, date, time, timespan, timestamp, duration, FuzzyTime
@@ -19,7 +19,7 @@
 :pkg-name: datetime
 :pkg-id: {pkg-vendor}/{pkg-name}
 
-== image:../icon.png[title={pkg-id},25] {pkg-id}
+== image:./icon.png[title={pkg-id},25] {pkg-id}
 
 version: $Id$ ($Date$)
 
