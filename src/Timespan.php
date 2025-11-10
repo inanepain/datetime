@@ -408,16 +408,34 @@ class Timespan implements TimeWrapper, Stringable {
      *
      * timespan can be negative seconds
      *
-     * @param int|string|\Inane\Datetime\Timespan $tsORdur timespan, Timespan or duration
+     * @param int|string|Timespan $tsOrDur timespan, Timespan or duration
      *
-     * @return \Inane\Datetime\Timespan
+     * @return Timespan
      */
-    public function adjust(int|string|Timespan $tsORdur): self {
-        if ($tsORdur instanceof Timespan) $tsORdur = $tsORdur->getSeconds();
-        else if (is_string($tsORdur) && !is_numeric($tsORdur)) $tsORdur = static::dur2ts((string)$tsORdur);
-        else if (is_string($tsORdur) && is_numeric($tsORdur)) $tsORdur = intval($tsORdur);
+    public function adjust(int|string|Timespan $tsOrDur): self {
+        if ($tsOrDur instanceof Timespan) $tsOrDur = $tsOrDur->getSeconds();
+        else if (is_string($tsOrDur) && !is_numeric($tsOrDur)) $tsOrDur = static::dur2ts((string)$tsOrDur);
+        else if (is_string($tsOrDur) && is_numeric($tsOrDur)) $tsOrDur = intval($tsOrDur);
 
-        $this->timespan += $tsORdur;
+        $this->timespan += $tsOrDur;
+        return $this;
+    }
+
+    /**
+     * Adjust current timespan by subtracting $tsOrDur
+     *
+     * timespan can be negative seconds (which will add the time)
+     *
+     * @param int|string|Timespan $tsOrDur timespan, Timespan or duration
+     *
+     * @return Timespan
+     */
+    public function adjustSubtract(int|string|Timespan $tsOrDur): self {
+        if ($tsOrDur instanceof Timespan) $tsOrDur = $tsOrDur->getSeconds();
+        else if (is_string($tsOrDur) && !is_numeric($tsOrDur)) $tsOrDur = static::dur2ts((string)$tsOrDur);
+        else if (is_string($tsOrDur) && is_numeric($tsOrDur)) $tsOrDur = intval($tsOrDur);
+
+        $this->timespan -= $tsOrDur;
         return $this;
     }
 

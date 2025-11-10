@@ -7,6 +7,9 @@
 
 - new: `Timestamp::modify` uses the same format as `strtotime`.
 
+- new: `Timespan::adjustSubtract` Adjust current timespan by subtracting
+  `$tsOrDur`.
+
 - update: General maintenance and optimisations.
 
 ## 0.4.0 (2025 Sep 29)
