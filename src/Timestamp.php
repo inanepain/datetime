@@ -48,6 +48,7 @@ use function time;
  * @version 0.4.0
  */
 class Timestamp implements TimeWrapper, Stringable {
+    use TimeTrait;
     use FuzzyTimeTrait;
     
     /**
@@ -69,8 +70,6 @@ class Timestamp implements TimeWrapper, Stringable {
      *                           defaulting to seconds.
      */
     private Timescale $timescale;
-
-    use TimeTrait;
 
     /**
      * Constructor for the Timestamp class.
@@ -113,9 +112,9 @@ class Timestamp implements TimeWrapper, Stringable {
      * @return static|false Returns a new Timestamp instance or false on failure.
      */
     public static function createFromFormat(string $format, string $datetime): static|false {
-        $datetime = DateTime::createFromFormat($format, $datetime);
+        $dt = DateTime::createFromFormat($format, $datetime);
 
-        return $datetime === false ? false : new static((int)$datetime->format('U'));
+        return $dt === false ? false : new static((int)$dt->format('U'));
     }
 
 	/**
