@@ -24,7 +24,7 @@ version: $Id$ ($Date$)
 
 {description}
 
-include::./doc/install.adoc[leveloffset=+2]
+include::./part/install.adoc[leveloffset=+2]
 
 <<<
 
@@ -49,24 +49,24 @@ This is meant as more of an introduction to the various classes, interfaces, enu
 
 <<<
 
-include::./doc/timewrapper.adoc[leveloffset=+2]
+include::./part/timewrapper.adoc[leveloffset=+2]
 
 [page-layout=portrait]
 <<<
 
-include::./doc/timetrait.adoc[leveloffset=+2]
+include::./part/timetrait.adoc[leveloffset=+2]
 
 <<<
 
-include::./doc/timescale.adoc[leveloffset=+2]
+include::./part/timescale.adoc[leveloffset=+2]
 
 <<<
 
-include::./doc/timespan.adoc[leveloffset=+2]
+include::./part/timespan.adoc[leveloffset=+2]
 
 <<<
 
-include::./doc/timestamp.adoc[leveloffset=+2]
+include::./part/timestamp.adoc[leveloffset=+2]
 
 [glossary]
 == Glossary

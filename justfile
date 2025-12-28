@@ -17,28 +17,28 @@ _default:
     @echo "{{project}}:"
     @just --list --list-heading ''
 
-# generate php doc
+# generate php part
 @doc:
-	mkdir -p doc/code
-	phpdoc -d src -t doc/code --title="{{project}}" --defaultpackagename="Inane"
+	mkdir -p part/code
+	phpdoc -d src -t part/code --title="{{project}}" --defaultpackagename="Inane"
 
 #*********************************************
 #### PHP
 ##############################################
-# generate php doc (v2) (all, cache, html)
+# generate php part (v2) (all, cache, html)
 php-doc clear="all":
 	#!/usr/bin/env zsh
 	if [ -d .phpdoc ] && [[ "{{clear}}" = "all" || "{{clear}}" = "cache" ]]; then
 		echo "\tCleaning: cache..."
 		rm -fr .phpdoc
 	fi
-	if [ -d doc/api ] && [[ "{{clear}}" = "all" || "{{clear}}" = "html" ]]; then
+	if [ -d part/api ] && [[ "{{clear}}" = "all" || "{{clear}}" = "html" ]]; then
 		echo "\tCleaning: html..."
-		rm -fr doc/api
+		rm -fr part/api
 	fi
 
-	mkdir -p doc/api
-	phpdoc -d src -t doc/api --title="{{project}}" --defaultpackagename="Inane"
+	mkdir -p part/api
+	phpdoc -d src -t part/api --title="{{project}}" --defaultpackagename="Inane"
 
 #*********************************************
 #### DOCUMENTATION: README
@@ -46,7 +46,7 @@ php-doc clear="all":
 # build: 1 - reduced adoc file
 @_readme-reduce:
 	echo "\tbuild: reduced"
-	asciidoctor-reducer -o README.adoc doc/readme/index.adoc
+	asciidoctor-reducer -o README.adoc part/readme/index.adoc
 
 # build: 2 - pandoc xml file
 @_readme-pandoc:
@@ -64,7 +64,7 @@ php-doc clear="all":
 	rm -vf README.{adoc,xml,md}
 	echo "\tbuild: clean: done"
 
-# build README files from doc/readme/index.adoc (targets build required files if missing): clean, reduce, pandoc, markdown*
+# build README files from part/readme/index.adoc (targets build required files if missing): clean, reduce, pandoc, markdown*
 readme target="markdown":
 	#!/usr/bin/env zsh
 	[[ ! "{{target}}" = *"-v" ]] && echo "building: readme: {{target}}"
