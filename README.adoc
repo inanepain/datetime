@@ -1,8 +1,9 @@
-= Datetime image:./icon.png[title=inanepain/datetime,25]
+= inanepain/datetime image:./icon.png[title=inanepain/datetime,25]
 :author: Philip Michael Raab
 :email: <philip@cathedral.co.za>
-:keywords: inanepain, library, datetime, date, time, timespan, timestamp, duration, FuzzyTime
 :description: Things to help you bend space and time to your will. Or at least do some calculations with it.
+:keywords: inanepain, library, datetime, date, time, timespan, timestamp, duration, FuzzyTime
+:homepage: https://github.com/inanepain/datetime
 :revnumber: 0.4.0
 :revdate: 2025-09-29
 :copyright: Unlicense
@@ -20,38 +21,26 @@
 
 == image:./icon.png[title={pkg-id},25] {pkg-id}
 
-version: $Id$ ($Date$)
-
 {description}
+
+:sectnums:
+
+<<<
 
 :leveloffset: +2
 
 = Install
-:author: Philip Michael Raab
-:email: <philip@cathedral.co.za>
-:keywords: datetime, date, time, timespan, timestamp, duration
-:revnumber: 0.1.0
-:revdate: 2025-04-30
-:copyright: Unlicense
-:experimental:
-:hide-uri-scheme:
-:icons: font
-:source-highlighter: highlight.js
-:sectnums: |,all|
-:toc: auto
-:sectanchors:
 
 [source,shell]
-----
+====
 $ composer require {pkg-id}
-----
+====
 
 :leveloffset!:
 
 <<<
 
 == Datetime
-:sectnums: |,all|
 :view-mode: project
 
 This is meant as more of an introduction to the various classes, interfaces, enums and anything else found in the `Inane\Datetime` namespace and not an in-depth guide.
@@ -74,20 +63,6 @@ This is meant as more of an introduction to the various classes, interfaces, enu
 :leveloffset: +2
 
 = TimeWrapper
-:author: Philip Michael Raab
-:email: <philip@cathedral.co.za>
-:keywords: datetime, date, time, timespan, timestamp, duration
-:revnumber: 0.2.0
-:revdate: 2022-10-14
-:copyright: Unlicense
-:experimental:
-:hide-uri-scheme:
-:table-stripes: even
-:icons: font
-:source-highlighter: highlight.js
-:sectnums: |,all|
-:toc: auto
-:sectanchors:
 
 The `((TimeWrapper))` *((interface))* implemented by link:timespan.adoc[`Timespan`] and link:timestamp.adoc[`Timestamp`] (possibly more to come), started more as a convenience than actually any real requirement. Soon after implementing this interface the usage of the `((Datetime))` classes increased, thanks to the greater interoperability they had acquired. This in turn resulted in them quickly evolving from the skinny classes they were to what they are now, skinny but with some meat on them. Enough rambling and there's nothing left to say about it anyway.
 
@@ -188,19 +163,6 @@ public function absoluteCopy(): ((TimeWrapper));
 :leveloffset: +2
 
 = TimeTrait
-:author: Philip Michael Raab
-:email: <philip@cathedral.co.za>
-:keywords: datetime, date, time, timespan, timestamp, duration
-:revnumber: 0.1.0
-:revdate: 2025-04-30
-:copyright: Unlicense
-:experimental:
-:hide-uri-scheme:
-:icons: font
-:source-highlighter: highlight.js
-:sectnums: |,all|
-:toc: auto
-:sectanchors:
 
 The `((TimeTrait))` *((trait))* simple adds some properties for the three timestamps: *((seconds))*, *((milliseconds))* and *((microseconds))*.
 
@@ -249,19 +211,6 @@ Returns a timestamp the has 16 digits.
 :leveloffset: +2
 
 = Timescale
-:author: Philip Michael Raab
-:email: <philip@cathedral.co.za>
-:keywords: datetime, date, time, timespan, timestamp, duration
-:revnumber: 0.1.0
-:revdate: 2025-04-30
-:copyright: Unlicense
-:experimental:
-:hide-uri-scheme:
-:icons: font
-:source-highlighter: highlight.js
-:sectnums: |,all|
-:toc: auto
-:sectanchors:
 
 The `((Timescale))` *((enum))* simply defines three *((timestamps))* of various length: *((seconds))* (10 digits), *((milliseconds))* (13 digits) and *((microseconds))* (16 digits).
 
@@ -291,23 +240,10 @@ The `((Timescale))` *((enum))* simply defines three *((timestamps))* of various 
 :leveloffset: +2
 
 = Timespan
-:author: Philip Michael Raab
-:email: <philip@cathedral.co.za>
-:keywords: datetime, date, time, timespan, timestamp, duration
-:revnumber: 0.4.0
-:revdate: 2025-04-30
-:copyright: Unlicense
-:experimental:
-:hide-uri-scheme:
 :table-stripes: even
-:icons: font
-:source-highlighter: highlight.js
-:sectnums: |,all|
 :fn-duration: pass:c,q[footnote:[*duration:* length or portion of time.]]
 :fn-moment: pass:c,q[footnote:[*moment:* exact point in time.]]
 :fn-timestamp: pass:c,q[footnote:[*timestamp:* a.k.a. unix time, epoch time, posix time and various combinations there of.]]
-:toc: auto
-:sectanchors:
 
 The `((Timespan))` *((class))* represents a _timespan_ or _((duration))_(fn-duration) which is essentially a number of seconds. As with most things, seconds can be expressed in various formats to suite the situation, for instance `5400` and `2years 3d 7secs`, `Timespan` makes this easy for you.
 
@@ -406,19 +342,6 @@ echo "$s1 == $d1";                                      // 10800 == 1hr 30min
 :leveloffset: +2
 
 = Timestamp
-:author: Philip Michael Raab
-:email: <philip@cathedral.co.za>
-:keywords: datetime, date, time, timespan, timestamp, duration
-:revnumber: 0.4.0
-:revdate: 2025-04-30
-:copyright: Unlicense
-:experimental:
-:hide-uri-scheme:
-:icons: font
-:source-highlighter: highlight.js
-:sectnums: |,all|
-:toc: auto
-:sectanchors:
 
 The `((Timestamp))` *((class))* is a truly simple wrapper for an *epoch timestamp*. It's mainly useful when used in combination with a link:timespan.adoc[`Timespan`] to do chained date calculations and then display the formatted result. Essentially, it saves typing a few lines of code here and there, and I think it looks a tad neater too. The original bit of code was primarily used as a convenience class to easily switch between various date and time structures.
 
