@@ -1,6 +1,7 @@
 = Install
 
-[source,shell]
-====
-$ composer require {pkg-id}
-====
+.composer
+[source,shell,subs=attributes+]
+----
+composer require {pkg-id}
+----
