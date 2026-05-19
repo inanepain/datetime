@@ -8,7 +8,7 @@
  * $Id$
  * $Date$
  *
- * PHP version 8.4
+ * PHP version 8.5
  *
  * @author Philip Michael Raab<philip@cathedral.co.za>
  * @package inanepain\datetime
@@ -25,16 +25,14 @@ declare(strict_types=1);
 namespace Inane\Datetime;
 
 use Inane\Stdlib\Enum\CoreEnumInterface;
-
 use Inane\Stdlib\Enum\CoreEnumTrait;
+
 use function intval;
-use function microtime;
 use function preg_match;
 use function strlen;
 
 use const false;
 use const null;
-use const true;
 
 /**
  * Enum Timescale sets the level of precision.
