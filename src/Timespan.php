@@ -39,7 +39,6 @@ use function array_shift;
 use function count;
 use function implode;
 use function in_array;
-use function intval;
 use function is_int;
 use function is_numeric;
 use function is_string;
@@ -55,7 +54,7 @@ use const null;
  * Timespan
  *
  * A duration of time stored as a number of seconds and can be formatted for display as desired.
- * 
+ *
  * @version 0.5.0
  */
 class Timespan implements TimeWrapper, Stringable {
@@ -113,7 +112,7 @@ class Timespan implements TimeWrapper, Stringable {
      * @var int $seconds The number of seconds.
      */
     public private(set) int $seconds {
-        get => intval($this->milliseconds * 1000);
+        get => (int)($this->milliseconds * 1000);
         set(?int $value) {
             $this->milliseconds = $value / 1000;
         }
@@ -168,7 +167,7 @@ class Timespan implements TimeWrapper, Stringable {
          *
          * @var int
          */
-        private int $timespan = 0 {
+        private int          $timespan = 0 {
             get => $this->timespan;
             set(?int $value) {
                 $this->timespan = $value ?? 0;
@@ -180,7 +179,7 @@ class Timespan implements TimeWrapper, Stringable {
          *
          * @var int
          */
-        private int $symbolFormat = Timespan::SYMBOL_ABBREVIATED,
+        private readonly int $symbolFormat = self::SYMBOL_ABBREVIATED,
     ) {
     }
 
@@ -214,7 +213,7 @@ class Timespan implements TimeWrapper, Stringable {
      * @return string unit symbol
      */
     private static function getUnitSymbol(bool $single, int $symbolFormat, array $symbols): string {
-        return $symbols[$symbolFormat == Timespan::SYMBOL_WORD ? ($single ? 1 : 0) : ($symbolFormat == Timespan::SYMBOL_CHAR ? 2 : ($single ? 4 : 3))];
+        return $symbols[$symbolFormat === self::SYMBOL_WORD ? ($single ? 1 : 0) : ($symbolFormat === self::SYMBOL_CHAR ? 2 : ($single ? 4 : 3))];
     }
 
     /**
@@ -234,12 +233,12 @@ class Timespan implements TimeWrapper, Stringable {
         $r = array_combine($m[3], $m[2]);
 
         foreach ($r as $u => $a) {
-            $matches = array_filter(static::$units, function($unit) use ($u) {
-                return in_array($u, $unit['symbols']);
+            $matches = array_filter(static::$units, static function($unit) use ($u) {
+                return in_array($u, $unit['symbols'], true);
             });
 
             $match = array_pop($matches) ?? ['value' => 0];
-            if (array_key_exists('symbols', $match)) $k[$match['symbols'][2]] = intval($a);
+            if (array_key_exists('symbols', $match)) $k[$match['symbols'][2]] = (int)$a;
         }
 
         return array_merge($invert, $k);
@@ -253,7 +252,7 @@ class Timespan implements TimeWrapper, Stringable {
      * @return int timespan (seconds)
      */
     public static function dur2ts(string $duration): int {
-        if (is_numeric($duration)) return intval($duration);
+        if (is_numeric($duration)) return (int)$duration;
 
         $r = static::parseDuration($duration);
         $invert = array_shift($r);
@@ -262,7 +261,7 @@ class Timespan implements TimeWrapper, Stringable {
         foreach ($r as $u => $a)
             $s += static::$units[$u]['value'] * $a;
 
-        return intval($s * $invert);
+        return (int)($s * $invert);
     }
 
     /**
@@ -281,8 +280,8 @@ class Timespan implements TimeWrapper, Stringable {
      *
      * @return string the duration string using the specified units of time
      */
-    public static function ts2dur(int $timespan, int $symbolFormat = Timespan::SYMBOL_ABBREVIATED, array $units = [], bool $spaced = false): string {
-        if ($timespan == 0) return match($symbolFormat) {
+    public static function ts2dur(int $timespan, int $symbolFormat = self::SYMBOL_ABBREVIATED, array $units = [], bool $spaced = false): string {
+        if ($timespan === 0) return match($symbolFormat) {
             static::SYMBOL_CHAR => '0s',
             static::SYMBOL_WORD => '0seconds',
             default => '0secs',
@@ -299,11 +298,17 @@ class Timespan implements TimeWrapper, Stringable {
         }
 
         foreach (static::$units as $k => $u) {
-            if (!empty($units) && !in_array($k, $units)) continue;
+            if (!empty($units) && !in_array($k, $units, true)) continue;
 
-            $a = intval($timespan / $u['value']);
+            $a = (int)($timespan / $u['value']);
             if ($a > 0) {
-                $r[] = (string)$a . $gap . static::getUnitSymbol($a == 1, $symbolFormat, $u['symbols']);
+                $s = static::getUnitSymbol($a === 1, $symbolFormat, $u['symbols']);
+                $s = match($s) {
+                    'm' => 'M',
+                    'i' => 'm',
+                    default => $s,
+                };
+                $r[] = (string)$a . $gap . $s;
                 // $timespan = $timespan % $u['value'];
                 $timespan %= $u['value'];
             }
@@ -385,7 +390,7 @@ class Timespan implements TimeWrapper, Stringable {
      * - %h: hours
      * - %i: minutes
      * - %s: seconds
-     * 
+     *
      * @since 0.5.0
      *
      * @param string $format string template with symbols as placeholders to be filled
@@ -412,10 +417,10 @@ class Timespan implements TimeWrapper, Stringable {
      *
      * @return Timespan
      */
-    public function adjust(int|string|Timespan $tsOrDur): self {
-        if ($tsOrDur instanceof Timespan) $tsOrDur = $tsOrDur->getSeconds();
+    public function adjust(int|string|self $tsOrDur): self {
+        if ($tsOrDur instanceof self) $tsOrDur = $tsOrDur->getSeconds();
         else if (is_string($tsOrDur) && !is_numeric($tsOrDur)) $tsOrDur = static::dur2ts((string)$tsOrDur);
-        else if (is_string($tsOrDur) && is_numeric($tsOrDur)) $tsOrDur = intval($tsOrDur);
+        else if (is_string($tsOrDur)) $tsOrDur = (int)$tsOrDur;
 
         $this->timespan += $tsOrDur;
         return $this;
@@ -430,10 +435,10 @@ class Timespan implements TimeWrapper, Stringable {
      *
      * @return Timespan
      */
-    public function adjustSubtract(int|string|Timespan $tsOrDur): self {
-        if ($tsOrDur instanceof Timespan) $tsOrDur = $tsOrDur->getSeconds();
+    public function adjustSubtract(int|string|self $tsOrDur): self {
+        if ($tsOrDur instanceof self) $tsOrDur = $tsOrDur->getSeconds();
         else if (is_string($tsOrDur) && !is_numeric($tsOrDur)) $tsOrDur = static::dur2ts((string)$tsOrDur);
-        else if (is_string($tsOrDur) && is_numeric($tsOrDur)) $tsOrDur = intval($tsOrDur);
+        else if (is_string($tsOrDur)) $tsOrDur = (int)$tsOrDur;
 
         $this->timespan -= $tsOrDur;
         return $this;
@@ -464,7 +469,7 @@ class Timespan implements TimeWrapper, Stringable {
      *
      * @return \Inane\Datetime\Timespan An absolute copy
      */
-    public function absoluteCopy(): Timespan {
+    public function absoluteCopy(): self {
         return new static(abs($this->timespan));
     }
 }

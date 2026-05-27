@@ -10,26 +10,28 @@
  *
  * PHP version 8.5
  *
- * @author Philip Michael Raab<philip@cathedral.co.za>
- * @package inanepain\datetime
+ * @author   Philip Michael Raab<philip@cathedral.co.za>
+ * @package  inanepain\datetime
  * @category datetime
  *
- * @license UNLICENSE
- * @license https://unlicense.org/UNLICENSE UNLICENSE
+ * @license  UNLICENSE
+ * @license  https://unlicense.org/UNLICENSE UNLICENSE
  *
  * _version_ $version
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Inane\Datetime;
 
+use DateTimeImmutable;
 use Inane\Stdlib\Enum\CoreEnumInterface;
 use Inane\Stdlib\Enum\CoreEnumTrait;
 
-use function intval;
+use function microtime;
 use function preg_match;
 use function strlen;
+use function time;
 
 use const false;
 use const null;
@@ -43,7 +45,6 @@ use const null;
  * @version 0.2.0
  */
 enum Timescale: int implements CoreEnumInterface {
-
     /**
      * Represents the timescale unit for microseconds.
      *
@@ -51,7 +52,6 @@ enum Timescale: int implements CoreEnumInterface {
      * corresponding to microsecond-level granularity in time measurement.
      */
     case MICROSECOND = 16;
-
     /**
      * Represents the millisecond timescale.
      *
@@ -64,7 +64,6 @@ enum Timescale: int implements CoreEnumInterface {
      * corresponding to millisecond-level granularity in time measurement.
      */
     case MILLISECOND = 13;
-
     /**
      * Represents the timescale unit for seconds.
      *
@@ -72,7 +71,6 @@ enum Timescale: int implements CoreEnumInterface {
      * corresponding to second-level granularity in time measurement.
      */
     case SECOND = 10;
-
     /**
      * This file is part of the inanepain datetime library.
      *
@@ -90,11 +88,11 @@ enum Timescale: int implements CoreEnumInterface {
      *
      * @return Timescale|null Returns the corresponding TimeScaleEnum if the scale is determined, or null if it cannot be determined.
      */
-    public static function tryFromTimestamp(int|Timestamp $timestamp): ?Timescale {
+    public static function tryFromTimestamp(int|Timestamp $timestamp): ?self {
         if ($timestamp instanceof Timestamp)
             $timestamp = $timestamp->microseconds;
 
-        $timestamp = (string) $timestamp;
+        $timestamp = (string)$timestamp;
         $length = strlen($timestamp);
 
         switch ($length) {
@@ -108,21 +106,23 @@ enum Timescale: int implements CoreEnumInterface {
             case 8:
             case 9:
             case 10:
-                return static::SECOND;
+                return self::SECOND;
             case 13:
                 if (preg_match('/^[0-9]{10}000$/', $timestamp)) {
-                    return static::SECOND;
-                } else {
-                    return static::MILLISECOND;
+                    return self::SECOND;
                 }
+
+                return self::MILLISECOND;
             case 16:
                 if (preg_match('/^[0-9]{10}000000$/', $timestamp)) {
-                    return static::SECOND;
-                } elseif (preg_match('/^[0-9]{13}000$/', $timestamp)) {
-                    return static::MILLISECOND;
-                } else {
-                    return static::MICROSECOND;
+                    return self::SECOND;
                 }
+
+                if (preg_match('/^[0-9]{13}000$/', $timestamp)) {
+                    return self::MILLISECOND;
+                }
+
+                return self::MICROSECOND;
         }
 
         return null;
@@ -138,8 +138,8 @@ enum Timescale: int implements CoreEnumInterface {
      */
     public function timestamp(bool $asObject = false): int|Timestamp {
         $ts = match ($this) {
-            self::MICROSECOND => intval(time() * 1000000),
-            self::MILLISECOND => intval(time() * 1000),
+            self::MICROSECOND => (int)(microtime(true) * 1_000_000),
+            self::MILLISECOND => (int)(new DateTimeImmutable()->format('Uv')),
             self::SECOND => time(),
         };
 

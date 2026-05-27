@@ -28,7 +28,7 @@ use function time;
 
 /**
  * TimeTrait
- * 
+ *
  * @todo version bump
  *
  * @version 0.1.0

@@ -30,7 +30,6 @@ use Inane\Stdlib\Parser\FuzzyTimeTrait;
 use Stringable;
 
 use function abs;
-use function date;
 use function is_int;
 use function strtotime;
 use function time;
@@ -40,7 +39,7 @@ use function time;
  *
  * A point in time, a date.
  * Unix time is measured as the number of seconds since or prior to <strong>01 January 1970 00:00:00 AM GMT</strong>.
- * 
+ *
  * @todo: version bump
  *
  * @property int $timestamp - unix timestamp
@@ -50,7 +49,7 @@ use function time;
 class Timestamp implements TimeWrapper, Stringable {
     use TimeTrait;
     use FuzzyTimeTrait;
-    
+
     /**
      * timestamp
      *
@@ -90,7 +89,7 @@ class Timestamp implements TimeWrapper, Stringable {
         return $this->format();
     }
 
-	#region Creator Methods
+    #region Creator Methods
     /**
      * Parses a time string according to a specified format
      *
@@ -117,24 +116,24 @@ class Timestamp implements TimeWrapper, Stringable {
         return $dt === false ? false : new static((int)$dt->format('U'));
     }
 
-	/**
-	 * Creates an instance from a datetime string
-	 *
-	 * @since version bump
-	 *
-	 * @see strtotime for $datetime string format
-	 *
-	 * @param string $datetime The datetime string to parse
-	 *
-	 * @return static|false An instance of the class if parsing is successful, or false on failure
-	 */
-	public static function createFromString(string $datetime = 'now'): static|false {
-		$timestamp = strtotime($datetime);
-		return $timestamp === false ? false : new static($timestamp);
-	}
-	#endregion Creator Methods
+    /**
+     * Creates an instance from a datetime string
+     *
+     * @since version bump
+     *
+     * @see strtotime for $datetime string format
+     *
+     * @param string $datetime The datetime string to parse
+     *
+     * @return static|false An instance of the class if parsing is successful, or false on failure
+     */
+    public static function createFromString(string $datetime = 'now'): static|false {
+        $timestamp = strtotime($datetime);
+        return $timestamp === false ? false : new static($timestamp);
+    }
+    #endregion Creator Methods
 
-	#region Time getters
+    #region Time getters
     /**
      * Get current unix time
      *
@@ -196,7 +195,7 @@ class Timestamp implements TimeWrapper, Stringable {
 
     /**
      * Get current Timestamp as fuzzy time.
-     * 
+     *
      * @return string fuzzy time.
      */
     public function getFuzzyTime(): string {
@@ -216,11 +215,11 @@ class Timestamp implements TimeWrapper, Stringable {
     public function format(string $format = 'Y-m-d H:i:s'): string {
         if (empty($format)) $format = 'Y-m-d H:i:s';
 
-        return date($format, $this->seconds);
+        return new DateTime('@' . $this->seconds)->format($format);
     }
-	#endregion Time getters
+    #endregion Time getters
 
-	#region Time Calculations
+    #region Time Calculations
     /**
      * Adjust timestamp by $timespan
      *
@@ -245,25 +244,25 @@ class Timestamp implements TimeWrapper, Stringable {
         return new Timespan($ts - $this->timestamp); // Gives the same result as DateTime::diff
     }
 
-	/**
-	 * Modifies the current timestamp based on the given modification string.
-	 *
-	 * @since version bump
-	 *
-	 * @see   strtotime for $modify string format
-	 *
-	 * @param string $modify The modification string to adjust the timestamp.
-	 *
-	 * @return false|self Returns the updated object on success, or false on failure.
-	 */
-	public function modify(string $modify): false|self {
-		if ($timestamp = strtotime($modify, $this->timestamp)) {
-			$this->timestamp = $timestamp;
-			return $this;
-		}
+    /**
+     * Modifies the current timestamp based on the given modification string.
+     *
+     * @since version bump
+     *
+     * @see   strtotime for $modify string format
+     *
+     * @param string $modify The modification string to adjust the timestamp.
+     *
+     * @return false|self Returns the updated object on success, or false on failure.
+     */
+    public function modify(string $modify): false|self {
+        if ($timestamp = strtotime($modify, $this->timestamp)) {
+            $this->timestamp = $timestamp;
+            return $this;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
     /**
      * Get a copy with an absolute value
@@ -275,5 +274,5 @@ class Timestamp implements TimeWrapper, Stringable {
     public function absoluteCopy(): Timestamp {
         return new static(abs($this->timestamp), $this->timescale);
     }
-	#endregion Time Calculations
+    #endregion Time Calculations
 }
