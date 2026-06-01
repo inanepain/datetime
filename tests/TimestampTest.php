@@ -1,16 +1,49 @@
 <?php
-declare(strict_types=1);
+
+/**
+ * Inane: Datetime
+ *
+ * Inane Datetime Library
+ *
+ * $Id$
+ * $Date$
+ *
+ * PHP version 8.5
+ *
+ * @author   Philip Michael Raab<philip@cathedral.co.za>
+ * @package  inanepain\datetime
+ * @category datetime
+ *
+ * @license  UNLICENSE
+ * @license  https://unlicense.org/UNLICENSE UNLICENSE
+ *
+ * _version_ $version
+ */
+
+declare(strict_types = 1);
 
 namespace Inane\Datetime\Tests;
 
-use Inane\Datetime\Timespan;
-use Inane\Datetime\Timestamp;
+use Inane\Datetime\{
+    Timespan,
+    Timestamp};
 use PHPUnit\Framework\TestCase;
 
-final class TimestampTest extends TestCase
-{
-    public function testCreateFromFormatParsesDate(): void
-    {
+/**
+ * Timestamp test suite
+ *
+ * Verifies construction, formatting, mutation and comparison behaviour of
+ * the `Inane\\Datetime\\Timestamp` value object, including interoperability
+ * with `strtotime()`-style strings and `DateTime`/`DateTimeImmutable`.
+ */
+final class TimestampTest extends TestCase {
+    /**
+     * Ensures `Timestamp::createFromFormat()` correctly parses a formatted date
+     * string and yields the expected Unix epoch seconds.
+     *
+     * @return void
+     */
+    public function testCreateFromFormatParsesDate(): void {
         $dt = '05 May 2022 07:08:09';
         $ts = Timestamp::createFromFormat('d F Y H:i:s', $dt);
 
@@ -18,8 +51,15 @@ final class TimestampTest extends TestCase
         $this->assertSame(strtotime($dt), $ts->getSeconds());
     }
 
-    public function testCreateFromStringParsesRelativeAndAbsolute(): void
-    {
+    /**
+     * Confirms `Timestamp::createFromString()` can handle both absolute
+     * (e.g. RFC-/SQL-like) and relative (e.g. 'now') time strings.
+     * Relative strings are validated within a small delta to account for the
+     * passage of time during test execution.
+     *
+     * @return void
+     */
+    public function testCreateFromStringParsesRelativeAndAbsolute(): void {
         $abs = '2024-01-02 03:04:05 UTC';
         $tsAbs = Timestamp::createFromString($abs);
         $this->assertInstanceOf(Timestamp::class, $tsAbs);
@@ -32,8 +72,13 @@ final class TimestampTest extends TestCase
         $this->assertLessThanOrEqual(2, abs(time() - $tsRel->getSeconds()));
     }
 
-    public function testGettersAndFormat(): void
-    {
+    /**
+     * Verifies primitive getters (seconds/milliseconds/microseconds) and the
+     * default/empty formatting behaviour.
+     *
+     * @return void
+     */
+    public function testGettersAndFormat(): void {
         $known = 1_600_000_000; // 2020-09-13 12:26:40 UTC
         $t = new Timestamp($known);
 
@@ -47,8 +92,13 @@ final class TimestampTest extends TestCase
         $this->assertSame($expected, $t->format(''));
     }
 
-    public function testGetDateTimeAndImmutable(): void
-    {
+    /**
+     * Checks conversion to `DateTime` and `DateTimeImmutable` retains the
+     * exact Unix epoch timestamp.
+     *
+     * @return void
+     */
+    public function testGetDateTimeAndImmutable(): void {
         $known = 1_650_000_000;
         $t = new Timestamp($known);
 
@@ -61,8 +111,14 @@ final class TimestampTest extends TestCase
         $this->assertSame($known, (int)$dti->format('U'));
     }
 
-    public function testAdjustAndDiff(): void
-    {
+    /**
+     * Validates in-place adjustment via integer seconds and `Timespan`, and
+     * that `diff()` returns the signed difference in seconds wrapped in a
+     * `Timespan` (other - this).
+     *
+     * @return void
+     */
+    public function testAdjustAndDiff(): void {
         $base = new Timestamp(1_700_000_000);
         $span = new Timespan(3600); // 1 hour
 
@@ -78,8 +134,13 @@ final class TimestampTest extends TestCase
         $this->assertSame(1000, $diff->getSeconds());
     }
 
-    public function testModifySupportsStrtotimeSyntax(): void
-    {
+    /**
+     * Ensures `modify()` accepts `strtotime()`-compatible modifiers and
+     * updates the internal value; invalid modifiers return `false`.
+     *
+     * @return void
+     */
+    public function testModifySupportsStrtotimeSyntax(): void {
         $t = new Timestamp(1_700_000_000);
         $r = $t->modify('+1 day');
         $this->assertInstanceOf(Timestamp::class, $r);
