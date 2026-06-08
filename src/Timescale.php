@@ -24,7 +24,6 @@ declare(strict_types = 1);
 
 namespace Inane\Datetime;
 
-use DateTimeImmutable;
 use Inane\Stdlib\Enum\CoreEnumInterface;
 use Inane\Stdlib\Enum\CoreEnumTrait;
 
@@ -139,7 +138,7 @@ enum Timescale: int implements CoreEnumInterface {
     public function timestamp(bool $asObject = false): int|Timestamp {
         $ts = match ($this) {
             self::MICROSECOND => (int)(microtime(true) * 1_000_000),
-            self::MILLISECOND => (int)(new DateTimeImmutable()->format('Uv')),
+            self::MILLISECOND => (int) (microtime(true) * 1_000),
             self::SECOND => time(),
         };
 
