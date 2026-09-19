@@ -65,7 +65,7 @@ php-doc clear="all":
 # build: 2 - pandoc xml file
 @_readme-pandoc:
 	echo "\tbuild: pandoc"
-	asciidoctor -b docbook README.adoc
+	asciidoctor -b docbook5 README.adoc
 
 # build: 3 - markdown file
 @_readme-markdown:

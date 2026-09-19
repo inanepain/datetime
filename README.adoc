@@ -219,12 +219,10 @@ The `((Timescale))` *((enum))* simply defines three *((timestamps))* of various 
 
 == Cases
 
-* (((unit, seconds)))SECOND
-    - 10 digits
-* (((unit, milliseconds)))MILLISECOND
-    - 13 digits
-* (((unit, microseconds)))MICROSECOND
-    - 16 digits
+[horizontal]
+(((unit, seconds)))SECOND:: 10 digits
+(((unit, milliseconds)))MILLISECOND:: 13 digits
+(((unit, microseconds)))MICROSECOND:: 16 digits
 
 == Methods
 
@@ -480,6 +478,8 @@ else echo "Something impossible has happened!!!", PHP_EOL;
 <2> same goes for equality
 
 :leveloffset!:
+
+<<<
 
 [glossary]
 == Glossary
